@@ -1,0 +1,9 @@
+# Downloaded inputs (see scripts/fetch_data.py and scripts/fetch_models.py)
+/data/
+/weights/
+# Python
+__pycache__/
+*.pyc
+# Rebuild by-products
+outputs/build_summary.json
+outputs/figures/contact_sheet.png

@@ -1,0 +1,414 @@
+English class,Spanish word,Spelling similarity,Hint,Correct? (Y/N),Better word (if N),Notes
+abacus,ábaco,0.5,,Y,,
+abaya,abaya,1.0,same spelling as English,Y,,loanword used as is in Spanish
+accordion,acordeón,0.6667,,Y,,
+acorn,bellota,0.1429,,Y,,
+agama,agama,1.0,same spelling as English,Y,,genus name used as the common name in Spanish
+agaric,agarico,0.8571,,N,agárico,"missing accent; everyday speakers say seta or hongo, but hongo is already the mushroom word; new word scores 0.71"
+airliner,avión de línea,0.3571,"multiword: may be a literal gloss, not the everyday name",N,avión,avión de línea is a technical gloss; avión (or avión comercial) is the everyday word; new word scores 0.25
+airship,dirigible,0.3333,,Y,,
+albatross,albatros,0.8889,,Y,,
+altar,altar,1.0,same spelling as English,Y,,
+ambulance,ambulancia,0.8,,Y,,
+ant,hormiga,0.0,,Y,,
+apiary,colmenar,0.125,,Y,,apiario is also used
+apron,delantal,0.125,,Y,,
+armadillo,armadillo,1.0,same spelling as English,Y,,the English word comes from Spanish
+artichoke,alcachofa,0.4444,,Y,,
+axolotl,ajolote,0.7143,,Y,,
+baboon,mandril,0.1429,,N,babuino,"mandril is the mandrill, a different primate; new word scores 0.57"
+backpack,mochila,0.125,,Y,,
+badger,tejón,0.0,,Y,,
+bagel,bagel,1.0,same spelling as English,Y,,loanword used as is in Spanish
+bakery,panadería,0.3333,,Y,,
+balloon,balón,0.5714,,N,globo,"balón means ball (soccer ball, basketball); new word scores 0.29"
+banana,plátano,0.2857,,Y,,"plátano in Spain, Mexico and Cuba; banana in the Southern Cone; guineo in Puerto Rico and the Dominican Republic"
+banjo,banjo,1.0,same spelling as English,Y,,
+barbell,barra,0.4286,,N,barra de pesas,barra alone mostly reads as bar or counter; new word scores 0.29
+barbershop,peluquería,0.0,,N,barbería,peluquería is a hair salon in general; new word scores 0.60
+barn,granero,0.2857,,Y,,
+barometer,barómetro,0.6667,,Y,,
+barrel,cuba,0.0,,N,barril,cuba is a rare sense and reads as the country name; new word scores 0.83
+baseball,béisbol,0.375,,Y,,"class shows the ball (pelota de béisbol); béisbol names the sport, as the English label also can"
+basenji,basenji,1.0,same spelling as English,Y,,
+basketball,básquetbol,0.5,,Y,,Latin American form; Spain says baloncesto; class shows the ball
+bassoon,bajón,0.4286,,N,fagot,bajón is the historical dulcian and colloquially means a slump; new word scores 0.29
+bathtub,baño,0.2857,,N,bañera,baño means bathroom; tina or bañadera in parts of Latin America; new word scores 0.29
+beach,playa,0.2,,Y,,
+beagle,beagle,1.0,same spelling as English,Y,,
+beaver,castor,0.1667,,Y,,
+bee,abeja,0.4,,Y,,
+bikini,bikini,1.0,same spelling as English,Y,,
+binoculars,gemelos,0.2,,N,binoculares,gemelos mainly means twins (also cufflinks); prismáticos in Spain; new word scores 0.91
+birdhouse,palomar,0.1111,,N,casita para pájaros,palomar is a pigeon loft (dovecote); new word scores 0.11
+bison,bisonte,0.7143,,Y,,
+bloodhound,sabueso,0.1,,Y,,breed name is perro de San Huberto; sabueso is the everyday word
+boathouse,varadero,0.1111,,N,cobertizo para botes,varadero is a slipway and also a well-known Cuban resort name; new word scores 0.20
+bobsleigh,bobsleigh,1.0,same spelling as English,Y,,loanword used in Spanish (also bob)
+bolete,bolete,1.0,same spelling as English,N,boletus,bolete is English; boleto means ticket in Latin America; new word scores 0.71
+bookcase,biblioteca,0.2,,N,estantería,biblioteca duplicates the library row; librero in Mexico; new word scores 0.00
+bookstore,librería,0.0,,Y,,
+borzoi,borzoi,1.0,same spelling as English,Y,,also galgo ruso
+boxer,boxeador,0.625,,N,bóxer,class is the dog breed; boxeador is a fighter; new word scores 0.80
+bra,sostén,0.0,,Y,,"sujetador in Spain, brasier in Mexico, corpiño in Argentina"
+brambling,pinzón real,0.0,"multiword: may be a literal gloss, not the everyday name",Y,,"standard common name for this finch, not a gloss"
+breakwater,dique,0.1,,N,rompeolas,dique is a dike or dock and duplicates the dock row; new word scores 0.10
+breastplate,patrocinio,0.0,,N,peto,patrocinio means sponsorship (wrong WordNet sense of aegis); new word scores 0.18
+briard,briard,1.0,same spelling as English,Y,,also pastor de Brie
+bridegroom,novio,0.1,,Y,,also means boyfriend
+broccoli,brécol,0.625,,N,brócoli,brécol is a less common Spain form; new word scores 0.75
+broom,escoba,0.1667,,Y,,
+bubble,burbuja,0.4286,,Y,,
+bucket,cubo,0.1667,,Y,,"Spain; balde in most of Latin America, cubeta in Mexico; cubo also means cube"
+buckle,hebilla,0.1429,,Y,,
+bulbul,bulbul,1.0,same spelling as English,Y,,
+bullmastiff,bull mastiff,0.9167,"multiword: may be a literal gloss, not the everyday name",N,bullmastiff,Spanish writes the breed as one word; new word scores 1.00
+burrito,burrito,1.0,same spelling as English,Y,,
+bustard,avutarda,0.5,,Y,,
+cabbage,repollo,0.0,,Y,,col is also common
+candle,vela,0.1667,,Y,,vela also means sail
+canoe,canoa,0.8,,Y,,
+carbonara,carbonara,1.0,same spelling as English,Y,,
+cardigan,rebeca,0.125,,Y,,Spain; Latin America mostly says cárdigan or suéter; rebeca is also a given name
+carousel,carrusel,0.875,,Y,,
+cassette,cassette,1.0,same spelling as English,Y,,RAE spelling is casete
+castle,castro,0.6667,,N,castillo,castro is a pre-Roman hillfort and a common surname; new word scores 0.62
+catamaran,catamarán,0.8889,,Y,,
+cauldron,caldera,0.5,,N,caldero,caldera usually means boiler (or volcanic caldera); new word scores 0.62
+cauliflower,coliflor,0.6364,,Y,,
+cello,chelo,0.6,,Y,,short for violonchelo
+centipede,ciempiés,0.2222,,Y,,
+chain,cadena,0.3333,,Y,,
+chainsaw,sierra de cadena,0.125,"multiword: may be a literal gloss, not the everyday name",N,motosierra,literal gloss; new word scores 0.10
+cheeseburger,cheeseburger,1.0,same spelling as English,N,hamburguesa con queso,cheeseburger is the English menu name; hamburguesa alone also works; new word scores 0.14
+cheetah,chita,0.5714,,N,guepardo,chita is regional and is also the chimp in Tarzan; new word scores 0.12
+chiffonier,comoda,0.2,,N,cómoda,missing accent; new word scores 0.20
+chihuahua,chihuahua,1.0,same spelling as English,Y,,
+chimpanzee,pan,0.3,,N,chimpancé,pan is the genus name and means bread; new word scores 0.70
+chiton,poliplacóforo,0.1538,,N,quitón,poliplacóforo is the zoological class name; new word scores 0.50
+church,iglesia,0.0,,Y,,
+cicada,cigarra,0.5714,,Y,,chicharra is also common
+cleaver,cuchilla,0.125,,N,cuchillo de carnicero,cuchilla alone reads as a blade or razor blade; new word scores 0.29
+cliff,acantilado,0.2,,Y,,
+clogs,geta,0.0,,N,zuecos,geta is the Japanese wooden sandal; new word scores 0.17
+cockroach,barata,0.2222,,N,cucaracha,barata mainly means cheap; new word scores 0.56
+coffeemaker,cafetera,0.3636,,Y,,
+collie,collie,1.0,same spelling as English,Y,,
+conch,caracola,0.25,,Y,,
+consomme,consomé,0.75,,Y,,
+convertible,convertible,1.0,same spelling as English,Y,,descapotable in Spain
+corkscrew,sacacorchos,0.1818,,Y,,
+cornet,trompeta,0.375,,Y,,synset also covers the trumpet; corneta is the cornet proper
+coucal,centropus,0.1111,,N,cucal,centropus is the genus name; new word scores 0.83
+cougar,puma,0.3333,,Y,,
+coyote,coyote,1.0,same spelling as English,Y,,
+cradle,cuna,0.1667,,Y,,
+crayfish,cangrejo,0.125,,N,cangrejo de río,cangrejo alone means crab; new word scores 0.13
+crossword,crucigrama,0.2,,Y,,
+crutch,muleta,0.0,,Y,,
+cucumber,pepino,0.0,,Y,,
+cuirass,coraza,0.4286,,Y,,
+daisy,margarita,0.2222,,Y,,also a cocktail and a given name
+dalmatian,dálmata,0.6667,,Y,,
+dam,presa,0.0,,Y,,also means prey; represa in much of Latin America
+desk,escritorio,0.1,,Y,,
+dhole,dhole,1.0,same spelling as English,Y,,also cuón or perro salvaje asiático
+diaper,pañal,0.1667,,Y,,
+dingo,dingo,1.0,same spelling as English,Y,,
+dishcloth,estropajo,0.0,,N,paño de cocina,estropajo is a scouring pad; repasador in Argentina; new word scores 0.07
+dishwasher,lavavajillas,0.0833,,Y,,lavaplatos in much of Latin America
+dobermann,doberman,0.8889,,Y,,
+dock,dique,0.2,,N,muelle,dique is a dike or dry dock and duplicates the breakwater row; new word scores 0.00
+dome,cúpula,0.0,,Y,,
+dough,masa,0.0,,Y,,
+dowitcher,limnodromus,0.0,,N,agujeta,limnodromus is the genus name; agujeta also means shoelace in Mexico; new word scores 0.00
+dragonfly,libélula,0.1111,,Y,,
+drum,tambor,0.0,,Y,,
+drumstick,palillo,0.0,,N,baqueta,palillo also means toothpick or chopstick; new word scores 0.11
+duck,pato macho,0.1,"multiword: may be a literal gloss, not the everyday name",N,pato,pato macho is a gloss of drake; new word scores 0.00
+dugong,dugongo,0.8571,,Y,,
+dumbbell,mancuerna,0.1111,,Y,,
+dunlin,calidris alpina,0.2667,"multiword: may be a literal gloss, not the everyday name",N,correlimos común,calidris alpina is the scientific name; new word scores 0.19
+echidna,equidna,0.7143,,Y,,
+eel,anguila,0.1429,,Y,,
+eggnog,rompope,0.1429,,Y,,Mexico and Central America; ponche de huevo in Spain
+envelope,sobre,0.125,,Y,,sobre also means on or about
+espresso,espresso,1.0,same spelling as English,N,expreso,espresso is the Italian spelling; café solo in Spain; new word scores 0.75
+fig,higo,0.5,,Y,,
+fireboat,fireboat,1.0,same spelling as English,N,barco bombero,fireboat is English; new word scores 0.23
+flagpole,asta,0.125,,Y,,asta de bandera is clearer; asta also means horn or spear
+flamingo,flamenco,0.75,,Y,,also the dance and music genre
+flatworm,platelmintos,0.25,,N,gusano plano,platelmintos is the plural phylum name; new word scores 0.08
+flute,flauta,0.6667,,Y,,
+fly,mosca,0.0,,Y,,
+forklift,montacargas,0.0909,,Y,,Latin American usage; carretilla elevadora in Spain
+fountain,fuente,0.375,,Y,,fuente is also proposed for plate
+gazelle,gacela,0.5714,,Y,,
+geyser,géiser,0.6667,,Y,,
+gibbon,gibón,0.6667,,Y,,
+goldfinch,jilguero,0.1111,,Y,,
+goldfish,pez rojo,0.0,"multiword: may be a literal gloss, not the everyday name",N,pez dorado,pez rojo is mainly Southern Cone; pez de colores in Spain; new word scores 0.10
+gondola,góndola,0.8571,,Y,,
+gong,gong,1.0,same spelling as English,Y,,
+goose,oca,0.2,,Y,,Spain; ganso is more common in Latin America
+gorilla,gorila,0.8571,,Y,,
+gown,vestido largo,0.0769,"multiword: may be a literal gloss, not the everyday name",Y,,vestido de gala is also common
+grasshopper,saltamontes,0.1818,,Y,,
+greenhouse,plantel,0.1,,N,invernadero,plantel is a seedbed or a team roster; new word scores 0.18
+guacamole,guacamole,1.0,same spelling as English,Y,,
+guenon,guenon,1.0,same spelling as English,N,cercopiteco,guenon is the English and French form; new word scores 0.09
+guillotine,guillotina,0.9,,Y,,
+gyromitra,gyromitra,1.0,same spelling as English,N,falsa morilla,gyromitra is the genus name; also bonete or falsa colmenilla; new word scores 0.23
+hammer,martillo,0.125,,Y,,
+hamper,canasta,0.1429,,Y,,cesta in Spain
+hamster,hámster,0.8571,,Y,,
+handkerchief,pañuelo,0.1667,,Y,,
+hare,liebre,0.3333,,Y,,
+harmonica,armónica,0.7778,,Y,,
+harp,arpa,0.5,,Y,,
+hartebeest,alcelafo,0.2,,N,alcélafo,missing accent; new word scores 0.10
+harvestman,segador,0.1,,N,opilión,segador is a folk name but mainly means reaper; new word scores 0.10
+hatchet,machado,0.2857,,N,hacha,machado is Portuguese and Galician and a surname; hachuela also works; new word scores 0.57
+hay,heno,0.25,,Y,,
+hen,pájaro hembra,0.1538,"multiword: may be a literal gloss, not the everyday name",N,gallina,literal gloss; new word scores 0.14
+hippopotamus,hipopótamo,0.6667,,Y,,
+holster,pistolera,0.3333,,Y,,
+honeycomb,panal,0.1111,,Y,,
+hook,gancho,0.0,,Y,,
+hornbill,cálao,0.0,,Y,,
+hummingbird,colibrí,0.2727,,Y,,
+husky,husky,1.0,same spelling as English,Y,,
+hyena,hiena,0.8,,Y,,
+indri,indri,1.0,same spelling as English,Y,,
+isopod,isópodo,0.7143,,Y,,
+jacamar,galbulidae,0.2,looks like a scientific family name,N,jacamar,galbulidae is the family name; Spanish uses jacamar; new word scores 1.00
+jackfruit,jak,0.3333,,N,yaca,jak is not used; jaca or fruta de jack also occur; new word scores 0.22
+jaguar,tigre,0.1667,,N,jaguar,tigre is a regional name and duplicates the tiger row; new word scores 1.00
+jay,jota,0.25,,N,arrendajo,jota is the letter j; chara in Mexico; new word scores 0.11
+jeans,jeans,1.0,same spelling as English,Y,,vaqueros in Spain
+jeep,todoterreno,0.1818,,Y,,Spain; jeep is also used
+jellyfish,medusa,0.2222,,Y,,aguamala or aguaviva in parts of Latin America
+joystick,joystick,1.0,same spelling as English,Y,,also palanca de mando
+junco,junco,1.0,same spelling as English,Y,,primary sense is the rush plant; the bird takes its name from it
+kimono,kimono,1.0,same spelling as English,Y,,quimono is also accepted
+knot,lazo,0.0,,N,nudo,lazo is a bow or lasso; new word scores 0.00
+koala,koala,1.0,same spelling as English,Y,,
+komondor,komondor,1.0,same spelling as English,Y,,
+kuvasz,kuvasz,1.0,same spelling as English,Y,,
+ladle,cazo,0.2,,N,cucharón,cazo also means saucepan; new word scores 0.12
+ladybug,mariquita,0.2222,,Y,,Spain; catarina in Mexico; mariquita is also a slur
+lakeshore,orilla del lago,0.2,"multiword: may be a literal gloss, not the everyday name",Y,,Spanish has no single word
+lampshade,pantalla,0.1111,,N,pantalla de lámpara,pantalla alone mainly means screen (clashes with monitor and television); new word scores 0.21
+langur,langur,1.0,same spelling as English,Y,,
+lemon,limón,0.6,,Y,,
+leopard,leopardo,0.875,,Y,,
+library,biblioteca,0.2,,Y,,
+lifeboat,lancha de socorro,0.1765,"multiword: may be a literal gloss, not the everyday name",N,bote salvavidas,lancha de socorro is less common; new word scores 0.13
+lighter,encendedor,0.2,,Y,,"mechero in Spain, fosforera in Cuba"
+lighthouse,faro,0.1,,Y,,
+limousine,limo,0.4444,,N,limusina,limo means silt; new word scores 0.78
+limpkin,carrao,0.0,,Y,,Cuba and Venezuela; carau in Argentina
+lion,león,0.5,,Y,,
+lipstick,pintalabios,0.1818,,Y,,Spain; lápiz labial in Latin America
+llama,llama,1.0,same spelling as English,Y,,also means flame
+lotion,loción,0.6667,,Y,,
+lynx,puma,0.0,,N,lince,puma is the cougar; new word scores 0.40
+macaque,macaco,0.5714,,Y,,
+macaw,ara,0.4,,N,guacamayo,ara is the genus name and also means altar; guacamaya in Mexico and Colombia; new word scores 0.33
+magpie,urraca,0.0,,Y,,
+mailbox,casilla,0.2857,,N,buzón,casilla is a box or cell (casilla de correo is a PO box); new word scores 0.00
+maraca,maraca,1.0,same spelling as English,Y,,
+marimba,marimba,1.0,same spelling as English,Y,,
+marmoset,tití,0.0,,Y,,tití also covers the titi monkeys
+marmot,marmota,0.8571,,Y,,
+mask,máscara,0.2857,,Y,,
+maypole,mayo,0.5714,,N,palo de mayo,mayo alone is the month; árbol de mayo in Spain; new word scores 0.17
+maze,laberinto,0.2222,,Y,,
+meatloaf,pastel de carne,0.2,"multiword: may be a literal gloss, not the everyday name",Y,,pastel de carne can also mean meat pie; pan de carne or rollo de carne also used
+meerkat,suricata,0.25,,Y,,suricato in Spain
+megalith,megalitismo,0.6364,,N,megalito,megalitismo is the megalithic culture; new word scores 0.88
+menu,carta,0.0,,N,menú,carta mainly means letter or playing card; new word scores 0.75
+microphone,micro,0.5,,N,micrófono,micro is a clipping and means bus in Chile and Argentina; new word scores 0.60
+minibus,microbús,0.5,,Y,,
+miniskirt,mini,0.4444,,N,minifalda,mini is a clipping; new word scores 0.44
+minivan,minivan,1.0,same spelling as English,Y,,monovolumen in Spain
+mink,visón,0.2,,Y,,
+mitten,manopla,0.1429,,Y,,
+modem,módem,0.8,,Y,,
+monastery,convento,0.2222,,N,monasterio,convento usually means convent; new word scores 0.80
+mongoose,mangosta,0.5,,Y,,
+monitor,monitor,1.0,same spelling as English,Y,,
+mop,fregar,0.0,,N,trapeador,fregar is a verb (to scrub); fregona in Spain; new word scores 0.11
+moped,ciclomotor,0.2,,Y,,motoneta in parts of Latin America
+mosque,mezquita,0.375,,Y,,
+motorboat,lancha rápida,0.0769,"multiword: may be a literal gloss, not the everyday name",Y,,"class is speedboat, so lancha rápida fits"
+mousetrap,ratonera,0.2222,,Y,,
+mushroom,hongo,0.125,,Y,,seta or champiñón in Spain
+necklace,cadena,0.125,,N,collar,cadena means chain and duplicates the chain row; new word scores 0.25
+nematode,nematodos,0.7778,,N,nematodo,plural form; new word scores 0.88
+obelisk,obelisco,0.75,,Y,,
+oboe,oboe,1.0,same spelling as English,Y,,
+ocarina,ocarina,1.0,same spelling as English,Y,,
+odometer,cuentakilómetros,0.1875,,Y,,Spain; odómetro in Latin America
+orange,china,0.1667,,N,naranja,china is Puerto Rican and Dominican usage and reads as the country; new word scores 0.43
+orangutan,pongo,0.2222,,N,orangután,pongo is the genus name and also means I put; new word scores 0.89
+oscilloscope,osciloscopio,0.75,,Y,,
+ostrich,avestruz,0.25,,Y,,
+otter,nutria,0.1667,,Y,,nutria means coypu in parts of Latin America
+overskirt,sobrefalda,0.1,,Y,,
+paddle,pala,0.5,,N,remo,pala means shovel and duplicates the shovel row; canalete for canoe paddles; new word scores 0.00
+pajamas,pijama,0.7143,,Y,,
+palace,palacio,0.7143,,Y,,
+papillon,papillon,1.0,same spelling as English,Y,,also written papillón
+parachute,paracaídas,0.5,,Y,,
+patio,patio,1.0,same spelling as English,Y,,
+payphone,teléfono público,0.125,"multiword: may be a literal gloss, not the everyday name",Y,,
+peafowl,pavón,0.2857,,N,pavo real,pavón is rare in this sense; new word scores 0.33
+pedestal,basa,0.25,,N,pedestal,basa is a column base; new word scores 1.00
+pekingese,pequinés,0.4444,,Y,,
+pelican,pelícano,0.75,,Y,,
+perfume,esencia,0.0,,N,perfume,esencia means essence; new word scores 1.00
+photocopier,fotocopiadora,0.5385,,Y,,
+pickelhaube,pickelhaube,1.0,same spelling as English,Y,,German loanword used as is; also casco de pincho
+pier,pilar,0.6,,N,embarcadero,pilar is a bridge pier (wrong sense); muelle is proposed for dock; new word scores 0.18
+pig,sus,0.0,,N,cerdo,"sus is the genus name; also chancho, puerco, cochino; new word scores 0.00"
+pillow,cabecera,0.0,,N,almohada,cabecera is a headboard; new word scores 0.12
+pineapple,piña,0.3333,,Y,,ananá in the Southern Cone; piña also means pine cone
+pizza,pizza,1.0,same spelling as English,Y,,
+planetarium,planetario,0.8182,,Y,,
+plate,fuente,0.3333,,N,plato,fuente is a serving platter and duplicates the fountain row; new word scores 0.80
+platypus,ornitorrinco,0.0833,,Y,,
+plectrum,púa,0.125,,Y,,
+plunger,sopapa,0.0,,N,desatascador,sopapa is Río de la Plata usage; destapacaños or chupón in Mexico; new word scores 0.08
+pole,palo,0.5,,Y,,
+pomegranate,granada,0.4545,,Y,,also means grenade and the city
+poncho,poncho,1.0,same spelling as English,Y,,
+popsicle,polo,0.375,,Y,,"Spain; paleta in Mexico, helado de palito in Argentina; polo is also the sport and the shirt"
+porcupine,espín,0.2222,,N,puercoespín,espín alone means spin (physics); new word scores 0.36
+pretzel,pretzel,1.0,same spelling as English,Y,,
+prison,cárcel,0.0,,Y,,
+projector,proyector,0.8889,,Y,,
+promontory,promontorio,0.8182,,Y,,
+ptarmigan,perdiz blanca,0.3077,"multiword: may be a literal gloss, not the everyday name",Y,,also perdiz nival or lagópodo
+pug,pug,1.0,same spelling as English,Y,,carlino in Spain
+purse,cartera,0.2857,,N,bolso,"cartera duplicates the wallet row; bolsa in Mexico, cartera means handbag in the Southern Cone; new word scores 0.20"
+quail,codorniz,0.125,,Y,,
+quill,cálamo,0.0,,N,pluma de ave,cálamo is a literary word for a reed pen; new word scores 0.08
+quilt,colcha,0.0,,Y,,
+racket,raqueta,0.5714,,Y,,
+radiator,radiador,0.875,,Y,,
+radio,radio,1.0,same spelling as English,Y,,
+rapeseed,colza,0.0,,Y,,
+refrigerator,nevera,0.3333,,Y,,"also refrigerador; heladera in Argentina, frigorífico in Spain"
+restaurant,restaurante,0.9091,,Y,,
+revolver,revolver,1.0,same spelling as English,N,revólver,missing accent; revolver is the verb to stir; new word scores 0.88
+rickshaw,rickshaw,1.0,same spelling as English,Y,,
+rifle,fusil,0.0,,Y,,rifle is also used
+rooster,pájaro macho,0.1667,"multiword: may be a literal gloss, not the everyday name",N,gallo,literal gloss of the definition; new word scores 0.00
+rotisserie,ast,0.1,,N,asador,ast is not a Spanish word; rostizador in Mexico; new word scores 0.10
+rottweiler,rottweiler,1.0,same spelling as English,Y,,
+safe,cofre,0.4,,N,caja fuerte,cofre is a chest (and a car hood in Mexico); new word scores 0.27
+sailboat,yola,0.25,,N,velero,"yola is a yawl, a specific rig; new word scores 0.12"
+samoyed,samoyedo,0.875,,Y,,
+sandal,chala,0.1667,,N,sandalia,chala is Chilean usage and also means corn husk; new word scores 0.75
+sandbar,banco de arena,0.3571,"multiword: may be a literal gloss, not the everyday name",Y,,
+sarong,pareo,0.3333,,Y,,
+sawmill,aserradero,0.1,,Y,,
+saxophone,saxo,0.4444,,N,saxofón,saxo is a clipping; new word scores 0.56
+scarf,estola,0.1667,,N,bufanda,"estola matches the underlying synset (stole), but the label is scarf; chal also fits; new word scores 0.14"
+schipperke,schipperke,1.0,same spelling as English,Y,,
+schooner,goleta,0.125,,Y,,
+scoreboard,marcador,0.2,,Y,,
+scorpion,escorpión,0.7778,,Y,,alacrán in Mexico
+screw,tornillo,0.125,,Y,,
+screwdriver,destornillador,0.2143,,Y,,
+shield,escudo,0.0,,Y,,
+shipwreck,buque hundido,0.0,"multiword: may be a literal gloss, not the everyday name",N,naufragio,buque hundido is a gloss; pecio is the technical word; new word scores 0.00
+shovel,pala,0.0,,Y,,
+siamang,siamang,1.0,same spelling as English,Y,,
+sink,lavabo,0.0,,Y,,lavabo is the bathroom sink; fregadero for kitchen sinks
+ski,esquí,0.2,,Y,,
+skunk,turón,0.0,,N,mofeta,turón is the polecat; zorrillo in Latin America; new word scores 0.00
+slug,babosa,0.0,,Y,,
+snail,caracol,0.2857,,Y,,
+sneaker,bamba,0.1429,,N,zapatilla deportiva,bamba is Spanish slang (and the song); tenis in Mexico; new word scores 0.16
+snorkel,esnórquel,0.5556,,Y,,also tubo de buceo
+snowmobile,motonieve,0.3,,Y,,
+snowplow,quitanieves,0.0,,Y,,
+sock,calcetines,0.1,,N,calcetín,plural form; media in parts of Latin America; new word scores 0.12
+sombrero,sombrero mexicano,0.4706,"multiword: may be a literal gloss, not the everyday name",Y,,"sombrero alone means any hat, so the qualifier is needed"
+spatula,espátula,0.75,,Y,,same word as the spoonbill row
+spindle,huso,0.0,,Y,,
+spoonbill,espátula,0.2222,,Y,,same word as the spatula row; espátula rosada for the roseate species
+spotlight,foco,0.1111,,Y,,foco means light bulb in Mexico; reflector also used
+stage,escena,0.1667,,N,escenario,escena means scene; new word scores 0.22
+starfish,asteroidea,0.4,,N,estrella de mar,asteroidea is the class name; new word scores 0.20
+stethoscope,estetoscopio,0.6667,,Y,,fonendoscopio in Spain
+stingray,pastinaca,0.4444,,N,raya,pastinaca also means parsnip; new word scores 0.25
+stopwatch,cronómetro,0.2,,Y,,
+stove,estufa,0.3333,,Y,,Mexico and Colombia; in Spain estufa is a heater and the stove is cocina
+strainer,colador,0.25,,Y,,
+strawberry,fresa,0.2,,Y,,frutilla in the Southern Cone
+stretcher,camilla,0.0,,Y,,
+stupa,tope,0.4,,N,estupa,tope is a speed bump or limit; new word scores 0.83
+sturgeon,esturión,0.5,,Y,,
+submarine,pigboat,0.1111,,N,submarino,pigboat is English slang; new word scores 0.89
+suit,conjunto,0.25,,N,traje,conjunto is a set or outfit; new word scores 0.00
+sundial,reloj de sol,0.1667,"multiword: may be a literal gloss, not the everyday name",Y,,
+sunscreen,protector solar,0.1333,"multiword: may be a literal gloss, not the everyday name",Y,,bloqueador solar in much of Latin America
+sweatshirt,buzo,0.0,,N,sudadera,buzo mainly means diver; Southern Cone usage; new word scores 0.30
+swing,columpio,0.0,,Y,,
+syringe,jeringa,0.5714,,Y,,
+tank,tanque,0.5,,Y,,
+tarantula,tarántula,0.8889,,Y,,
+taxicab,taxi,0.5714,,Y,,
+teapot,tetera,0.3333,,Y,,
+television,televisión,0.9,,Y,,televisor is the set itself
+tench,tenca,0.8,,Y,,
+thimble,dedal,0.1429,,Y,,
+throne,trono,0.6667,,Y,,
+tick,garrapata,0.0,,Y,,
+tiger,tigre,0.6,,Y,,
+toaster,tostadora,0.4444,,Y,,
+torch,antorcha,0.625,,Y,,
+toucan,tucán,0.6667,,Y,,
+tractor,tractor,1.0,same spelling as English,Y,,
+tram,tranvía,0.4286,,Y,,
+tray,bandeja,0.0,,Y,,
+triceratops,triceratops,1.0,same spelling as English,Y,,
+tricycle,triciclo,0.75,,Y,,
+trifle,trifle,1.0,same spelling as English,Y,,borrowed; no common Spanish name
+trilobite,trilobite,1.0,same spelling as English,Y,,
+trimaran,trimarán,0.875,,Y,,
+tripod,trípode,0.7143,,Y,,
+trolleybus,trolebús,0.7,,Y,,
+trombone,trombón,0.75,,Y,,
+turnstile,torniquete,0.4,,Y,,also means tourniquet
+umbrella,paraguas,0.125,,Y,,
+unicycle,monociclo,0.4444,,Y,,
+valley,valle,0.8333,,Y,,
+vase,florero,0.1429,,Y,,jarrón also common
+vespa,scooter,0.0,,Y,,English loanword in everyday use; RAE form escúter; motoneta in Latin America
+vestment,vestidura,0.4444,,Y,,
+viaduct,viaducto,0.875,,Y,,
+violin,violín,0.8333,,Y,,
+vizsla,vizsla,1.0,same spelling as English,Y,,also braco húngaro
+volcano,volcán,0.7143,,Y,,
+volleyball,balón de volleyball,0.5263,"multiword: may be a literal gloss, not the everyday name",N,voleibol,mixes in the English spelling; vóley also common; class shows the ball; new word scores 0.60
+vulture,buitre,0.5714,,Y,,"zopilote in Mexico, aura tiñosa in Cuba"
+wallaby,wallaby,1.0,same spelling as English,Y,,also ualabí
+wallet,cartera,0.2857,,Y,,billetera in much of Latin America
+wardrobe,armario,0.25,,Y,,ropero or clóset also common
+warthog,facocero,0.125,,N,facóquero,facocero is the Italian form; jabalí verrugoso also used; new word scores 0.11
+weasel,comadreja,0.2222,,Y,,
+website,website,1.0,same spelling as English,N,página web,website is English; sitio web also common; new word scores 0.10
+weevil,gorgojo,0.0,,Y,,
+wheelbarrow,carretilla de mano,0.1667,"multiword: may be a literal gloss, not the everyday name",N,carretilla,de mano is a redundant gloss; new word scores 0.00
+whippet,whippet,1.0,same spelling as English,Y,,
+whistle,silbato,0.0,,Y,,
+wok,wok,1.0,same spelling as English,Y,,
+wombat,wombat,1.0,same spelling as English,Y,,
+wool,lana,0.0,,Y,,
+yurt,yurta,0.8,,Y,,
+zebra,cebra,0.8,,Y,,
+zucchini,calabacín,0.0,,Y,,"Spain; calabacita in Mexico, zapallito in Argentina"

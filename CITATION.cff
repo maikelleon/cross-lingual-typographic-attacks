@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use these materials, please cite them as below."
+title: "Cross-lingual typographic attacks on contrastive vision-language models: stimuli, model outputs, and code"
+authors:
+  - family-names: Leon
+    given-names: Maikel
+    affiliation: "University of Miami Business School"
+    email: mleon@miami.edu
+version: 1.0.0
+date-released: 2026-10-26
+license: MIT
+repository-code: "https://github.com/maikelleon/cross-lingual-typographic-attacks"
+keywords:
+  - typographic attacks
+  - CLIP
+  - vision-language models
+  - multilingual
+  - robustness

@@ -1,0 +1,141 @@
+sheet,target_en,old_word,new_word,note
+Translations,agaric,agarico,agárico,"missing accent; everyday speakers say seta or hongo, but hongo is already the mushroom word; new word scores 0.71"
+Translations,airliner,avión de línea,avión,avión de línea is a technical gloss; avión (or avión comercial) is the everyday word; new word scores 0.25
+Translations,baboon,mandril,babuino,"mandril is the mandrill, a different primate; new word scores 0.57"
+Translations,balloon,balón,globo,"balón means ball (soccer ball, basketball); new word scores 0.29"
+Translations,barbell,barra,barra de pesas,barra alone mostly reads as bar or counter; new word scores 0.29
+Translations,barbershop,peluquería,barbería,peluquería is a hair salon in general; new word scores 0.60
+Translations,barrel,cuba,barril,cuba is a rare sense and reads as the country name; new word scores 0.83
+Translations,bassoon,bajón,fagot,bajón is the historical dulcian and colloquially means a slump; new word scores 0.29
+Translations,bathtub,baño,bañera,baño means bathroom; tina or bañadera in parts of Latin America; new word scores 0.29
+Translations,binoculars,gemelos,binoculares,gemelos mainly means twins (also cufflinks); prismáticos in Spain; new word scores 0.91
+Translations,birdhouse,palomar,casita para pájaros,palomar is a pigeon loft (dovecote); new word scores 0.11
+Translations,boathouse,varadero,cobertizo para botes,varadero is a slipway and also a well-known Cuban resort name; new word scores 0.20
+Translations,bolete,bolete,boletus,bolete is English; boleto means ticket in Latin America; new word scores 0.71
+Translations,bookcase,biblioteca,estantería,biblioteca duplicates the library row; librero in Mexico; new word scores 0.00
+Translations,boxer,boxeador,bóxer,class is the dog breed; boxeador is a fighter; new word scores 0.80
+Translations,breakwater,dique,rompeolas,dique is a dike or dock and duplicates the dock row; new word scores 0.10
+Translations,breastplate,patrocinio,peto,patrocinio means sponsorship (wrong WordNet sense of aegis); new word scores 0.18
+Translations,broccoli,brécol,brócoli,brécol is a less common Spain form; new word scores 0.75
+Translations,bullmastiff,bull mastiff,bullmastiff,Spanish writes the breed as one word; new word scores 1.00
+Translations,castle,castro,castillo,castro is a pre-Roman hillfort and a common surname; new word scores 0.62
+Translations,cauldron,caldera,caldero,caldera usually means boiler (or volcanic caldera); new word scores 0.62
+Translations,chainsaw,sierra de cadena,motosierra,literal gloss; new word scores 0.10
+Translations,cheeseburger,cheeseburger,hamburguesa con queso,cheeseburger is the English menu name; hamburguesa alone also works; new word scores 0.14
+Translations,cheetah,chita,guepardo,chita is regional and is also the chimp in Tarzan; new word scores 0.12
+Translations,chiffonier,comoda,cómoda,missing accent; new word scores 0.20
+Translations,chimpanzee,pan,chimpancé,pan is the genus name and means bread; new word scores 0.70
+Translations,chiton,poliplacóforo,quitón,poliplacóforo is the zoological class name; new word scores 0.50
+Translations,cleaver,cuchilla,cuchillo de carnicero,cuchilla alone reads as a blade or razor blade; new word scores 0.29
+Translations,clogs,geta,zuecos,geta is the Japanese wooden sandal; new word scores 0.17
+Translations,cockroach,barata,cucaracha,barata mainly means cheap; new word scores 0.56
+Translations,coucal,centropus,cucal,centropus is the genus name; new word scores 0.83
+Translations,crayfish,cangrejo,cangrejo de río,cangrejo alone means crab; new word scores 0.13
+Translations,dishcloth,estropajo,paño de cocina,estropajo is a scouring pad; repasador in Argentina; new word scores 0.07
+Translations,dock,dique,muelle,dique is a dike or dry dock and duplicates the breakwater row; new word scores 0.00
+Translations,dowitcher,limnodromus,agujeta,limnodromus is the genus name; agujeta also means shoelace in Mexico; new word scores 0.00
+Translations,drumstick,palillo,baqueta,palillo also means toothpick or chopstick; new word scores 0.11
+Translations,duck,pato macho,pato,pato macho is a gloss of drake; new word scores 0.00
+Translations,dunlin,calidris alpina,correlimos común,calidris alpina is the scientific name; new word scores 0.19
+Translations,espresso,espresso,expreso,espresso is the Italian spelling; café solo in Spain; new word scores 0.75
+Translations,fireboat,fireboat,barco bombero,fireboat is English; new word scores 0.23
+Translations,flatworm,platelmintos,gusano plano,platelmintos is the plural phylum name; new word scores 0.08
+Translations,goldfish,pez rojo,pez dorado,pez rojo is mainly Southern Cone; pez de colores in Spain; new word scores 0.10
+Translations,greenhouse,plantel,invernadero,plantel is a seedbed or a team roster; new word scores 0.18
+Translations,guenon,guenon,cercopiteco,guenon is the English and French form; new word scores 0.09
+Translations,gyromitra,gyromitra,falsa morilla,gyromitra is the genus name; also bonete or falsa colmenilla; new word scores 0.23
+Translations,hartebeest,alcelafo,alcélafo,missing accent; new word scores 0.10
+Translations,harvestman,segador,opilión,segador is a folk name but mainly means reaper; new word scores 0.10
+Translations,hatchet,machado,hacha,machado is Portuguese and Galician and a surname; hachuela also works; new word scores 0.57
+Translations,hen,pájaro hembra,gallina,literal gloss; new word scores 0.14
+Translations,jacamar,galbulidae,jacamar,galbulidae is the family name; Spanish uses jacamar; new word scores 1.00
+Translations,jackfruit,jak,yaca,jak is not used; jaca or fruta de jack also occur; new word scores 0.22
+Translations,jaguar,tigre,jaguar,tigre is a regional name and duplicates the tiger row; new word scores 1.00
+Translations,jay,jota,arrendajo,jota is the letter j; chara in Mexico; new word scores 0.11
+Translations,knot,lazo,nudo,lazo is a bow or lasso; new word scores 0.00
+Translations,ladle,cazo,cucharón,cazo also means saucepan; new word scores 0.12
+Translations,lampshade,pantalla,pantalla de lámpara,pantalla alone mainly means screen (clashes with monitor and television); new word scores 0.21
+Translations,lifeboat,lancha de socorro,bote salvavidas,lancha de socorro is less common; new word scores 0.13
+Translations,limousine,limo,limusina,limo means silt; new word scores 0.78
+Translations,lynx,puma,lince,puma is the cougar; new word scores 0.40
+Translations,macaw,ara,guacamayo,ara is the genus name and also means altar; guacamaya in Mexico and Colombia; new word scores 0.33
+Translations,mailbox,casilla,buzón,casilla is a box or cell (casilla de correo is a PO box); new word scores 0.00
+Translations,maypole,mayo,palo de mayo,mayo alone is the month; árbol de mayo in Spain; new word scores 0.17
+Translations,megalith,megalitismo,megalito,megalitismo is the megalithic culture; new word scores 0.88
+Translations,menu,carta,menú,carta mainly means letter or playing card; new word scores 0.75
+Translations,microphone,micro,micrófono,micro is a clipping and means bus in Chile and Argentina; new word scores 0.60
+Translations,miniskirt,mini,minifalda,mini is a clipping; new word scores 0.44
+Translations,monastery,convento,monasterio,convento usually means convent; new word scores 0.80
+Translations,mop,fregar,trapeador,fregar is a verb (to scrub); fregona in Spain; new word scores 0.11
+Translations,necklace,cadena,collar,cadena means chain and duplicates the chain row; new word scores 0.25
+Translations,nematode,nematodos,nematodo,plural form; new word scores 0.88
+Translations,orange,china,naranja,china is Puerto Rican and Dominican usage and reads as the country; new word scores 0.43
+Translations,orangutan,pongo,orangután,pongo is the genus name and also means I put; new word scores 0.89
+Translations,paddle,pala,remo,pala means shovel and duplicates the shovel row; canalete for canoe paddles; new word scores 0.00
+Translations,peafowl,pavón,pavo real,pavón is rare in this sense; new word scores 0.33
+Translations,pedestal,basa,pedestal,basa is a column base; new word scores 1.00
+Translations,perfume,esencia,perfume,esencia means essence; new word scores 1.00
+Translations,pier,pilar,embarcadero,pilar is a bridge pier (wrong sense); muelle is proposed for dock; new word scores 0.18
+Translations,pig,sus,cerdo,"sus is the genus name; also chancho, puerco, cochino; new word scores 0.00"
+Translations,pillow,cabecera,almohada,cabecera is a headboard; new word scores 0.12
+Translations,plate,fuente,plato,fuente is a serving platter and duplicates the fountain row; new word scores 0.80
+Translations,plunger,sopapa,desatascador,sopapa is Río de la Plata usage; destapacaños or chupón in Mexico; new word scores 0.08
+Translations,porcupine,espín,puercoespín,espín alone means spin (physics); new word scores 0.36
+Translations,purse,cartera,bolso,"cartera duplicates the wallet row; bolsa in Mexico, cartera means handbag in the Southern Cone; new word scores 0.20"
+Translations,quill,cálamo,pluma de ave,cálamo is a literary word for a reed pen; new word scores 0.08
+Translations,revolver,revolver,revólver,missing accent; revolver is the verb to stir; new word scores 0.88
+Translations,rooster,pájaro macho,gallo,literal gloss of the definition; new word scores 0.00
+Translations,rotisserie,ast,asador,ast is not a Spanish word; rostizador in Mexico; new word scores 0.10
+Translations,safe,cofre,caja fuerte,cofre is a chest (and a car hood in Mexico); new word scores 0.27
+Translations,sailboat,yola,velero,"yola is a yawl, a specific rig; new word scores 0.12"
+Translations,sandal,chala,sandalia,chala is Chilean usage and also means corn husk; new word scores 0.75
+Translations,saxophone,saxo,saxofón,saxo is a clipping; new word scores 0.56
+Translations,scarf,estola,bufanda,"estola matches the underlying synset (stole), but the label is scarf; chal also fits; new word scores 0.14"
+Translations,shipwreck,buque hundido,naufragio,buque hundido is a gloss; pecio is the technical word; new word scores 0.00
+Translations,skunk,turón,mofeta,turón is the polecat; zorrillo in Latin America; new word scores 0.00
+Translations,sneaker,bamba,zapatilla deportiva,bamba is Spanish slang (and the song); tenis in Mexico; new word scores 0.16
+Translations,sock,calcetines,calcetín,plural form; media in parts of Latin America; new word scores 0.12
+Translations,stage,escena,escenario,escena means scene; new word scores 0.22
+Translations,starfish,asteroidea,estrella de mar,asteroidea is the class name; new word scores 0.20
+Translations,stingray,pastinaca,raya,pastinaca also means parsnip; new word scores 0.25
+Translations,stupa,tope,estupa,tope is a speed bump or limit; new word scores 0.83
+Translations,submarine,pigboat,submarino,pigboat is English slang; new word scores 0.89
+Translations,suit,conjunto,traje,conjunto is a set or outfit; new word scores 0.00
+Translations,sweatshirt,buzo,sudadera,buzo mainly means diver; Southern Cone usage; new word scores 0.30
+Translations,volleyball,balón de volleyball,voleibol,mixes in the English spelling; vóley also common; class shows the ball; new word scores 0.60
+Translations,warthog,facocero,facóquero,facocero is the Italian form; jabalí verrugoso also used; new word scores 0.11
+Translations,website,website,página web,website is English; sitio web also common; new word scores 0.10
+Translations,wheelbarrow,carretilla de mano,carretilla,de mano is a redundant gloss; new word scores 0.00
+False friends,banana,banano,banda,"banano is the banana plant or fruit (Colombia, Central America); new word scores 0.67"
+False friends,barbershop,barbero,barbecho,barbero means barber; new word scores 0.70
+False friends,bolete,boleto,boleta,boleto is also the Spanish name of Boletus mushrooms; new word scores 0.83
+False friends,boxer,boxeo,botes,"boxeo means boxing, the other sense of the English word boxer; new word scores 0.60"
+False friends,bustard,bastardo,bastar,bastardo is an insult; meaning is otherwise unrelated; new word scores 0.71
+False friends,cauldron,calderón,caudal,calderón is the augmentative of caldera (large cauldron); also a musical fermata; new word scores 0.50
+False friends,chainsaw,chingar,chasis,chingar is vulgar; new word scores 0.50
+False friends,chihuahua,chucha,chiquilla,chucha is colloquial for a dog in some regions and vulgar in Chile and Peru; new word scores 0.56
+False friends,corn,corán,coro,Corán is a proper noun (the Quran); new word scores 0.75
+False friends,dingo,pingo,dinero,pingo means horse in the Southern Cone and is derogatory toward women in other uses; new word scores 0.67
+False friends,dragonfly,dragón,diagonal,dragón (dragon) is part of the English compound; new word scores 0.67
+False friends,espresso,expreso,esposo,expreso is the same coffee (and an express train); new word scores 0.62
+False friends,harmonica,armonía,harina,armonía (harmony) shares meaning with armónica; new word scores 0.56
+False friends,indri,indio,indicio,indio is an ethnic term that can be offensive; new word scores 0.57
+False friends,lakeshore,lacustre,(dropped),"lacustre means of or relating to lakes; no unrelated Spanish word above 0.5 found, so drop"
+False friends,lighter,ligero,litera,"ligero means light in weight, the comparative sense of the English word lighter; new word scores 0.57"
+False friends,mailbox,millon,millón,millon is misspelled; millón scores 0.43
+False friends,maraca,marica,marca,marica is a homophobic slur; new word scores 0.83
+False friends,marimba,marica,marina,marica is a homophobic slur; new word scores 0.71
+False friends,maze,mame,mate,mame is vulgar in Mexican usage; new word scores 0.75
+False friends,meerkat,mierda,mermar,mierda is vulgar; new word scores 0.57
+False friends,motorboat,motorizado,matorral,motorizado (motorized) shares the motor meaning; new word scores 0.56
+False friends,palace,palante,palanca,"palante is a colloquial contraction (pa'lante), not a standard word; new word scores 0.71"
+False friends,perfume,perfumado,perfecto,perfumado means perfumed; new word scores 0.50
+False friends,porcupine,porcino,porcelana,"porcino (pig-related) overlaps puercoespín, the Spanish name, and the pig class; new word scores 0.56"
+False friends,prison,preso,prisa,preso means prisoner; new word scores 0.67
+False friends,racket,racista,racha,racista is a charged word; meaning is otherwise unrelated; new word scores 0.50
+False friends,radio,arcadio,rabia,arcadio is mainly a given name; new word scores 0.60
+False friends,refrigerator,refrigerante,refriega,refrigerante means coolant (shares the cooling meaning); new word scores 0.58
+False friends,scorpion,escorpio,escoria,escorpio is the zodiac sign (the scorpion); new word scores 0.50
+False friends,sombrero,sombreado,somero,"sombreado (shaded) shares the root sombra, the shade a sombrero gives; new word scores 0.75"
+False friends,vespa,avispa,vista,"vespa is Italian for wasp, so avispa matches the label word's meaning; new word scores 0.60"
+False friends,violin,violación,violeta,violación also means rape; new word scores 0.57

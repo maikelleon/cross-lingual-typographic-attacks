@@ -1,0 +1,98 @@
+{
+ "photo": "fbi_police_k9_33512795453.jpg",
+ "crop": [
+  0.239,
+  0.029,
+  0.699
+ ],
+ "words": [
+  [
+   "English class name",
+   "lemon"
+  ],
+  [
+   "Translation, French",
+   "citron"
+  ],
+  [
+   "Translation, Spanish",
+   "limón"
+  ],
+  [
+   "False friend, French",
+   "leçon"
+  ],
+  [
+   "Pseudoword",
+   "memon"
+  ],
+  [
+   "Random string",
+   "wwkvg"
+  ]
+ ],
+ "rn50_openai": [
+  [
+   "lemon",
+   0.6199699640274048,
+   0.6199699640274048
+  ],
+  [
+   "Labrador Retriever",
+   0.5814520716667175,
+   0.00022456567967310548
+  ],
+  [
+   "Labrador Retriever",
+   0.8727094531059265,
+   0.0004928375128656626
+  ],
+  [
+   "Labrador Retriever",
+   0.8600570559501648,
+   0.0006301826797425747
+  ],
+  [
+   "Labrador Retriever",
+   0.48739948868751526,
+   0.012346792034804821
+  ],
+  [
+   "Labrador Retriever",
+   0.6283344626426697,
+   5.201866315474035e-07
+  ]
+ ],
+ "rn50_yfcc15m": [
+  [
+   "Wire Fox Terrier",
+   0.4945378303527832,
+   2.2456434489726007e-09
+  ],
+  [
+   "Wire Fox Terrier",
+   0.4314710199832916,
+   4.1839700593016005e-09
+  ],
+  [
+   "Wire Fox Terrier",
+   0.44105765223503113,
+   2.890551575873701e-09
+  ],
+  [
+   "Wire Fox Terrier",
+   0.6160167455673218,
+   3.2080849088345076e-09
+  ],
+  [
+   "Wire Fox Terrier",
+   0.619408905506134,
+   3.525353897693151e-10
+  ],
+  [
+   "Wire Fox Terrier",
+   0.5933655500411987,
+   1.1051571879860944e-09
+  ]
+ ]
+}

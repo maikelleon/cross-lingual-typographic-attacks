@@ -1,0 +1,404 @@
+English class,Spanish word,Spelling similarity,Hint,Unrelated in meaning? (Y/N),Replacement (optional),Notes
+abacus,abarcar,0.5714,,Y,,
+abaya,sabana,0.6667,,Y,,"sabana is savanna (sábana, with accent, is bedsheet)"
+accordion,acuerdo,0.5556,,Y,,"shares a Latin root, but the meanings are unrelated (agreement)"
+acorn,acorde,0.6667,,Y,,
+agama,alarma,0.6667,,Y,,
+agaric,agrario,0.7143,,Y,,
+airliner,arruinar,0.625,,Y,,
+albatross,aliados,0.5556,,Y,,
+altar,saltar,0.8333,,Y,,
+ambulance,ambulante,0.8889,,Y,,"shares a Latin root, but ambulante means itinerant"
+ant,anta,0.75,,Y,,"rare word (elk, or a pilaster); most readers will not know it"
+apiary,aviar,0.6667,,Y,,aviar means avian
+apron,arroz,0.6,,Y,,
+armadillo,mercadillo,0.7,,Y,,
+artichoke,ártico,0.5556,,Y,,
+axolotl,absoluto,0.5,,Y,,
+baboon,babosa,0.6667,,Y,,"babosa means slug, another class in the set"
+backpack,bacalao,0.5,,Y,,
+badger,barrer,0.6667,,Y,,same word as the barrel row
+bagel,ángel,0.6,,Y,,
+bakery,bañera,0.6667,,Y,,"bañera means bathtub, another class in the set"
+balloon,ballena,0.5714,,Y,,
+banana,banano,0.8333,,N,banda,"banano is the banana plant or fruit (Colombia, Central America); new word scores 0.67"
+banjo,manejo,0.6667,,Y,,
+barbell,barbilla,0.75,,Y,,
+barbershop,barbero,0.7,,N,barbecho,barbero means barber; new word scores 0.70
+barn,barón,0.8,,Y,,
+barometer,prometer,0.7778,,Y,,same word as the rooster row
+barrel,barrer,0.8333,,Y,,same word as the badger row
+baseball,basural,0.625,,Y,,basural (garbage dump) is Southern Cone usage
+basenji,asentir,0.5714,,Y,,
+bassoon,bastón,0.5714,,Y,,
+bathtub,batata,0.5714,,Y,,
+beach,beca,0.6,,Y,,
+beagle,baile,0.6667,,Y,,
+beaver,beber,0.6667,,Y,,
+bee,bebe,0.75,,Y,,also reads as bebé (baby) without the accent
+bikini,vikingo,0.5714,,Y,,
+binoculars,vincular,0.7,,Y,,
+birdhouse,bichos,0.5556,,Y,,
+bison,piso,0.6,,Y,,
+bloodhound,bochorno,0.5,,Y,,
+bolete,boleto,0.8333,,N,boleta,boleto is also the Spanish name of Boletus mushrooms; new word scores 0.83
+bookcase,colocarse,0.5556,,Y,,
+bookstore,postre,0.5556,,Y,,
+borzoi,corzo,0.6667,,Y,,
+boxer,boxeo,0.8,,N,botes,"boxeo means boxing, the other sense of the English word boxer; new word scores 0.60"
+bra,abra,0.75,,Y,,
+brambling,bambalinas,0.6,,Y,,
+breakwater,rescate,0.5,,Y,,
+breastplate,trasplante,0.6364,,Y,,
+briard,criar,0.6667,,Y,,
+bridegroom,primero,0.5,,Y,,
+broccoli,protocolo,0.5556,,Y,,same word as the photocopier row
+broom,broma,0.6,,Y,,
+bubble,mueble,0.6667,,Y,,
+bucket,buceo,0.6667,,Y,,
+buckle,bucle,0.8333,,Y,,bucle means loop or curl
+bulbul,bulbo,0.6667,,Y,,
+burrito,aburrido,0.75,,Y,,
+bustard,bastardo,0.75,,N,bastar,bastardo is an insult; meaning is otherwise unrelated; new word scores 0.71
+cabbage,cabotaje,0.625,,Y,,
+candle,conde,0.6667,,Y,,
+canoe,cante,0.8,,Y,,
+carbonara,carbonato,0.7778,,Y,,
+cardigan,cargar,0.625,,Y,,
+cardoon,cargos,0.5714,,Y,,
+carousel,coronel,0.625,,Y,,
+cassette,caliente,0.625,,Y,,
+castle,coste,0.6667,,Y,,
+catamaran,catalana,0.6667,,Y,,
+cauldron,calderón,0.625,,N,caudal,calderón is the augmentative of caldera (large cauldron); also a musical fermata; new word scores 0.50
+cauliflower,canciller,0.5455,,Y,,
+cello,sello,0.8,,Y,,
+centipede,centinela,0.6667,,Y,,
+chain,chabón,0.6667,,Y,,"Argentine slang (guy, dude)"
+chainsaw,chingar,0.625,,N,chasis,chingar is vulgar; new word scores 0.50
+cheeseburger,converger,0.5,,Y,,
+cheetah,cuenta,0.5714,,Y,,
+chiffonier,imponer,0.5,,Y,,
+chihuahua,chucha,0.5556,,N,chiquilla,chucha is colloquial for a dog in some regions and vulgar in Chile and Peru; new word scores 0.56
+chimpanzee,chimenea,0.6,,Y,,
+chiton,chinos,0.6667,,Y,,
+church,charco,0.6667,,Y,,
+cicada,picada,0.8333,,Y,,
+cleaver,clavar,0.7143,,Y,,
+cliff,clic,0.6,,Y,,
+clogs,caos,0.6,,Y,,
+cockroach,controlado,0.5,,Y,,
+coffeemaker,confirmar,0.5455,,Y,,
+collie,calle,0.6667,,Y,,same word as the gazelle row
+conch,cancha,0.6667,,Y,,
+consomme,conforme,0.75,,Y,,
+convertible,convertirse,0.8182,,Y,,
+corkscrew,correr,0.5556,,Y,,
+corn,corán,0.8,,N,coro,Corán is a proper noun (the Quran); new word scores 0.75
+cornet,carnet,0.8333,,Y,,
+coucal,comunal,0.7143,,Y,,
+cougar,colgar,0.8333,,Y,,
+coyote,cogote,0.8333,,Y,,
+cradle,fraile,0.6667,,Y,,
+crayfish,camisa,0.5,,Y,,
+crossword,grosor,0.5556,,Y,,
+crutch,crítica,0.5714,,Y,,
+cucumber,sucumbir,0.75,,Y,,
+cuirass,cuidados,0.625,,Y,,
+daisy,darse,0.6,,Y,,
+dalmatian,salvación,0.5556,,Y,,
+dam,damas,0.6,,Y,,
+desk,deseo,0.6,,Y,,
+dhole,darle,0.6,,Y,,
+diaper,hiper,0.6667,,Y,,hiper is a colloquial clipping of hipermercado (written híper); same word as the whippet row
+dingo,pingo,0.8,,N,dinero,pingo means horse in the Southern Cone and is derogatory toward women in other uses; new word scores 0.67
+dishcloth,discreto,0.5556,,Y,,
+dishwasher,deshacer,0.6,,Y,,
+dobermann,soberana,0.6667,,Y,,
+dock,doce,0.75,,Y,,same word as the dome row
+dome,doce,0.75,,Y,,dote (0.75) would avoid sharing doce with dock
+doormat,deformar,0.625,,Y,,
+dough,dogo,0.6,,Y,,dogo is a dog breed name
+dowitcher,boliche,0.5556,,Y,,
+dragonfly,dragón,0.5556,,N,diagonal,dragón (dragon) is part of the English compound; new word scores 0.67
+drum,bruma,0.6,,Y,,
+drumstick,dramática,0.6667,,Y,,
+duck,dulce,0.6,,Y,,
+dugong,duro,0.5,,Y,,
+dumbbell,cumbre,0.5,,Y,,
+dunlin,función,0.5714,,Y,,
+echidna,chilena,0.5714,,Y,,
+eel,piel,0.5,,Y,,
+eggnog,signo,0.5,,Y,,same word as the sink row
+envelope,antílope,0.625,,Y,,antílope (antelope) is close to the gazelle and hartebeest classes
+espresso,expreso,0.75,,N,esposo,expreso is the same coffee (and an express train); new word scores 0.62
+fig,fiel,0.5,,Y,,
+fireboat,firma,0.5,,Y,,
+flagpole,flagrante,0.5556,,Y,,
+flamingo,filamento,0.6667,,Y,,
+flatworm,plataforma,0.6,,Y,,
+flute,afluente,0.625,,Y,,
+fly,flor,0.5,,Y,,
+forklift,moralista,0.5556,,Y,,
+fountain,comunitario,0.5455,,Y,,
+gazelle,calle,0.5714,,Y,,same word as the collie row
+geyser,gánster,0.5714,,Y,,
+gibbon,guion,0.5,,Y,,
+goblet,doblete,0.7143,,Y,,
+goldfinch,golosinas,0.5556,,Y,,
+goldfish,golfista,0.625,,Y,,
+gondola,ganadora,0.625,,Y,,
+gong,ganga,0.6,,Y,,
+goose,goloso,0.6667,,Y,,
+gorilla,orilla,0.8571,,Y,,orilla (shore) overlaps the lakeshore translation
+gown,gota,0.5,,Y,,
+greenhouse,presentarse,0.5455,,Y,,
+guacamole,guacho,0.5556,,Y,,"guacho is regional slang (orphan, kid) and can be derogatory"
+guenon,bueno,0.6667,,Y,,
+guillotine,quijote,0.5,,Y,,
+gyromitra,geometría,0.5556,,Y,,
+hammer,hacer,0.6667,,Y,,"same word as the hamper, hamster, and hatchet rows"
+hamper,hacer,0.6667,,Y,,"same word as the hammer, hamster, and hatchet rows"
+hamster,hacer,0.5714,,Y,,"same word as the hammer, hamper, and hatchet rows"
+hare,hace,0.75,,Y,,
+harmonica,armonía,0.6667,,N,harina,armonía (harmony) shares meaning with armónica; new word scores 0.56
+harp,harto,0.6,,Y,,same word as the warthog row
+hartebeest,mantenerse,0.5,,Y,,
+harvestman,arrestar,0.6,,Y,,
+hatchet,hacer,0.5714,,Y,,"same word as the hammer, hamper, and hamster rows"
+hay,haya,0.75,,Y,,same word as the jay row
+hen,heno,0.75,,Y,,"heno means hay, another class in the set"
+hippopotamus,hipotálamo,0.5,,Y,,
+holster,hámster,0.7143,,Y,,hámster is the hamster class
+honeycomb,honesto,0.5556,,Y,,
+hornbill,horquilla,0.6667,,Y,,
+hourglass,hurgar,0.5556,,Y,,
+husky,huso,0.6,,Y,,"huso means spindle, another class in the set"
+hyena,cayena,0.6667,,Y,,
+indri,indio,0.6,,N,indicio,indio is an ethnic term that can be offensive; new word scores 0.57
+isopod,piropos,0.5714,,Y,,
+jacamar,acabar,0.7143,,Y,,
+jaguar,jugar,0.6667,,Y,,
+jay,haya,0.5,,Y,,same word as the hay row
+jeans,remanso,0.5714,,Y,,
+jeep,jemer,0.6,,Y,,jemer (Khmer) is a rare ethnonym
+joystick,doméstico,0.5556,,Y,,
+junco,junio,0.8,,Y,,
+kimono,himno,0.6667,,Y,,
+knot,unos,0.5,,Y,,
+koala,toalla,0.6667,,Y,,
+komondor,dominador,0.6667,,Y,,
+kuvasz,nuevas,0.5,,Y,,
+ladle,loable,0.6667,,Y,,
+lakeshore,lacustre,0.5556,,N,,"lacustre means of or relating to lakes; no unrelated Spanish word above 0.5 found, so drop"
+lampshade,ampliado,0.5556,,Y,,
+langur,lengua,0.6667,,Y,,
+lemon,alemán,0.6667,,Y,,
+leopard,llorar,0.5714,,Y,,
+library,librar,0.8571,,Y,,librar means to free
+lifeboat,libertad,0.5,,Y,,
+lighter,ligero,0.5714,,N,litera,"ligero means light in weight, the comparative sense of the English word lighter; new word scores 0.57"
+lighthouse,ligeros,0.5,,Y,,
+limousine,limosna,0.6667,,Y,,
+limpkin,limpia,0.7143,,Y,,
+lion,limón,0.6,,Y,,limón is the lemon class
+lipstick,climático,0.5556,,Y,,
+llama,llamar,0.8333,,Y,,
+lorikeet,oriente,0.5,,Y,,
+lotion,litio,0.6667,,Y,,
+lynx,lona,0.5,,Y,,
+macaque,ataque,0.7143,,Y,,
+macaw,marcar,0.6667,,Y,,
+magpie,magia,0.6667,,Y,,
+mailbox,millon,0.5714,,N,millón,millon is misspelled; millón scores 0.43
+maltese,mantener,0.625,,Y,,
+maraca,marica,0.8333,,N,marca,marica is a homophobic slur; new word scores 0.83
+marimba,marica,0.7143,,N,marina,marica is a homophobic slur; new word scores 0.71
+marmoset,marioneta,0.6667,,Y,,
+marmot,maremoto,0.75,,Y,,
+mask,manso,0.6,,Y,,
+maypole,mausoleo,0.625,,Y,,
+maze,mame,0.75,,N,mate,mame is vulgar in Mexican usage; new word scores 0.75
+meatloaf,mentira,0.5,,Y,,
+meerkat,mierda,0.5714,,N,mermar,mierda is vulgar; new word scores 0.57
+megalith,regaliz,0.625,,Y,,
+menu,menos,0.6,,Y,,
+minibus,manitas,0.5714,,Y,,
+miniskirt,ministro,0.6667,,Y,,
+minivan,misiva,0.7143,,Y,,
+mink,minar,0.6,,Y,,
+mitten,mientes,0.5714,,Y,,
+modem,morder,0.6667,,Y,,
+monastery,forastero,0.6667,,Y,,
+mongoose,montañoso,0.5556,,Y,,
+monitor,monto,0.7143,,Y,,
+mop,miope,0.6,,Y,,
+moped,moneda,0.6667,,Y,,
+mosque,bosques,0.7143,,Y,,
+motorboat,motorizado,0.6,,N,matorral,motorizado (motorized) shares the motor meaning; new word scores 0.56
+mountain,montón,0.625,,Y,,
+mousetrap,mostrar,0.6667,,Y,,
+mushroom,mucho,0.5,,Y,,
+necklace,reclame,0.625,,Y,,
+nematode,remate,0.625,,Y,,
+obelisk,bilis,0.5714,,Y,,
+oboe,pobre,0.6,,Y,,
+ocarina,doctrina,0.75,,Y,,
+odometer,cometer,0.75,,Y,,
+orange,rango,0.6667,,Y,,
+orangutan,fragata,0.5556,,Y,,
+oscilloscope,orgulloso,0.5,,Y,,
+ostrich,estrecho,0.625,,Y,,
+otter,optar,0.6,,Y,,
+overskirt,versión,0.5556,,Y,,
+paddle,papeles,0.5714,,Y,,same word as the rapeseed row
+padlock,paloma,0.5714,,Y,,
+paintbrush,intruso,0.6,,Y,,
+pajamas,palmas,0.7143,,Y,,
+palace,palante,0.7143,,N,palanca,"palante is a colloquial contraction (pa'lante), not a standard word; new word scores 0.71"
+papillon,pasillo,0.75,,Y,,
+parachute,puramente,0.5556,,Y,,
+partridge,partida,0.6667,,Y,,same word as the ptarmigan row
+patio,patito,0.8333,,Y,,patito means duckling (duck is another class)
+payphone,proponer,0.5,,Y,,
+peafowl,perfil,0.5714,,Y,,
+pedestal,pedernal,0.75,,Y,,
+pekingese,definirse,0.5556,,Y,,
+pelican,peluca,0.7143,,Y,,
+perfume,perfumado,0.6667,,N,perfecto,perfumado means perfumed; new word scores 0.50
+photocopier,protocolo,0.5455,,Y,,same word as the broccoli row
+pier,piar,0.75,,Y,,
+pig,pis,0.6667,,Y,,pis is colloquial for pee
+pillow,pillo,0.8333,,Y,,
+pineapple,inefable,0.5556,,Y,,
+pizza,pieza,0.8,,Y,,
+planetarium,plantación,0.6364,,Y,,
+plate,platea,0.8333,,Y,,
+platypus,playas,0.625,,Y,,playas means beaches (beach is another class)
+plectrum,electrón,0.625,,Y,,
+plunger,plantear,0.625,,Y,,
+pole,polen,0.8,,Y,,
+pomegranate,inmigrante,0.6364,,Y,,
+poncho,pincho,0.8333,,Y,,
+popsicle,posible,0.75,,Y,,
+porcupine,porcino,0.6667,,N,porcelana,"porcino (pig-related) overlaps puercoespín, the Spanish name, and the pig class; new word scores 0.56"
+pretzel,prender,0.5714,,Y,,
+printer,pintor,0.7143,,Y,,
+prison,preso,0.6667,,N,prisa,preso means prisoner; new word scores 0.67
+projector,proyecto,0.7778,,Y,,"shares a root, but proyecto means a plan or project"
+promontory,promover,0.6,,Y,,
+ptarmigan,partida,0.5556,,Y,,same word as the partridge row
+pug,puf,0.6667,,Y,,
+purse,pudrirse,0.625,,Y,,
+quail,sutil,0.6,,Y,,same word as the snail row
+quill,quizá,0.6,,Y,,
+quilt,quinto,0.6667,,Y,,
+racket,racista,0.5714,,N,racha,racista is a charged word; meaning is otherwise unrelated; new word scores 0.50
+radiator,traductor,0.6667,,Y,,
+radio,arcadio,0.7143,,N,rabia,arcadio is mainly a given name; new word scores 0.60
+rapeseed,papeles,0.5,,Y,,same word as the paddle row
+refrigerator,refrigerante,0.75,,N,refriega,refrigerante means coolant (shares the cooling meaning); new word scores 0.58
+restaurant,restaurar,0.8,,Y,,restaurar means to restore
+revolver,resolver,0.875,,Y,,
+rickshaw,dicha,0.5,,Y,,
+rifle,rifa,0.6,,Y,,
+rooster,prometer,0.625,,Y,,same word as the barometer row
+rotisserie,misterio,0.5,,Y,,
+rottweiler,obtener,0.5,,Y,,
+safe,rafe,0.75,,Y,,"rafe is rare (eave, raphe); sabe (0.75) is a common alternative"
+sailboat,silbato,0.625,,Y,,"silbato means whistle, another class in the set"
+saluki,salud,0.6667,,Y,,same word as the slug row
+samoyed,camote,0.5714,,Y,,
+sandal,sanidad,0.7143,,Y,,
+sandbar,andar,0.7143,,Y,,
+sarong,sarna,0.6667,,Y,,
+sawmill,semilla,0.5714,,Y,,
+scarf,sacar,0.6,,Y,,
+schipperke,chupete,0.5,,Y,,
+schooner,suponer,0.625,,Y,,
+scoreboard,comentar,0.5,,Y,,
+scorpion,escorpio,0.75,,N,escoria,escorpio is the zodiac sign (the scorpion); new word scores 0.50
+screw,ocre,0.6,,Y,,
+screwdriver,acreditar,0.5455,,Y,,
+shield,deshielo,0.625,,Y,,
+shipwreck,hipoteca,0.5556,,Y,,
+shovel,joven,0.5,,Y,,
+siamang,semana,0.5714,,Y,,
+sink,signo,0.6,,Y,,same word as the eggnog row
+ski,seis,0.5,,Y,,
+slug,salud,0.6,,Y,,same word as the saluki row
+snail,sutil,0.6,,Y,,same word as the quail row
+sneaker,nacer,0.5714,,Y,,
+snorkel,enorme,0.5714,,Y,,
+snowmobile,inconcebible,0.5,,Y,,
+snowplow,soplo,0.625,,Y,,
+sock,socia,0.6,,Y,,
+sombrero,sombreado,0.7778,,N,somero,"sombreado (shaded) shares the root sombra, the shade a sombrero gives; new word scores 0.75"
+spatula,española,0.625,,Y,,
+spindle,finde,0.5714,,Y,,finde is a colloquial clipping of fin de semana
+stage,destape,0.5714,,Y,,
+starfish,sonrisa,0.5,,Y,,
+stingray,sangrar,0.625,,Y,,
+stove,llover,0.5,,Y,,
+strainer,traer,0.625,,Y,,
+strawberry,trasero,0.5,,Y,,trasero is colloquial for buttocks
+stretcher,estrechar,0.6667,,Y,,
+stupa,astuta,0.6667,,Y,,
+sturgeon,torneo,0.5,,Y,,
+submarine,sumario,0.6667,,Y,,
+suit,subir,0.6,,Y,,
+sundial,mundial,0.8571,,Y,,
+sunscreen,suscrito,0.5556,,Y,,
+swing,espina,0.5,,Y,,
+syringe,laringe,0.7143,,Y,,
+tank,tanto,0.6,,Y,,
+tarantula,garantía,0.6667,,Y,,
+taxicab,tóxica,0.7143,,Y,,
+teapot,tiempos,0.5714,,Y,,
+television,revisión,0.6,,Y,,
+tench,tener,0.6,,Y,,
+thimble,hambre,0.5714,,Y,,
+throne,trote,0.6667,,Y,,
+tick,tico,0.75,,Y,,tico is colloquial for Costa Rican
+tiger,ligero,0.6667,,Y,,
+toaster,traste,0.7143,,Y,,traste also means kitchen utensil in Mexico
+torch,torcer,0.6667,,Y,,
+toucan,toscano,0.7143,,Y,,
+tractor,tracto,0.8571,,Y,,
+tram,tras,0.75,,Y,,same word as the tray row
+tray,tras,0.75,,Y,,same word as the tram row
+triceratops,terceros,0.5455,,Y,,
+tricycle,triste,0.5,,Y,,same word as the trifle and trilobite rows
+trifle,triste,0.6667,,Y,,same word as the tricycle and trilobite rows
+trilobite,triste,0.5556,,Y,,same word as the tricycle and trifle rows
+trimaran,primarias,0.6667,,Y,,
+tripod,trigo,0.6667,,Y,,
+trombone,trombosis,0.6667,,Y,,
+turnstile,turístico,0.6667,,Y,,
+umbrella,amarilla,0.625,,Y,,
+unicycle,iniciales,0.5556,,Y,,
+valley,valer,0.6667,,Y,,
+vase,pase,0.75,,Y,,
+vespa,avispa,0.6667,,N,vista,"vespa is Italian for wasp, so avispa matches the label word's meaning; new word scores 0.60"
+vestment,testamento,0.7,,Y,,
+viaduct,caduco,0.5714,,Y,,
+violin,violación,0.6667,,N,violeta,violación also means rape; new word scores 0.57
+vizsla,vigilar,0.5714,,Y,,
+volcano,solano,0.7143,,Y,,
+volleyball,voltear,0.5,,Y,,
+vulture,cultura,0.7143,,Y,,
+wallaby,talla,0.5714,,Y,,
+wallet,galleta,0.7143,,Y,,
+wardrobe,tardío,0.5,,Y,,
+warthog,harto,0.5714,,Y,,same word as the harp row
+weasel,frase,0.5,,Y,,
+website,este,0.5714,,Y,,
+weevil,servil,0.6667,,Y,,
+wheelbarrow,herbario,0.5455,,Y,,
+whippet,hiper,0.5714,,Y,,hiper is a colloquial clipping of hipermercado (written híper); same word as the diaper row
+whistle,chiste,0.7143,,Y,,
+wombat,combate,0.7143,,Y,,
+wool,rol,0.5,,Y,,
+yurt,hurto,0.6,,Y,,
+zebra,hebra,0.8,,Y,,
+zucchini,cochino,0.5,,Y,,cochino means pig (another class) or dirty
