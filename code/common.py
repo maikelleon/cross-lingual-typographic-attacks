@@ -23,8 +23,36 @@ MODELS = {
     # OpenAI's own RN50 (TorchScript archive, trained on OpenAI's 400M web pairs). Kept in its own
     # folder; its SHA-256 must equal the hash in OpenAI's download URL before it is loaded.
     "rn50_openai": ("RN50", "openai_rn50/RN50.pt", "OpenAI WIT-400M"),
+    # OpenCLIP's multilingual model: the ViT-B/32 image encoder trained on LAION-5B with an XLM-RoBERTa text
+    # encoder, which reads captions in many languages. Its text encoder is built from the xlm-roberta-base
+    # configuration and tokenizer kept in weights/xlm_roberta_base, so loading needs no network access.
+    "vitb32_xlmr_laion5b": ("xlm-roberta-base-ViT-B-32", "xlmr_vitb32_laion5b/open_clip_pytorch_model.bin", "LAION-5B"),
 }
 OPENAI_RN50_SHA256 = "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762"
+XLMR_DIR = os.path.join(ROOT, "weights", "xlm_roberta_base")   # config.json and tokenizer.json of xlm-roberta-base
+XLMR_SHA256 = "a5412f19cca70db8d434f68361f7254bd322a553455a63dbb709bd6a650cf378"   # open_clip_pytorch_model.bin
+
+
+def create_openclip(key):
+    """Model, image preprocessing, and tokenizer for one of the OpenCLIP checkpoints in weights/."""
+    import copy
+    import json
+    import tempfile
+    import open_clip
+    arch, ckpt, _ = MODELS[key]
+    path = os.path.join(ROOT, "weights", ckpt)
+    kwargs = {}
+    if arch.startswith("xlm-roberta"):
+        cfg = copy.deepcopy(open_clip.get_model_config(arch))
+        cfg["text_cfg"]["hf_model_name"] = cfg["text_cfg"]["hf_tokenizer_name"] = XLMR_DIR
+        arch += "-local"
+        cfg_dir = tempfile.mkdtemp()
+        with open(os.path.join(cfg_dir, arch + ".json"), "w") as fh:
+            json.dump(cfg, fh)
+        open_clip.add_model_config(cfg_dir)
+        kwargs["pretrained_text"] = False     # every weight comes from the checkpoint
+    model, _, pre = open_clip.create_model_and_transforms(arch, pretrained=path, **kwargs)
+    return model, pre, open_clip.get_tokenizer(arch)
 
 
 def image_files():

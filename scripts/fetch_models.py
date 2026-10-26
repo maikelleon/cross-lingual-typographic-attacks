@@ -1,8 +1,10 @@
-"""Download the six CLIP checkpoints from their official release locations and verify them.
+"""Download the seven CLIP checkpoints from their official release locations and verify them.
 
-The OpenCLIP checkpoints come from the OpenCLIP release assets and the ResNet-50 released by
-OpenAI from OpenAI's model server. Files are saved under weights/ with the names that
-code/common.py expects and are checked against checksums/model_checkpoints.sha256.
+The OpenCLIP checkpoints come from the OpenCLIP release assets, the ResNet-50 released by OpenAI
+from OpenAI's model server, and the multilingual ViT-B/32 (LAION-5B, XLM-RoBERTa text encoder) from
+LAION's Hugging Face repository, together with the configuration and tokenizer of its text encoder,
+at pinned revisions. Files are saved under weights/ with the names that code/common.py expects and
+are checked against checksums/model_checkpoints.sha256.
 Usage: python3 scripts/fetch_models.py [--verify-only]
 """
 import hashlib
@@ -12,6 +14,8 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OPENCLIP = "https://github.com/mlfoundations/open_clip/releases/download/v0.2-weights/"
+XLMR_HUB = ("https://huggingface.co/laion/CLIP-ViT-B-32-xlm-roberta-base-laion5B-s13B-b90k/resolve/"
+            "506d40eb551f4801a1c27fc20a31c7b8f590deda/")
 SOURCES = {
     "vit_b_32-quickgelu-laion400m_e32.pt": OPENCLIP + "vit_b_32-quickgelu-laion400m_e32-46683a32.pt",
     "vit_b_16-laion400m_e32-55e67d44.pt": OPENCLIP + "vit_b_16-laion400m_e32-55e67d44.pt",
@@ -20,6 +24,10 @@ SOURCES = {
     "rn50-quickgelu-cc12m-f000538c.pt": OPENCLIP + "rn50-quickgelu-cc12m-f000538c.pt",
     "openai_rn50/RN50.pt": "https://openaipublic.azureedge.net/clip/models/"
                            "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762/RN50.pt",
+    "xlmr_vitb32_laion5b/open_clip_pytorch_model.bin": XLMR_HUB + "open_clip_pytorch_model.bin",
+    "xlm_roberta_base/tokenizer.json": XLMR_HUB + "tokenizer.json",
+    "xlm_roberta_base/config.json": "https://huggingface.co/FacebookAI/xlm-roberta-base/resolve/"
+                                    "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089/config.json",
 }
 
 

@@ -19,11 +19,12 @@ import torch
 import open_clip
 from open_clip.zero_shot_metadata import IMAGENET_CLASSNAMES
 
-from common import MODELS, OPENAI_RN50_SHA256, ROOT, image_files, load_source, overlay
+from common import MODELS, OPENAI_RN50_SHA256, ROOT, XLMR_SHA256, create_openclip, image_files, load_source, overlay
 
 torch.set_num_threads(int(os.environ.get("TORCH_THREADS", "2")))   # results do not depend on this
 QUEUE = [("vitb32_laion400m", 16), ("rn50_yfcc15m", 10), ("rn50_cc12m", 10),
-         ("vitb16_laion400m", 10), ("rn101_yfcc15m", 10), ("rn50_openai", 10)]      # (model, photos per target)
+         ("vitb16_laion400m", 10), ("rn101_yfcc15m", 10), ("rn50_openai", 10),
+         ("vitb32_xlmr_laion5b", 16)]      # (model, photos per target); the multilingual ViT-B/32 matches its twin
 BATCH = 64
 RES = os.path.join(ROOT, "results")
 os.makedirs(RES, exist_ok=True)
@@ -48,10 +49,12 @@ def load_model(key):
             raise SystemExit(f"[{key}] checksum mismatch ({digest}); not loading")
         model = open_clip.openai.load_openai_model(path, precision="fp32", device="cpu")
         pre = open_clip.image_transform(model.visual.image_size, is_train=False)
+        tok = open_clip.get_tokenizer(arch)
     else:
-        model, _, pre = open_clip.create_model_and_transforms(arch, pretrained=path)
+        if key == "vitb32_xlmr_laion5b" and sha256(path) != XLMR_SHA256:
+            raise SystemExit(f"[{key}] checksum mismatch; not loading")
+        model, pre, tok = create_openclip(key)
     model.eval()
-    tok = open_clip.get_tokenizer(arch)
     with torch.no_grad():
         t = model.encode_text(tok([f"a photo of a {n}." for n in IMAGENET_CLASSNAMES]))
         t = t / t.norm(dim=-1, keepdim=True)
