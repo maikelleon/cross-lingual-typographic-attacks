@@ -82,12 +82,14 @@ for key in ORDER:
     m["r2_accent"], m["r2_noaccent"] = float(a.rsquared), float(b.rsquared)
     # The same comparison among the translations whose two similarity measures differ.
     trd = tr[(tr.sim_raw - tr.sim_noaccent).abs() > 1e-9]
+    m["accent_differing_trials"] = int(len(trd))
     m["r2_accent_differing"] = float(smf.ols("d_target_logp ~ sim_raw", trd).fit().rsquared)
     m["r2_noaccent_differing"] = float(smf.ols("d_target_logp ~ sim_noaccent", trd).fit().rsquared)
     # H1: pseudoword dose-response.
     pw = df[df.word_type == "pseudoword"]
     mp = smf.ols("d_target_logp ~ sim_raw", pw).fit(cov_type="cluster", cov_kwds={"groups": pw["target_idx"]})
     m["pw_slope"], m["pw_slope_ci"] = float(mp.params["sim_raw"]), ci(mp.params["sim_raw"], mp.bse["sim_raw"])
+    m["pw_slope_p"], m["pw_n"] = float(mp.pvalues["sim_raw"]), int(mp.nobs)
     # Anagrams against pseudowords whose spelling similarity lies within the central 80% of the anagrams'.
     an = df[df.word_type == "anagram"]
     lo, hi = an.sim_raw.quantile([0.1, 0.9])

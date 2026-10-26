@@ -37,6 +37,7 @@
    },
    "r2_accent": 0.5760562349107199,
    "r2_noaccent": 0.578681648645765,
+   "accent_differing_trials": 2848,
    "r2_accent_differing": 0.4125091530410272,
    "r2_noaccent_differing": 0.4085707484154898,
    "pw_slope": 10.99707708354019,
@@ -44,6 +45,8 @@
     10.60447486152582,
     11.389679305554562
    ],
+   "pw_slope_p": 0.0,
+   "pw_n": 31184,
    "anagram_vs_pseudoword": {
     "sim_range": [
      0.1111,
@@ -178,6 +181,7 @@
    },
    "r2_accent": 0.5582365728997263,
    "r2_noaccent": 0.5614596214813623,
+   "accent_differing_trials": 1780,
    "r2_accent_differing": 0.45832226640801565,
    "r2_noaccent_differing": 0.4362566174464726,
    "pw_slope": 12.30828693359063,
@@ -185,6 +189,8 @@
     11.884802405220729,
     12.73177146196053
    ],
+   "pw_slope_p": 0.0,
+   "pw_n": 19490,
    "anagram_vs_pseudoword": {
     "sim_range": [
      0.1111,
@@ -319,6 +325,7 @@
    },
    "r2_accent": 0.7092535784520823,
    "r2_noaccent": 0.7171114351797545,
+   "accent_differing_trials": 1780,
    "r2_accent_differing": 0.571176166133702,
    "r2_noaccent_differing": 0.5585935130443651,
    "pw_slope": 8.275974059652112,
@@ -326,6 +333,8 @@
     8.010436152106267,
     8.541511967197957
    ],
+   "pw_slope_p": 0.0,
+   "pw_n": 19490,
    "anagram_vs_pseudoword": {
     "sim_range": [
      0.1111,
@@ -460,6 +469,7 @@
    },
    "r2_accent": 0.0006093885034128554,
    "r2_noaccent": 0.0008896077269561209,
+   "accent_differing_trials": 1780,
    "r2_accent_differing": 0.0014977486968209552,
    "r2_noaccent_differing": 0.00042371399191554193,
    "pw_slope": -0.009104827422428272,
@@ -467,6 +477,8 @@
     -0.09968363762161345,
     0.08147398277675691
    ],
+   "pw_slope_p": 0.8438151303505576,
+   "pw_n": 19490,
    "anagram_vs_pseudoword": {
     "sim_range": [
      0.1111,
@@ -595,6 +607,7 @@
    },
    "r2_accent": 1.2499551803935027e-05,
    "r2_noaccent": 4.5523450191709e-06,
+   "accent_differing_trials": 1780,
    "r2_accent_differing": 5.835334628767619e-05,
    "r2_noaccent_differing": 1.4008909240303957e-05,
    "pw_slope": -0.01769586327290255,
@@ -602,6 +615,8 @@
     -0.11334591011500302,
     0.07795418356919791
    ],
+   "pw_slope_p": 0.7168944540649815,
+   "pw_n": 19490,
    "anagram_vs_pseudoword": {
     "sim_range": [
      0.1111,
@@ -730,6 +745,7 @@
    },
    "r2_accent": 0.0018253823516848344,
    "r2_noaccent": 0.0020142163272959257,
+   "accent_differing_trials": 1780,
    "r2_accent_differing": 0.005952661095869893,
    "r2_noaccent_differing": 0.005017289504059552,
    "pw_slope": -0.06217283344261993,
@@ -737,6 +753,8 @@
     -0.15642781674573142,
     0.032082149860491564
    ],
+   "pw_slope_p": 0.1960585452082596,
+   "pw_n": 19490,
    "anagram_vs_pseudoword": {
     "sim_range": [
      0.1111,

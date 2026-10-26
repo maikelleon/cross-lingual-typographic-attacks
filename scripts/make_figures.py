@@ -58,7 +58,7 @@ def save(fig, name):
     # the figure to the text width.
     fig.savefig(os.path.join(FIG, f"{name}.pdf"), bbox_inches="tight", pad_inches=0.02, dpi=400,
                 metadata={"CreationDate": None})
-    fig.savefig(os.path.join(FIG, f"{name}.png"), bbox_inches="tight", pad_inches=0.02, dpi=300)
+    fig.savefig(os.path.join(FIG, f"{name}.png"), bbox_inches="tight", pad_inches=0.02, dpi=400)
     plt.close(fig)
 
 
@@ -100,7 +100,8 @@ def figure1():
                 xx += t.get_window_extent(renderer=renderer).width / fig.dpi
 
     def marker(x, y, wt):
-        ax.plot([x], [y], marker=MK[wt], markersize=6 if wt != "english" else 5.2, color=C[wt],
+        # The white edge is drawn half inside the marker, so these sizes leave at least 6 pt of solid color.
+        ax.plot([x], [y], marker=MK[wt], markersize=7.5 if wt != "english" else 6.8, color=C[wt],
                 markeredgecolor="white", markeredgewidth=0.6)
 
     def arrow(p0, p1):
@@ -249,7 +250,8 @@ def figure3():
     for yi, v in zip(y, d.english_success * 100):
         if v >= 0.5:                     # bars below 0.5% would be invisible slivers; their values are printed
             hbar(a, yi, v, 0.52, C["english"])
-        a.text(v + 1.0, yi, f"{v:.1f}%" if v >= 1 else f"{v:.2f}%", va="center", ha="left", fontsize=7.5, color=INK,
+        a.text(v + 1.0, yi, f"{v:.1f}%" if v >= 1 else ("0%" if v == 0 else f"{v:.2f}%"), va="center", ha="left",
+               fontsize=7.5, color=INK,
                clip_on=False)
     a.set_yticks(y, [LABEL[k] for k in ORDER])
     a.set_ylim(-0.6, len(ORDER) - 0.4)
@@ -260,7 +262,7 @@ def figure3():
 
     b.errorbar(d.reading_index, y, xerr=[d.reading_index - d.ri_lo, d.ri_hi - d.reading_index], fmt="none",
                ecolor=C["english"], elinewidth=1.5, capsize=0)
-    b.scatter(d.reading_index, y, s=36, marker=MK["english"], color=C["english"], edgecolor="white", linewidth=1.0,
+    b.scatter(d.reading_index, y, s=56, marker=MK["english"], color=C["english"], edgecolor="white", linewidth=1.0,
               zorder=3, clip_on=False)
     for yi, v in zip(y, d.reading_index):
         b.text(v + 0.55, yi + 0.18, (f"{v:.1f}" if abs(v) >= 1 else f"{v:.2f}").replace("-", "−"), va="bottom",
@@ -282,7 +284,9 @@ def figure4():
     d = pd.read_csv(os.path.join(PAPER, "data", "fig4_similarity.csv"))
     bands = ["0.0–0.2", "0.2–0.4", "0.4–0.6", "0.6–0.8", "0.8–1.0"]
     readers = ORDER[:3]
-    fig, axes = plt.subplots(1, 3, figsize=(WIDTH, 2.3), sharey=True, gridspec_kw={"wspace": 0.2})
+    # Each panel has its own y scale, ending at the first multiple of 5 above its largest value, so that no axis
+    # runs far beyond the data it shows.
+    fig, axes = plt.subplots(1, 3, figsize=(WIDTH, 2.3), gridspec_kw={"wspace": 0.3})
     for ax, key, letter in zip(axes, readers, "abc"):
         g = d[d.model == key]
         mids = np.array([0.1, 0.3, 0.5, 0.7, 0.9])           # band midpoints on a continuous similarity axis
@@ -290,15 +294,17 @@ def figure4():
             s = g[g.word_type == wt].set_index("band").reindex(bands)
             ok = s["mean"].notna().values
             ax.plot(mids[ok], 100 * s["mean"].values[ok], color=C[wt], linewidth=1.5, solid_capstyle="round",
-                    solid_joinstyle="round", marker=MK[wt], markersize=6, markeredgecolor="white",
+                    solid_joinstyle="round", marker=MK[wt], markersize=7.5, markeredgecolor="white",
                     markeredgewidth=1.0, label=NAME[wt], zorder=3, clip_on=False)
         ax.set_xticks([0, 0.2, 0.4, 0.6, 0.8, 1.0], ["0", "0.2", "0.4", "0.6", "0.8", "1"])
         ax.set_title(LABEL[key], loc="left", pad=4)
-        ax.set_ylim(0, 35)                   # the largest value is 34.1%
+        top = 5 * int(np.ceil(100 * g["mean"].max() / 5))
+        ax.set_ylim(0, top)
+        ax.set_yticks(range(0, top + 1, 5))
         ax.set_xlim(0, 1)
         panel_label(ax, letter, x=-0.03, y=1.02)
     axes[0].set_ylabel("Predictions switched to the target class (%)")
-    fig.supxlabel("Spelling similarity to the English class name (band midpoints)", fontsize=8, y=-0.04)
+    fig.supxlabel("Spelling similarity to the English class name", fontsize=8, y=-0.04)
     h, l = axes[0].get_legend_handles_labels()
     fig.legend(h, l, loc="upper center", ncol=3, bbox_to_anchor=(0.5, 1.10), handlelength=2.2, columnspacing=1.8)
     save(fig, "fig4_similarity")
@@ -312,7 +318,7 @@ def figure5():
     for col, wt, off in [("tr", "translation", 0.14), ("ff", "false_friend", -0.14)]:
         est, se = d[col].values, d[f"{col}_se"].values
         ax.errorbar(est, y + off, xerr=1.96 * se, fmt="none", ecolor=C[wt], elinewidth=1.5, capsize=0, zorder=2)
-        ax.scatter(est, y + off, s=40, marker=MK[wt], color=C[wt], edgecolor="white", linewidth=1.0, zorder=3,
+        ax.scatter(est, y + off, s=64, marker=MK[wt], color=C[wt], edgecolor="white", linewidth=1.0, zorder=3,
                    label=f"{NAME[wt]} vs. pseudoword")
     ax.axvline(0, color=INK, linewidth=0.6, zorder=1)
     ax.axhline(2.5, color=INK, linewidth=0.6, linestyle=(0, (4, 3)), zorder=0)

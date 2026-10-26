@@ -62,13 +62,31 @@ def effect(sub, word_type):
     k = f"C(word_type)[T.{word_type}]"
     est, se = float(m.params[k]), float(m.bse[k])
     return {"est": est, "se": se, "ci": [est - 1.96 * se, est + 1.96 * se], "p": float(m.pvalues[k]),
-            "n_words": int(d[d.word_type == word_type][["target_idx", "word"]].drop_duplicates().shape[0])}
+            "n_words": int(d[d.word_type == word_type][["target_idx", "word"]].drop_duplicates().shape[0]),
+            "n": int(m.nobs)}
+
+
+def ff_language_difference(sub):
+    """French minus Spanish false-friend effect, both against pseudowords in one full-specification model,
+    with a two-sided Wald test on the clustered covariance."""
+    d = sub[sub.word_type.isin(["pseudoword", "false_friend"])].copy()
+    d["word_type"] = pd.Categorical(np.where(d.word_type == "pseudoword", "pseudoword", "ff_" + d.lang),
+                                    ["pseudoword", "ff_es", "ff_fr"])
+    m = smf.ols(FORMULA, d).fit(cov_type="cluster", cov_kwds={"groups": d["target_idx"]})
+    names = list(m.params.index)
+    contrast = np.zeros(len(names))
+    contrast[names.index("C(word_type)[T.ff_fr]")], contrast[names.index("C(word_type)[T.ff_es]")] = 1.0, -1.0
+    t = m.t_test(contrast)
+    est, se = float(np.squeeze(t.effect)), float(np.squeeze(t.sd))
+    return {"est": est, "se": se, "ci": [est - 1.96 * se, est + 1.96 * se], "p": float(np.squeeze(t.pvalue)),
+            "n": int(m.nobs)}
 
 
 def slope(d):
     m = smf.ols("d_target_logp ~ sim_raw", d).fit(cov_type="cluster", cov_kwds={"groups": d["target_idx"]})
     est, se = float(m.params["sim_raw"]), float(m.bse["sim_raw"])
-    return {"est": est, "se": se, "ci": [est - 1.96 * se, est + 1.96 * se], "p": float(m.pvalues["sim_raw"])}
+    return {"est": est, "se": se, "ci": [est - 1.96 * se, est + 1.96 * se], "p": float(m.pvalues["sim_raw"]),
+            "n": int(m.nobs)}
 
 
 def main():
@@ -88,6 +106,7 @@ def main():
             if code in ("es", "fr"):
                 lang_sub = sub[(sub.word_type == "pseudoword") | ((sub.word_type == "false_friend") & (sub.lang == code))]
                 r["ff"][code] = effect(lang_sub, "false_friend")
+        r["ff_lang_diff"] = ff_language_difference(sub)
         for name, keep in [("half_a", sub.target_idx.isin(half_a)), ("half_b", ~sub.target_idx.isin(half_a))]:
             r["tr"][name] = effect(sub[keep], "translation")
             r["ff"][name] = effect(sub[keep], "false_friend")
@@ -146,20 +165,32 @@ def write_table(res):
     row("Direct comparison", [cell(pooled[k]["tr_vs_ff"]) for k in READERS])
     # The spelling gradients within each language (res[k]["slope"]) are in nats per unit similarity, a different
     # unit from every row above, so they are reported in the text and in data/robustness.json, not in this table.
-    n_first, n_rest = pooled[READERS[0]]["regression_n"], pooled[READERS[1]]["regression_n"]
-    assert all(pooled[k]["regression_n"] == n_rest for k in READERS[1:])
-    clusters = pooled[READERS[0]]["regression_clusters"]
+    def num(n):
+        return f"{n:,}".replace(",", "{,}")
+
+    def first_rest(get):
+        first, rest = get(READERS[0]), get(READERS[1])
+        assert all(get(k) == rest for k in READERS[1:])
+        return num(first), num(rest)
+
+    n_pooled = first_rest(lambda k: pooled[k]["regression_n"])
+    n_direct = first_rest(lambda k: pooled[k]["tr_vs_ff"]["n"])
+    clusters = num(pooled[READERS[0]]["regression_clusters"])
+    lang_n = [res[k][kind][c]["n"] for k in READERS for kind, codes in [("tr", [c for c, _ in LANGS]), ("ff", ["es", "fr"])]
+              for c in codes]
+    half_n = [res[k][kind][h]["n"] for k in READERS for kind in ("tr", "ff") for h in ("half_a", "half_b")]
     table = r"""\begin{table}[tbp]
 \centering
-\caption{Effects of meaning on the log-probability of the target class in the three reading models. Values are differences between word types with 95\% CIs from standard errors clustered by the """ + f"{clusters:,}".replace(",", "{,}") + r""" target classes, and the pooled comparisons with pseudowords use """ + f"{n_first:,}".replace(",", "{,}") + r""" observations for ViT-B/32 and """ + f"{n_rest:,}".replace(",", "{,}") + r""" for each other model. Specifications follow Section~\ref{sec:analysis}. The row excluding other-class words repeats the letter-position specification without false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language or for one random half of the target classes.}
+\caption{Effects of meaning on the log-probability of the target class in the three reading models. Values are differences between word types with 95\% CIs from standard errors clustered by target class; an interval that excludes zero corresponds to $P < 0.05$ in a two-sided Wald test. The pooled comparisons with pseudowords use """ + n_pooled[0] + r""" observations for ViT-B/32 and """ + n_pooled[1] + r""" for each other model, with """ + clusters + r""" target classes, the language-specific rows """ + num(min(lang_n)) + " to " + num(max(lang_n)) + r""", the half-sample rows """ + num(min(half_n)) + " to " + num(max(half_n)) + r""", and the direct comparison """ + n_direct[0] + " and " + n_direct[1] + r""". Specifications follow Section~\ref{sec:analysis}. The row excluding other-class words repeats the letter-position specification without false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language or for one random half of the target classes.}
 \label{tab:effects}
 \small
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lccc@{}}
 \toprule
- & \multicolumn{3}{c}{Difference in log-probability (nats)} \\
+ & \multicolumn{3}{c}{Difference in log-probability} \\
 \cmidrule(l){2-4}
 Contrast and specification & ViT-B/32 & ViT-B/16 & RN50 \\
  & LAION-400M & LAION-400M & OpenAI WIT \\
+ & (nats) & (nats) & (nats) \\
 \midrule
 """ + "\n".join(rows) + r"""
 \bottomrule

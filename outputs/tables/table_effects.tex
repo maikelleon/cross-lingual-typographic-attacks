@@ -1,14 +1,15 @@
 \begin{table}[tbp]
 \centering
-\caption{Effects of meaning on the log-probability of the target class in the three reading models. Values are differences between word types with 95\% CIs from standard errors clustered by the 426 target classes, and the pooled comparisons with pseudowords use 68{,}176 observations for ViT-B/32 and 42{,}610 for each other model. Specifications follow Section~\ref{sec:analysis}. The row excluding other-class words repeats the letter-position specification without false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language or for one random half of the target classes.}
+\caption{Effects of meaning on the log-probability of the target class in the three reading models. Values are differences between word types with 95\% CIs from standard errors clustered by target class; an interval that excludes zero corresponds to $P < 0.05$ in a two-sided Wald test. The pooled comparisons with pseudowords use 68{,}176 observations for ViT-B/32 and 42{,}610 for each other model, with 426 target classes, the language-specific rows 22{,}310 to 37{,}408, the half-sample rows 13{,}540 to 27{,}904, and the direct comparison 18{,}816 and 11{,}760. Specifications follow Section~\ref{sec:analysis}. The row excluding other-class words repeats the letter-position specification without false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language or for one random half of the target classes.}
 \label{tab:effects}
 \small
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lccc@{}}
 \toprule
- & \multicolumn{3}{c}{Difference in log-probability (nats)} \\
+ & \multicolumn{3}{c}{Difference in log-probability} \\
 \cmidrule(l){2-4}
 Contrast and specification & ViT-B/32 & ViT-B/16 & RN50 \\
  & LAION-400M & LAION-400M & OpenAI WIT \\
+ & (nats) & (nats) & (nats) \\
 \midrule
 \multicolumn{4}{c}{Translation vs.\ pseudoword} \\
 \quad Similarity spline & 0.51 [0.29, 0.72] & 0.92 [0.67, 1.17] & 0.76 [0.59, 0.92] \\
