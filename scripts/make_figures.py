@@ -140,8 +140,8 @@ def figure1():
     u1, u2 = m, m + v1 + gap
     u3 = u2 + v2 + gap
     box(u1, y2, v1, h2, "4", "Zero-shot classification")
-    lines(u1 + 0.11, y2 + h2 - 0.34, ["Seven CLIP models, including", "three RN50s and two ViT-B/32s",
-                                      "trained on different data", "1,000 ImageNet classes", "Prompt: a photo of a {class}.",
+    lines(u1 + 0.11, y2 + h2 - 0.34, ["Seven CLIP models; within two", "groups, the image encoder is",
+                                      "shared but training differs", "1,000 ImageNet classes", "Prompt: a photo of a {class}.",
                                       f"{facts['stimuli']['run_total']:,} classifications"])
     box(u2, y2, v2, h2, "5", "Outcome")
     lines(u2 + 0.11, y2 + h2 - 0.34, ["Change in log $P$(target)", "relative to a random", "string on the same",

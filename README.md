@@ -152,8 +152,8 @@ access.
 
 `stimuli/manifest.csv` (one row per stimulus image): `stim_id`, the target and word columns above,
 `source_idx` and `source_wnid` (the ImageNet class of the photograph the word is written on), and
-`source_rank` (0 to 15; the ViT-B/32 model uses all 16 photographs per target and the other models
-the first 10).
+`source_rank` (0 to 15; the two ViT-B/32 models use all 16 photographs per target and the other
+models the first 10).
 
 `results/<model>_stimuli.csv` (one row per stimulus): `pred` (top-1 class index), `target_logp`
 (log-probability of the target class), `target_rank` (number of classes ranked above the target),
@@ -181,7 +181,8 @@ downloads the photographs from the public sample at
 https://github.com/EliSchwartz/imagenet-sample-images (commit `bc69043`), which remain subject to
 the ImageNet terms of access, and the WordNet and Open Multilingual Wordnet corpora from the NLTK
 data repository, under their own licenses. `fetch_models.py` downloads the checkpoints from the
-OpenCLIP and OpenAI release locations, under the licenses of those projects. The DejaVu Sans font
+OpenCLIP and OpenAI release locations and from the LAION and XLM-RoBERTa repositories on Hugging
+Face, under the licenses of those projects. The DejaVu Sans font
 is included under its license in `fonts/LICENSE-DejaVu.txt`. The photograph in `photos/`, shown in
 Figure 2, was taken by an employee of the Federal Bureau of Investigation as part of official
 duties and is in the public domain in the United States; `photos/README.md` records its source.
