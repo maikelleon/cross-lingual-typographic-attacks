@@ -112,6 +112,10 @@ for key in ORDER:
             m[f"{eff}_{spec}"] = {"est": est, "se": se, "ci": ci(est, se) if not np.isnan(se) else None, "p": p}
     m["ff_noother"] = {"est": float(s.ff_position_noother), "se": float(s.ff_position_noother_se),
                        "ci": ci(s.ff_position_noother, s.ff_position_noother_se), "p": float(s.ff_position_noother_p)}
+    # That model is fitted to pseudowords and false friends alone (synthesis.ff_position_effect).
+    noother, _ = load(key, exclude_other_class=True)
+    noother = noother.dropna(subset=["d_target_logp"])
+    m["ff_noother"]["n"] = int((noother.word_type.isin(["pseudoword", "false_friend"]) & (noother.sim_raw < 0.999)).sum())
     m["tr_vs_ff"] = {"est": float(s.tr_vs_ff), "se": float(s.tr_vs_ff_se), "ci": ci(s.tr_vs_ff, s.tr_vs_ff_se),
                      "p": float(s.tr_vs_ff_p), "n": int(s.tr_vs_ff_n)}
     facts["models"][key] = m
