@@ -22,14 +22,15 @@ from synthesis import box_adjusted, ff_position_effect, tr_vs_ff_matched, prefix
 
 PAPER = os.path.join(PROJECT, "outputs")
 RES = os.path.join(PROJECT, "results")
-ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "rn50_yfcc15m", "rn101_yfcc15m", "rn50_cc12m"]
-READERS = ORDER[:3]
+ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitb32_xlmr_laion5b", "rn50_yfcc15m", "rn101_yfcc15m",
+         "rn50_cc12m"]
+READERS = ORDER[:4]
 LABEL = {
     "vitb32_laion400m": ("ViT-B/32", "LAION-400M", 400), "vitb16_laion400m": ("ViT-B/16", "LAION-400M", 400),
-    "rn50_openai": ("RN50", "OpenAI WIT", 400), "rn50_yfcc15m": ("RN50", "YFCC15M", 15),
-    "rn101_yfcc15m": ("RN101", "YFCC15M", 15), "rn50_cc12m": ("RN50", "CC12M", 12),
+    "rn50_openai": ("RN50", "OpenAI WIT", 400), "vitb32_xlmr_laion5b": ("ViT-B/32", "LAION-5B (multilingual)", 5850),
+    "rn50_yfcc15m": ("RN50", "YFCC15M", 15), "rn101_yfcc15m": ("RN101", "YFCC15M", 15), "rn50_cc12m": ("RN50", "CC12M", 12),
 }
-PHOTOS = {"vitb32_laion400m": 16}
+PHOTOS = {"vitb32_laion400m": 16, "vitb32_xlmr_laion5b": 16}
 for sub in ("data", "tables"):
     os.makedirs(os.path.join(PAPER, sub), exist_ok=True)
 summary = pd.read_csv(os.path.join(RES, "cross_model_summary.csv")).set_index("model")
@@ -232,15 +233,16 @@ def nfmt(n):
 rows = []
 for k in ORDER:
     m = facts["models"][k]
-    rows.append(f"{m['arch']} & {m['corpus']} & {m['pairs_m']} & {m['photos_per_class']} & "
+    rows.append(f"{m['arch']} & {m['corpus']} & {format(m['pairs_m'], ',').replace(',', '{,}')} & {m['photos_per_class']} & "
                 f"{nfmt(m['stimuli_analyzed'])} & {100 * m['clean_top1']:.1f} \\\\")
 table_models = r"""\begin{table}[tbp]
 \centering
-\caption{CLIP models evaluated. Pairs are approximate training corpus sizes in millions of image-text pairs, stimuli are the images that entered the analysis, and clean top-1 is zero-shot accuracy on the 1{,}000 source photographs without text.}
+\caption{CLIP models evaluated. Pairs are approximate training corpus sizes in millions of image-text pairs, stimuli are the images that entered the analysis, and clean top-1 is zero-shot accuracy on the 1{,}000 source photographs without text. The ViT-B/32 trained on LAION-5B pairs its image encoder with a multilingual text encoder.}
 \label{tab:models}
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llrrrr@{}}
 \toprule
-Encoder & Training data & Pairs (M) & Photos per target & Stimuli & Clean top-1 (\%) \\
+Encoder & Training data & Pairs & Photos per & Stimuli & Clean top-1 \\
+ & & (M) & target & & (\%) \\
 \midrule
 """ + "\n".join(rows) + r"""
 \bottomrule

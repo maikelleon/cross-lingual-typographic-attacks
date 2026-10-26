@@ -1,4 +1,4 @@
-"""Robustness checks for the main effects in the three reading models.
+"""Robustness checks for the main effects in the four reading models.
 
 1. Spelling gradient within translations of each language: slope of the change in the target
    log-probability on spelling similarity (OLS, standard errors clustered by target class).
@@ -7,6 +7,10 @@
 3. The same effects in two random halves of the target classes (split-half replication).
 4. The pooled full-specification effects without the translations that differ from the English class name only
    in diacritics, and with each translation string counted once per target and photograph.
+5. The translation effect among words with a spelling similarity below 0.4, a direct test of meaning without
+   shared spelling, and the differences in the translation and false-friend effects between the multilingual
+   ViT-B/32 and the ViT-B/32 trained on LAION-400M, estimated jointly on the stimuli both models classified,
+   together with the difference between those two differences and the difference in the low-similarity effect.
 
 Outputs: data/robustness.json and tables/table_effects.tex, which combines the pooled estimates in
 data/facts.json with checks 2 and 3 (run compute_facts.py first). The gradients of check 1 are in a different
@@ -34,7 +38,8 @@ from synthesis import box_adjusted, dice, prefix_ratio, suffix_ratio, text_box  
 
 OUT = os.path.join(PROJECT, "outputs") if os.path.isdir(os.path.join(PROJECT, "outputs")) and \
     not os.path.isdir(os.path.join(PROJECT, "paper")) else os.path.join(PROJECT, "paper")
-READERS = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai"]
+READERS = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitb32_xlmr_laion5b"]
+MULTILINGUAL = "vitb32_xlmr_laion5b"
 LANGS = [("es", "Spanish"), ("fr", "French"), ("pt", "Portuguese"), ("it", "Italian"), ("ca", "Catalan")]
 FORMULA = ("d_target_logp ~ bs(sim_raw, df=4) + bs(jw, df=3) + prefix + suffix + dice + bs(dw, df=3) + box_h"
            " + C(word_type)")
@@ -82,6 +87,52 @@ def ff_language_difference(sub):
             "n": int(m.nobs)}
 
 
+def low_similarity(sub, limit=0.4):
+    """Translation effect against pseudowords among words that share little spelling with the class name
+    (similarity below the limit), under the full specification."""
+    return effect(sub[sub.word_type.isin(["pseudoword", "translation"]) & (sub.sim_raw < limit)], "translation")
+
+
+def twin_difference(sub_english, sub_multilingual, limit=0.4):
+    """Differences between the multilingual ViT-B/32 and the ViT-B/32 trained on LAION-400M, from
+    full-specification models in which every term interacts with the model. Both models classified the same
+    stimuli, so standard errors clustered by target class allow for the pairing. Reports the differences in
+    the translation and false-friend effects, the difference between them (the part of the change specific to
+    translations), and the difference in the translation effect among words below the similarity limit."""
+    rhs = FORMULA.split("~", 1)[1]
+
+    def fit(english, multilingual):
+        both = pd.concat([english.assign(model="english"), multilingual.assign(model="multilingual")],
+                         ignore_index=True)
+        both["model"] = pd.Categorical(both["model"], ["english", "multilingual"])
+        types = [t for t in ["pseudoword", "translation", "false_friend"] if t in set(both.word_type)]
+        both["word_type"] = pd.Categorical(both["word_type"], types)
+        return smf.ols(f"d_target_logp ~ ({rhs}) * C(model)", both).fit(cov_type="cluster",
+                                                                       cov_kwds={"groups": both["target_idx"]})
+
+    def test(m, plus, minus=None):
+        names = list(m.params.index)
+        contrast = np.zeros(len(names))
+        contrast[names.index(plus)] = 1.0
+        if minus is not None:
+            contrast[names.index(minus)] = -1.0
+        t = m.t_test(contrast)
+        est, se = float(np.squeeze(t.effect)), float(np.squeeze(t.sd))
+        return {"est": est, "se": se, "ci": [est - 1.96 * se, est + 1.96 * se], "p": float(np.squeeze(t.pvalue)),
+                "n": int(m.nobs)}
+
+    key = "C(word_type)[T.{}]:C(model)[T.multilingual]".format
+    m = fit(sub_english, sub_multilingual)
+    out = {"tr": test(m, key("translation")), "ff": test(m, key("false_friend")),
+           "tr_minus_ff": test(m, key("translation"), key("false_friend"))}
+
+    def low(s):
+        return s[s.word_type.isin(["pseudoword", "translation"]) & (s.sim_raw < limit)]
+
+    out["tr_low_similarity"] = test(fit(low(sub_english), low(sub_multilingual)), key("translation"))
+    return out
+
+
 def slope(d):
     m = smf.ols("d_target_logp ~ sim_raw", d).fit(cov_type="cluster", cov_kwds={"groups": d["target_idx"]})
     est, se = float(m.params["sim_raw"]), float(m.bse["sim_raw"])
@@ -90,7 +141,7 @@ def slope(d):
 
 
 def main():
-    res = {}
+    res, subs = {}, {}
     for key in READERS:
         df, _ = load(key)
         df = df.dropna(subset=["d_target_logp"])
@@ -107,6 +158,8 @@ def main():
                 lang_sub = sub[(sub.word_type == "pseudoword") | ((sub.word_type == "false_friend") & (sub.lang == code))]
                 r["ff"][code] = effect(lang_sub, "false_friend")
         r["ff_lang_diff"] = ff_language_difference(sub)
+        r["tr_low_similarity"] = low_similarity(sub)
+        subs[key] = sub
         for name, keep in [("half_a", sub.target_idx.isin(half_a)), ("half_b", ~sub.target_idx.isin(half_a))]:
             r["tr"][name] = effect(sub[keep], "translation")
             r["ff"][name] = effect(sub[keep], "false_friend")
@@ -121,6 +174,7 @@ def main():
                       "p": float(b[f"{eff}_box_p"])} for eff in ("tr", "ff")}
         res[key] = r
         print(key, "done", flush=True)
+    res["twin_difference"] = twin_difference(subs["vitb32_laion400m"], subs[MULTILINGUAL])
     os.makedirs(os.path.join(OUT, "data"), exist_ok=True)
     with open(os.path.join(OUT, "data", "robustness.json"), "w") as fh:
         json.dump(res, fh, indent=1)
@@ -141,7 +195,7 @@ def write_table(res):
     rows = []
 
     def head(text):
-        rows.append(f"\\multicolumn{{4}}{{c}}{{{text}}} \\\\")
+        rows.append(f"\\multicolumn{{{len(READERS) + 1}}}{{c}}{{{text}}} \\\\")
 
     def row(label, cells, indent="\\quad"):
         rows.append(f"{indent} {label} & " + " & ".join(cells) + " \\\\")
@@ -156,9 +210,10 @@ def write_table(res):
                        ("Full specification", "tr_box")]:
         row(label, [cell(pooled[k][key]) for k in READERS])
     subsets("tr", [c for c, _ in LANGS] + ["half_a", "half_b"])
+    row("Similarity below 0.4", [cell(res[k]["tr_low_similarity"]) for k in READERS], "\\qquad")
     head("False friend vs.\\ pseudoword")
     for label, key in [("Similarity spline", "ff_basic"), ("Letter position", "ff_position"),
-                       ("Excluding other-class words", "ff_noother"), ("Full specification", "ff_box")]:
+                       ("No other-class words", "ff_noother"), ("Full specification", "ff_box")]:
         row(label, [cell(pooled[k][key]) for k in READERS])
     subsets("ff", ["es", "fr", "half_a", "half_b"])
     head("Translation vs.\\ false friend")
@@ -168,29 +223,48 @@ def write_table(res):
     def num(n):
         return f"{n:,}".replace(",", "{,}")
 
-    def first_rest(get):
-        first, rest = get(READERS[0]), get(READERS[1])
-        assert all(get(k) == rest for k in READERS[1:])
-        return num(first), num(rest)
+    def by_photos(get):
+        """One count per number of photographs per target (16 or 10), largest first."""
+        counts = {}
+        for k in READERS:
+            counts.setdefault(pooled[k]["photos_per_class"], set()).add(get(k))
+        assert all(len(v) == 1 for v in counts.values())
+        return [num(counts[p].pop()) for p in sorted(counts, reverse=True)]
 
-    n_pooled = first_rest(lambda k: pooled[k]["regression_n"])
-    n_direct = first_rest(lambda k: pooled[k]["tr_vs_ff"]["n"])
+    words = {3: "three", 4: "four", 5: "five"}
+    n_pooled = by_photos(lambda k: pooled[k]["regression_n"])
+    n_direct = by_photos(lambda k: pooled[k]["tr_vs_ff"]["n"])
+    n_low = by_photos(lambda k: res[k]["tr_low_similarity"]["n"])
     clusters = num(pooled[READERS[0]]["regression_clusters"])
     lang_n = [res[k][kind][c]["n"] for k in READERS for kind, codes in [("tr", [c for c, _ in LANGS]), ("ff", ["es", "fr"])]
               for c in codes]
     half_n = [res[k][kind][h]["n"] for k in READERS for kind in ("tr", "ff") for h in ("half_a", "half_b")]
+    cols = len(READERS)
+    # Column groups by training corpus: the English-centered readers first, then the multilingual one.
+    groups = [("English-centered", [k for k in READERS if k != MULTILINGUAL]), ("Multilingual", [MULTILINGUAL])]
+    order = [k for _, keys in groups for k in keys]
+    assert order == READERS
+    head_groups, rules, start = [], [], 2
+    for name, keys in groups:
+        head_groups.append(f"\\multicolumn{{{len(keys)}}}{{c}}{{{name}}}")
+        rules.append(f"\\cmidrule({'lr' if start + len(keys) - 1 < cols + 1 else 'l'}){{{start}-{start + len(keys) - 1}}}")
+        start += len(keys)
+    head_arch = " & ".join(pooled[k]["arch"] for k in READERS)
+    head_corpus = " & ".join(pooled[k]["corpus"].replace(" (multilingual)", "") for k in READERS)
     table = r"""\begin{table}[tbp]
 \centering
-\caption{Effects of meaning on the log-probability of the target class in the three reading models. Values are differences between word types with 95\% CIs from standard errors clustered by target class; an interval that excludes zero corresponds to $P < 0.05$ in a two-sided Wald test. The pooled comparisons with pseudowords use """ + n_pooled[0] + r""" observations for ViT-B/32 and """ + n_pooled[1] + r""" for each other model, with """ + clusters + r""" target classes, the language-specific rows """ + num(min(lang_n)) + " to " + num(max(lang_n)) + r""", the half-sample rows """ + num(min(half_n)) + " to " + num(max(half_n)) + r""", and the direct comparison """ + n_direct[0] + " and " + n_direct[1] + r""". Specifications follow Section~\ref{sec:analysis}. The row excluding other-class words repeats the letter-position specification without false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language or for one random half of the target classes.}
+\caption{Effects of meaning on the log-probability of the target class in the """ + words[cols] + r""" reading models, grouped by training corpus as in Section~\ref{sec:models}. Values are differences between word types with 95\% CIs from standard errors clustered by target class; an interval that excludes zero corresponds to $P < 0.05$ in a two-sided Wald test. The pooled comparisons with pseudowords use """ + n_pooled[0] + r""" observations for the models evaluated on 16 photographs per target and """ + n_pooled[1] + r""" for those evaluated on 10, with """ + clusters + r""" target classes, the language-specific rows """ + num(min(lang_n)) + " to " + num(max(lang_n)) + r""", the half-sample rows """ + num(min(half_n)) + " to " + num(max(half_n)) + r""", the low-similarity row """ + n_low[0] + " and " + n_low[1] + r""", and the direct comparison """ + n_direct[0] + " and " + n_direct[1] + r""". Specifications follow Section~\ref{sec:analysis}. The row without other-class words repeats the letter-position specification after removing the false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language, for one random half of the target classes, or for the words whose spelling similarity to the class name is below 0.4.}
 \label{tab:effects}
-\small
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lccc@{}}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l""" + "c" * cols + r"""@{}}
 \toprule
- & \multicolumn{3}{c}{Difference in log-probability} \\
-\cmidrule(l){2-4}
-Contrast and specification & ViT-B/32 & ViT-B/16 & RN50 \\
- & LAION-400M & LAION-400M & OpenAI WIT \\
- & (nats) & (nats) & (nats) \\
+ & \multicolumn{""" + str(cols) + r"""}{c}{Difference in log-probability (nats)} \\
+\cmidrule(l){2-""" + str(cols + 1) + r"""}
+ & """ + " & ".join(head_groups) + r""" \\
+""" + "".join(rules) + r"""
+Contrast and & """ + head_arch + r""" \\
+specification & """ + head_corpus + r""" \\
 \midrule
 """ + "\n".join(rows) + r"""
 \bottomrule

@@ -38,3 +38,16 @@ translation,0.2–0.4,0.006796116504854369,3090,rn50_openai
 translation,0.4–0.6,0.07128712871287128,2020,rn50_openai
 translation,0.6–0.8,0.24232365145228216,2410,rn50_openai
 translation,0.8–1.0,0.340625,1280,rn50_openai
+false_friend,0.4–0.6,0.018702046035805626,6256,vitb32_xlmr_laion5b
+false_friend,0.6–0.8,0.051217765042979944,5584,vitb32_xlmr_laion5b
+false_friend,0.8–1.0,0.14527027027027026,592,vitb32_xlmr_laion5b
+pseudoword,0.0–0.2,0.0004411764705882353,6800,vitb32_xlmr_laion5b
+pseudoword,0.2–0.4,0.0033875338753387536,5904,vitb32_xlmr_laion5b
+pseudoword,0.4–0.6,0.020072992700729927,6576,vitb32_xlmr_laion5b
+pseudoword,0.6–0.8,0.08796806167400881,7264,vitb32_xlmr_laion5b
+pseudoword,0.8–1.0,0.2206896551724138,4640,vitb32_xlmr_laion5b
+translation,0.0–0.2,0.003530534351145038,10480,vitb32_xlmr_laion5b
+translation,0.2–0.4,0.0026294498381877023,4944,vitb32_xlmr_laion5b
+translation,0.4–0.6,0.053527227722772276,3232,vitb32_xlmr_laion5b
+translation,0.6–0.8,0.13615145228215766,3856,vitb32_xlmr_laion5b
+translation,0.8–1.0,0.255859375,2048,vitb32_xlmr_laion5b

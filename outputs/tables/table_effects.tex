@@ -1,38 +1,41 @@
 \begin{table}[tbp]
 \centering
-\caption{Effects of meaning on the log-probability of the target class in the three reading models. Values are differences between word types with 95\% CIs from standard errors clustered by target class; an interval that excludes zero corresponds to $P < 0.05$ in a two-sided Wald test. The pooled comparisons with pseudowords use 68{,}176 observations for ViT-B/32 and 42{,}610 for each other model, with 426 target classes, the language-specific rows 22{,}310 to 37{,}408, the half-sample rows 13{,}540 to 27{,}904, and the direct comparison 18{,}816 and 11{,}760. Specifications follow Section~\ref{sec:analysis}. The row excluding other-class words repeats the letter-position specification without false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language or for one random half of the target classes.}
+\caption{Effects of meaning on the log-probability of the target class in the four reading models, grouped by training corpus as in Section~\ref{sec:models}. Values are differences between word types with 95\% CIs from standard errors clustered by target class; an interval that excludes zero corresponds to $P < 0.05$ in a two-sided Wald test. The pooled comparisons with pseudowords use 68{,}176 observations for the models evaluated on 16 photographs per target and 42{,}610 for those evaluated on 10, with 426 target classes, the language-specific rows 22{,}310 to 37{,}408, the half-sample rows 13{,}540 to 27{,}904, the low-similarity row 27{,}744 and 17{,}340, and the direct comparison 18{,}816 and 11{,}760. Specifications follow Section~\ref{sec:analysis}. The row without other-class words repeats the letter-position specification after removing the false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language, for one random half of the target classes, or for the words whose spelling similarity to the class name is below 0.4.}
 \label{tab:effects}
-\small
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lccc@{}}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccc@{}}
 \toprule
- & \multicolumn{3}{c}{Difference in log-probability} \\
-\cmidrule(l){2-4}
-Contrast and specification & ViT-B/32 & ViT-B/16 & RN50 \\
- & LAION-400M & LAION-400M & OpenAI WIT \\
- & (nats) & (nats) & (nats) \\
+ & \multicolumn{4}{c}{Difference in log-probability (nats)} \\
+\cmidrule(l){2-5}
+ & \multicolumn{3}{c}{English-centered} & \multicolumn{1}{c}{Multilingual} \\
+\cmidrule(lr){2-4}\cmidrule(l){5-5}
+Contrast and & ViT-B/32 & ViT-B/16 & RN50 & ViT-B/32 \\
+specification & LAION-400M & LAION-400M & OpenAI WIT & LAION-5B \\
 \midrule
-\multicolumn{4}{c}{Translation vs.\ pseudoword} \\
-\quad Similarity spline & 0.51 [0.29, 0.72] & 0.92 [0.67, 1.17] & 0.76 [0.59, 0.92] \\
-\quad Letter position & 0.01 [\textminus 0.23, 0.25] & 0.28 [0.004, 0.56] & \textminus 0.07 [\textminus 0.25, 0.10] \\
-\quad Full specification & 0.09 [\textminus 0.17, 0.35] & 0.23 [\textminus 0.07, 0.53] & \textminus 0.03 [\textminus 0.23, 0.18] \\
-\qquad Spanish & 0.17 [\textminus 0.17, 0.52] & 0.39 [0.02, 0.77] & 0.07 [\textminus 0.17, 0.32] \\
-\qquad French & 0.03 [\textminus 0.36, 0.43] & 0.18 [\textminus 0.24, 0.61] & \textminus 0.10 [\textminus 0.35, 0.16] \\
-\qquad Portuguese & 0.10 [\textminus 0.27, 0.47] & 0.23 [\textminus 0.20, 0.66] & 0.09 [\textminus 0.19, 0.36] \\
-\qquad Italian & 0.01 [\textminus 0.37, 0.39] & 0.17 [\textminus 0.23, 0.58] & \textminus 0.14 [\textminus 0.39, 0.11] \\
-\qquad Catalan & 0.08 [\textminus 0.27, 0.43] & 0.13 [\textminus 0.24, 0.51] & 0.06 [\textminus 0.19, 0.31] \\
-\qquad Target half A & \textminus 0.06 [\textminus 0.40, 0.28] & 0.08 [\textminus 0.36, 0.51] & \textminus 0.11 [\textminus 0.36, 0.15] \\
-\qquad Target half B & 0.15 [\textminus 0.29, 0.60] & 0.33 [\textminus 0.13, 0.79] & 0.10 [\textminus 0.24, 0.44] \\
-\multicolumn{4}{c}{False friend vs.\ pseudoword} \\
-\quad Similarity spline & \textminus 1.04 [\textminus 1.26, \textminus 0.81] & \textminus 0.94 [\textminus 1.19, \textminus 0.70] & \textminus 0.30 [\textminus 0.47, \textminus 0.14] \\
-\quad Letter position & \textminus 1.20 [\textminus 1.45, \textminus 0.95] & \textminus 1.21 [\textminus 1.49, \textminus 0.93] & \textminus 0.60 [\textminus 0.76, \textminus 0.43] \\
-\quad Excluding other-class words & \textminus 1.13 [\textminus 1.43, \textminus 0.82] & \textminus 1.31 [\textminus 1.61, \textminus 1.01] & \textminus 0.50 [\textminus 0.69, \textminus 0.30] \\
-\quad Full specification & \textminus 1.03 [\textminus 1.28, \textminus 0.77] & \textminus 1.13 [\textminus 1.42, \textminus 0.84] & \textminus 0.50 [\textminus 0.68, \textminus 0.33] \\
-\qquad Spanish & \textminus 0.81 [\textminus 1.18, \textminus 0.45] & \textminus 0.97 [\textminus 1.32, \textminus 0.62] & \textminus 0.29 [\textminus 0.53, \textminus 0.06] \\
-\qquad French & \textminus 1.04 [\textminus 1.39, \textminus 0.69] & \textminus 1.41 [\textminus 1.76, \textminus 1.06] & \textminus 0.54 [\textminus 0.77, \textminus 0.30] \\
-\qquad Target half A & \textminus 0.91 [\textminus 1.28, \textminus 0.53] & \textminus 1.31 [\textminus 1.69, \textminus 0.93] & \textminus 0.46 [\textminus 0.74, \textminus 0.19] \\
-\qquad Target half B & \textminus 0.93 [\textminus 1.42, \textminus 0.43] & \textminus 1.07 [\textminus 1.53, \textminus 0.61] & \textminus 0.41 [\textminus 0.71, \textminus 0.11] \\
-\multicolumn{4}{c}{Translation vs.\ false friend} \\
-\quad Direct comparison & 1.15 [0.62, 1.69] & 1.01 [0.41, 1.62] & 0.60 [0.14, 1.06] \\
+\multicolumn{5}{c}{Translation vs.\ pseudoword} \\
+\quad Similarity spline & 0.51 [0.29, 0.72] & 0.92 [0.67, 1.17] & 0.76 [0.59, 0.92] & 1.05 [0.85, 1.25] \\
+\quad Letter position & 0.01 [\textminus 0.23, 0.25] & 0.28 [0.004, 0.56] & \textminus 0.07 [\textminus 0.25, 0.10] & 0.49 [0.27, 0.70] \\
+\quad Full specification & 0.09 [\textminus 0.17, 0.35] & 0.23 [\textminus 0.07, 0.53] & \textminus 0.03 [\textminus 0.23, 0.18] & 0.53 [0.29, 0.77] \\
+\qquad Spanish & 0.17 [\textminus 0.17, 0.52] & 0.39 [0.02, 0.77] & 0.07 [\textminus 0.17, 0.32] & 0.59 [0.27, 0.91] \\
+\qquad French & 0.03 [\textminus 0.36, 0.43] & 0.18 [\textminus 0.24, 0.61] & \textminus 0.10 [\textminus 0.35, 0.16] & 0.36 [\textminus 0.01, 0.72] \\
+\qquad Portuguese & 0.10 [\textminus 0.27, 0.47] & 0.23 [\textminus 0.20, 0.66] & 0.09 [\textminus 0.19, 0.36] & 0.46 [0.10, 0.82] \\
+\qquad Italian & 0.01 [\textminus 0.37, 0.39] & 0.17 [\textminus 0.23, 0.58] & \textminus 0.14 [\textminus 0.39, 0.11] & 0.45 [0.10, 0.80] \\
+\qquad Catalan & 0.08 [\textminus 0.27, 0.43] & 0.13 [\textminus 0.24, 0.51] & 0.06 [\textminus 0.19, 0.31] & 0.37 [0.03, 0.70] \\
+\qquad Target half A & \textminus 0.06 [\textminus 0.40, 0.28] & 0.08 [\textminus 0.36, 0.51] & \textminus 0.11 [\textminus 0.36, 0.15] & 0.59 [0.21, 0.96] \\
+\qquad Target half B & 0.15 [\textminus 0.29, 0.60] & 0.33 [\textminus 0.13, 0.79] & 0.10 [\textminus 0.24, 0.44] & 0.41 [0.06, 0.76] \\
+\qquad Similarity below 0.4 & 0.12 [\textminus 0.20, 0.44] & 0.52 [0.18, 0.86] & \textminus 0.17 [\textminus 0.40, 0.05] & 0.64 [0.32, 0.97] \\
+\multicolumn{5}{c}{False friend vs.\ pseudoword} \\
+\quad Similarity spline & \textminus 1.04 [\textminus 1.26, \textminus 0.81] & \textminus 0.94 [\textminus 1.19, \textminus 0.70] & \textminus 0.30 [\textminus 0.47, \textminus 0.14] & \textminus 0.64 [\textminus 0.84, \textminus 0.44] \\
+\quad Letter position & \textminus 1.20 [\textminus 1.45, \textminus 0.95] & \textminus 1.21 [\textminus 1.49, \textminus 0.93] & \textminus 0.60 [\textminus 0.76, \textminus 0.43] & \textminus 0.92 [\textminus 1.15, \textminus 0.70] \\
+\quad No other-class words & \textminus 1.13 [\textminus 1.43, \textminus 0.82] & \textminus 1.31 [\textminus 1.61, \textminus 1.01] & \textminus 0.50 [\textminus 0.69, \textminus 0.30] & \textminus 0.96 [\textminus 1.21, \textminus 0.71] \\
+\quad Full specification & \textminus 1.03 [\textminus 1.28, \textminus 0.77] & \textminus 1.13 [\textminus 1.42, \textminus 0.84] & \textminus 0.50 [\textminus 0.68, \textminus 0.33] & \textminus 0.80 [\textminus 1.04, \textminus 0.56] \\
+\qquad Spanish & \textminus 0.81 [\textminus 1.18, \textminus 0.45] & \textminus 0.97 [\textminus 1.32, \textminus 0.62] & \textminus 0.29 [\textminus 0.53, \textminus 0.06] & \textminus 0.72 [\textminus 1.01, \textminus 0.42] \\
+\qquad French & \textminus 1.04 [\textminus 1.39, \textminus 0.69] & \textminus 1.41 [\textminus 1.76, \textminus 1.06] & \textminus 0.54 [\textminus 0.77, \textminus 0.30] & \textminus 0.96 [\textminus 1.26, \textminus 0.66] \\
+\qquad Target half A & \textminus 0.91 [\textminus 1.28, \textminus 0.53] & \textminus 1.31 [\textminus 1.69, \textminus 0.93] & \textminus 0.46 [\textminus 0.74, \textminus 0.19] & \textminus 0.75 [\textminus 1.08, \textminus 0.42] \\
+\qquad Target half B & \textminus 0.93 [\textminus 1.42, \textminus 0.43] & \textminus 1.07 [\textminus 1.53, \textminus 0.61] & \textminus 0.41 [\textminus 0.71, \textminus 0.11] & \textminus 0.86 [\textminus 1.23, \textminus 0.50] \\
+\multicolumn{5}{c}{Translation vs.\ false friend} \\
+\quad Direct comparison & 1.15 [0.62, 1.69] & 1.01 [0.41, 1.62] & 0.60 [0.14, 1.06] & 1.14 [0.64, 1.64] \\
 \bottomrule
 \end{tabular*}
 \end{table}

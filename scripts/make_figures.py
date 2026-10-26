@@ -31,7 +31,9 @@ INK = "#000000"
 C = {"pseudoword": "#2a78d6", "translation": "#eb6834", "false_friend": "#a23b9f", "english": INK}
 MK = {"pseudoword": "o", "translation": "s", "false_friend": "^", "english": "D"}
 NAME = {"pseudoword": "Pseudoword", "translation": "Translation", "false_friend": "False friend"}
-ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "rn50_yfcc15m", "rn101_yfcc15m", "rn50_cc12m"]
+ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitb32_xlmr_laion5b", "rn50_yfcc15m", "rn101_yfcc15m",
+         "rn50_cc12m"]
+READERS = ORDER[:4]
 LABEL = {k: f"{facts['models'][k]['arch']}, {facts['models'][k]['corpus']}" for k in ORDER}
 WIDTH = 6.0  # inches, the text width of the manuscript
 
@@ -138,8 +140,8 @@ def figure1():
     u1, u2 = m, m + v1 + gap
     u3 = u2 + v2 + gap
     box(u1, y2, v1, h2, "4", "Zero-shot classification")
-    lines(u1 + 0.11, y2 + h2 - 0.34, ["Six CLIP models; three share", "an image-encoder architecture",
-                                      "but differ in training", "1,000 ImageNet classes", "Prompt: a photo of a {class}.",
+    lines(u1 + 0.11, y2 + h2 - 0.34, ["Seven CLIP models, including", "three RN50s and two ViT-B/32s",
+                                      "trained on different data", "1,000 ImageNet classes", "Prompt: a photo of a {class}.",
                                       f"{facts['stimuli']['run_total']:,} classifications"])
     box(u2, y2, v2, h2, "5", "Outcome")
     lines(u2 + 0.11, y2 + h2 - 0.34, ["Change in log $P$(target)", "relative to a random", "string on the same",
@@ -242,11 +244,12 @@ def figure2(recompute=False):
 # ---------------------------------------------------------------- Figure 3: reading strength
 def figure3():
     d = pd.read_csv(os.path.join(PAPER, "data", "fig3_reading.csv")).set_index("model").loc[ORDER]
-    fig, (a, b) = plt.subplots(1, 2, figsize=(WIDTH, 2.35), gridspec_kw={"width_ratios": [1.05, 1], "wspace": 0.16})
+    fig, (a, b) = plt.subplots(1, 2, figsize=(WIDTH, 2.7), gridspec_kw={"width_ratios": [1.05, 1], "wspace": 0.16})
     b.patch.set_alpha(0)
     y = np.arange(len(ORDER))[::-1]
-    a.set_xlim(0, 50)                    # the largest value is 49.1%
-    a.set_xticks(range(0, 51, 10))
+    top = 10 * int(np.ceil(100 * d.english_success.max() / 10))       # the axis ends at the decade above the data
+    a.set_xlim(0, top)
+    a.set_xticks(range(0, top + 1, 10))
     for yi, v in zip(y, d.english_success * 100):
         if v >= 0.5:                     # bars below 0.5% would be invisible slivers; their values are printed
             hbar(a, yi, v, 0.52, C["english"])
@@ -268,8 +271,8 @@ def figure3():
         b.text(v + 0.55, yi + 0.18, (f"{v:.1f}" if abs(v) >= 1 else f"{v:.2f}").replace("-", "−"), va="bottom",
                ha="left", fontsize=7.5, color=INK, clip_on=False)
     b.axvline(0, color=INK, linewidth=0.6, zorder=1)
-    b.set_xlim(-0.5, 13.5)               # the data run from -0.20 to 13.1 nats
-    b.set_xticks([0, 5, 10])
+    b.set_xlim(-0.5, np.ceil(d.ri_hi.max()) + 0.5)                 # just beyond the widest interval
+    b.set_xticks(range(0, int(np.ceil(d.ri_hi.max())) + 1, 5))
     b.set_ylim(-0.6, len(ORDER) - 0.4)
     b.set_yticks(y, [""] * len(ORDER))
     b.tick_params(axis="y", length=0)
@@ -283,11 +286,11 @@ def figure3():
 def figure4():
     d = pd.read_csv(os.path.join(PAPER, "data", "fig4_similarity.csv"))
     bands = ["0.0–0.2", "0.2–0.4", "0.4–0.6", "0.6–0.8", "0.8–1.0"]
-    readers = ORDER[:3]
     # Each panel has its own y scale, ending at the first multiple of 5 above its largest value, so that no axis
     # runs far beyond the data it shows.
-    fig, axes = plt.subplots(1, 3, figsize=(WIDTH, 2.3), gridspec_kw={"wspace": 0.3})
-    for ax, key, letter in zip(axes, readers, "abc"):
+    fig, axes = plt.subplots(2, 2, figsize=(WIDTH, 4.4), gridspec_kw={"wspace": 0.22, "hspace": 0.5})
+    axes = axes.ravel()
+    for ax, key, letter in zip(axes, READERS, "abcd"):
         g = d[d.model == key]
         mids = np.array([0.1, 0.3, 0.5, 0.7, 0.9])           # band midpoints on a continuous similarity axis
         for wt in ["pseudoword", "translation", "false_friend"]:
@@ -303,17 +306,18 @@ def figure4():
         ax.set_yticks(range(0, top + 1, 5))
         ax.set_xlim(0, 1)
         panel_label(ax, letter, x=-0.03, y=1.02)
-    axes[0].set_ylabel("Predictions switched to the target class (%)")
-    fig.supxlabel("Spelling similarity to the English class name", fontsize=8, y=-0.04)
+    fig.subplots_adjust(top=0.88, bottom=0.11)
+    fig.supylabel("Predictions switched to the target class (%)", fontsize=8, x=0.035)
+    fig.supxlabel("Spelling similarity to the English class name", fontsize=8, y=0.025)
     h, l = axes[0].get_legend_handles_labels()
-    fig.legend(h, l, loc="upper center", ncol=3, bbox_to_anchor=(0.5, 1.10), handlelength=2.2, columnspacing=1.8)
+    fig.legend(h, l, loc="upper center", ncol=3, bbox_to_anchor=(0.5, 0.995), handlelength=2.2, columnspacing=1.8)
     save(fig, "fig4_similarity")
 
 
 # ---------------------------------------------------------------- Figure 5: adjusted effects
 def figure5():
     d = pd.read_csv(os.path.join(PAPER, "data", "fig5_effects.csv")).set_index("model").loc[ORDER]
-    fig, ax = plt.subplots(figsize=(WIDTH, 2.6))
+    fig, ax = plt.subplots(figsize=(WIDTH, 2.95))
     y = np.arange(len(ORDER))[::-1].astype(float)
     for col, wt, off in [("tr", "translation", 0.14), ("ff", "false_friend", -0.14)]:
         est, se = d[col].values, d[f"{col}_se"].values
@@ -321,13 +325,15 @@ def figure5():
         ax.scatter(est, y + off, s=64, marker=MK[wt], color=C[wt], edgecolor="white", linewidth=1.0, zorder=3,
                    label=f"{NAME[wt]} vs. pseudoword")
     ax.axvline(0, color=INK, linewidth=0.6, zorder=1)
-    ax.axhline(2.5, color=INK, linewidth=0.6, linestyle=(0, (4, 3)), zorder=0)
+    ax.axhline(len(ORDER) - len(READERS) - 0.5, color=INK, linewidth=0.6, linestyle=(0, (4, 3)), zorder=0)
     ax.set_yticks(y, [LABEL[k] for k in ORDER])
     ax.tick_params(axis="y", length=0)
     ax.spines["left"].set_visible(False)
     ax.set_ylim(-0.6, len(ORDER) - 0.4)
-    ax.set_xlim(-1.5, 0.6)                   # the intervals run from -1.42 to 0.53 nats
-    ax.set_xticks([-1.5, -1.0, -0.5, 0, 0.5])
+    lo = min((d[c] - 1.96 * d[f"{c}_se"]).min() for c in ("tr", "ff"))
+    hi = max((d[c] + 1.96 * d[f"{c}_se"]).max() for c in ("tr", "ff"))
+    ax.set_xlim(np.floor(lo * 10) / 10 - 0.05, np.ceil(hi * 10) / 10 + 0.05)   # just beyond the intervals
+    ax.set_xticks(np.arange(np.floor(lo * 2) / 2, hi + 1e-9, 0.5))
     ax.set_xlabel("Difference in log-probability of the target class (nats)")
     ax.legend(loc="lower left", bbox_to_anchor=(0.0, 1.0), ncol=2, handletextpad=0.4, columnspacing=1.8)
     save(fig, "fig5_effects")

@@ -1,14 +1,16 @@
 \begin{table}[tbp]
 \centering
-\caption{CLIP models evaluated. Pairs are approximate training corpus sizes in millions of image-text pairs, stimuli are the images that entered the analysis, and clean top-1 is zero-shot accuracy on the 1{,}000 source photographs without text.}
+\caption{CLIP models evaluated. Pairs are approximate training corpus sizes in millions of image-text pairs, stimuli are the images that entered the analysis, and clean top-1 is zero-shot accuracy on the 1{,}000 source photographs without text. The ViT-B/32 trained on LAION-5B pairs its image encoder with a multilingual text encoder.}
 \label{tab:models}
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llrrrr@{}}
 \toprule
-Encoder & Training data & Pairs (M) & Photos per target & Stimuli & Clean top-1 (\%) \\
+Encoder & Training data & Pairs & Photos per & Stimuli & Clean top-1 \\
+ & & (M) & target & & (\%) \\
 \midrule
 ViT-B/32 & LAION-400M & 400 & 16 & 93{,}136 & 64.5 \\
 ViT-B/16 & LAION-400M & 400 & 10 & 58{,}210 & 68.6 \\
 RN50 & OpenAI WIT & 400 & 10 & 58{,}210 & 58.0 \\
+ViT-B/32 & LAION-5B (multilingual) & 5{,}850 & 16 & 93{,}136 & 65.3 \\
 RN50 & YFCC15M & 15 & 10 & 58{,}210 & 29.5 \\
 RN101 & YFCC15M & 15 & 10 & 58{,}210 & 33.4 \\
 RN50 & CC12M & 12 & 10 & 58{,}210 & 33.9 \\
