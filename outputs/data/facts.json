@@ -1240,7 +1240,19 @@
   },
   "targets_without_anagram": [
    "eel"
-  ]
+  ],
+  "exterior_letters": {
+   "pseudoword": {
+    "first": 0.6917748917748918,
+    "last": 0.6701298701298701,
+    "n": 1155
+   },
+   "translation": {
+    "first": 0.853781512605042,
+    "last": 0.3243697478991597,
+    "n": 595
+   }
+  }
  },
  "review": {
   "es_tr_reviewed": 413,

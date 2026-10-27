@@ -194,6 +194,16 @@ facts["stimuli"].update({
     "targets_without_anagram": sorted(set(w[w.word_type == "english"].word) -
                                       set(w[w.word_type == "anagram"].target_en)),
 })
+# Exterior letters: share of translations and pseudowords with a similarity of 0.4 to below 1 that keep the first
+# and the last letter of the English class name (lowercase, diacritics removed).
+from common import strip_accents  # noqa: E402
+ext = w[w.word_type.isin(["translation", "pseudoword"]) & (w.sim_raw >= 0.4) & (w.sim_raw < 0.999)].copy()
+ext["plain"] = [strip_accents(x.lower()) for x in ext.word]
+ext["en"] = ext.target_en.str.lower()
+ext["first"] = [p[:1] == e[:1] for p, e in zip(ext.plain, ext.en)]
+ext["last"] = [p[-1:] == e[-1:] for p, e in zip(ext.plain, ext.en)]
+facts["stimuli"]["exterior_letters"] = {wt: {"first": float(g["first"].mean()), "last": float(g["last"].mean()),
+                                             "n": int(len(g))} for wt, g in ext.groupby("word_type")}
 # Review bookkeeping.
 rv = words_all
 facts["review"] = {
