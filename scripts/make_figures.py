@@ -288,9 +288,12 @@ def figure4():
     bands = ["0.0–0.2", "0.2–0.4", "0.4–0.6", "0.6–0.8", "0.8–1.0"]
     # Each panel has its own y scale, ending at the first multiple of 5 above its largest value, so that no axis
     # runs far beyond the data it shows.
-    fig, axes = plt.subplots(2, 2, figsize=(WIDTH, 4.4), gridspec_kw={"wspace": 0.22, "hspace": 0.5})
+    # Up to four reading models fill a 2 x 2 grid; five or six fill a 2 x 3 grid, with the legend in a spare cell.
+    wide = len(READERS) > 4
+    fig, axes = plt.subplots(2, 3 if wide else 2, figsize=(WIDTH, 4.2 if wide else 4.4),
+                             gridspec_kw={"wspace": 0.3 if wide else 0.22, "hspace": 0.5})
     axes = axes.ravel()
-    for ax, key, letter in zip(axes, READERS, "abcd"):
+    for ax, key, letter in zip(axes, READERS, "abcdef"):
         g = d[d.model == key]
         mids = np.array([0.1, 0.3, 0.5, 0.7, 0.9])           # band midpoints on a continuous similarity axis
         for wt in ["pseudoword", "translation", "false_friend"]:
@@ -306,11 +309,16 @@ def figure4():
         ax.set_yticks(range(0, top + 1, 5))
         ax.set_xlim(0, 1)
         panel_label(ax, letter, x=-0.03, y=1.02)
-    fig.subplots_adjust(top=0.88, bottom=0.11)
+    fig.subplots_adjust(top=0.93 if wide else 0.88, bottom=0.11)
     fig.supylabel("Predictions switched to the target class (%)", fontsize=8, x=0.035)
     fig.supxlabel("Spelling similarity to the English class name", fontsize=8, y=0.025)
     h, l = axes[0].get_legend_handles_labels()
-    fig.legend(h, l, loc="upper center", ncol=3, bbox_to_anchor=(0.5, 0.995), handlelength=2.2, columnspacing=1.8)
+    if wide and len(READERS) < len(axes):
+        for ax in axes[len(READERS):]:
+            ax.axis("off")
+        axes[len(READERS)].legend(h, l, loc="center", handlelength=2.2, labelspacing=1.0)
+    else:
+        fig.legend(h, l, loc="upper center", ncol=3, bbox_to_anchor=(0.5, 0.995), handlelength=2.2, columnspacing=1.8)
     save(fig, "fig4_similarity")
 
 

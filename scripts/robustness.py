@@ -193,31 +193,38 @@ def cell(d):
 def write_table(res):
     pooled = json.load(open(os.path.join(OUT, "data", "facts.json")))["models"]
     rows = []
+    # With five or more models an estimate and its interval no longer fit side by side within the text width,
+    # so each interval moves to its own line under the estimate.
+    stack = len(READERS) >= 5
 
     def head(text):
         rows.append(f"\\multicolumn{{{len(READERS) + 1}}}{{c}}{{{text}}} \\\\")
 
-    def row(label, cells, indent="\\quad"):
-        rows.append(f"{indent} {label} & " + " & ".join(cells) + " \\\\")
+    def row(label, ds, indent="\\quad"):
+        if stack:
+            rows.append(f"{indent} {label} & " + " & ".join(fmt(d["est"]) for d in ds) + " \\\\")
+            rows.append(" & " + " & ".join(f"[{fmt(d['ci'][0])}, {fmt(d['ci'][1])}]" for d in ds) + " \\\\[2pt]")
+        else:
+            rows.append(f"{indent} {label} & " + " & ".join(cell(d) for d in ds) + " \\\\")
 
     def subsets(kind, codes):
         names = dict(LANGS + [("half_a", "Target half A"), ("half_b", "Target half B")])
         for code in codes:
-            row(names[code], [cell(res[k][kind][code]) for k in READERS], "\\qquad")
+            row(names[code], [res[k][kind][code] for k in READERS], "\\qquad")
 
     head("Translation vs.\\ pseudoword")
     for label, key in [("Similarity spline", "tr_basic"), ("Letter position", "tr_position"),
                        ("Full specification", "tr_box")]:
-        row(label, [cell(pooled[k][key]) for k in READERS])
+        row(label, [pooled[k][key] for k in READERS])
     subsets("tr", [c for c, _ in LANGS] + ["half_a", "half_b"])
-    row("Similarity below 0.4", [cell(res[k]["tr_low_similarity"]) for k in READERS], "\\qquad")
+    row("Similarity below 0.4", [res[k]["tr_low_similarity"] for k in READERS], "\\qquad")
     head("False friend vs.\\ pseudoword")
     for label, key in [("Similarity spline", "ff_basic"), ("Letter position", "ff_position"),
                        ("No other-class words", "ff_noother"), ("Full specification", "ff_box")]:
-        row(label, [cell(pooled[k][key]) for k in READERS])
+        row(label, [pooled[k][key] for k in READERS])
     subsets("ff", ["es", "fr", "half_a", "half_b"])
     head("Translation vs.\\ false friend")
-    row("Direct comparison", [cell(pooled[k]["tr_vs_ff"]) for k in READERS])
+    row("Direct comparison", [pooled[k]["tr_vs_ff"] for k in READERS])
     # The spelling gradients within each language (res[k]["slope"]) are in nats per unit similarity, a different
     # unit from every row above, so they are reported in the text and in data/robustness.json, not in this table.
     def num(n):
@@ -254,11 +261,11 @@ def write_table(res):
     head_corpus = " & ".join(pooled[k]["corpus"].replace(" (multilingual)", "") for k in READERS)
     table = r"""\begin{table}[tbp]
 \centering
-\caption{Effects of meaning on the log-probability of the target class in the """ + words[cols] + r""" reading models, grouped by training corpus as in Section~\ref{sec:models}. Values are differences between word types with 95\% CIs from standard errors clustered by target class; an interval that excludes zero corresponds to $P < 0.05$ in a two-sided Wald test. The pooled comparisons with pseudowords use """ + n_pooled[0] + r""" observations for the models evaluated on 16 photographs per target and """ + n_pooled[1] + r""" for those evaluated on 10, with """ + clusters + r""" target classes, the row without other-class words """ + n_noother[0] + " and " + n_noother[1] + r""", the language-specific rows """ + num(min(lang_n)) + " to " + num(max(lang_n)) + r""", the half-sample rows """ + num(min(half_n)) + " to " + num(max(half_n)) + r""", the low-similarity row """ + n_low[0] + " and " + n_low[1] + r""", and the direct comparison """ + n_direct[0] + " and " + n_direct[1] + r""". Specifications follow Section~\ref{sec:analysis}. The row without other-class words repeats the letter-position specification on pseudowords and false friends alone, after removing the false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language, for one random half of the target classes, or for the words whose spelling similarity to the class name is below 0.4.}
+\caption{Effects of meaning on the log-probability of the target class in the """ + words[cols] + r""" reading models, grouped by training corpus as in Section~\ref{sec:models}. Values are differences between word types with 95\% CIs""" + (" (in brackets, under each value)" if stack else "") + r""" from standard errors clustered by target class; an interval that excludes zero corresponds to $P < 0.05$ in a two-sided Wald test. The pooled comparisons with pseudowords use """ + n_pooled[0] + r""" observations for the models evaluated on 16 photographs per target and """ + n_pooled[1] + r""" for those evaluated on 10, with """ + clusters + r""" target classes, the row without other-class words """ + n_noother[0] + " and " + n_noother[1] + r""", the language-specific rows """ + num(min(lang_n)) + " to " + num(max(lang_n)) + r""", the half-sample rows """ + num(min(half_n)) + " to " + num(max(half_n)) + r""", the low-similarity row """ + n_low[0] + " and " + n_low[1] + r""", and the direct comparison """ + n_direct[0] + " and " + n_direct[1] + r""". Specifications follow Section~\ref{sec:analysis}. The row without other-class words repeats the letter-position specification on pseudowords and false friends alone, after removing the false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language, for one random half of the target classes, or for the words whose spelling similarity to the class name is below 0.4.}
 \label{tab:effects}
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l""" + "c" * cols + r"""@{}}
+""" + ("\\renewcommand{\\arraystretch}{0.92}\n" if stack else "") + r"""\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l""" + "c" * cols + r"""@{}}
 \toprule
  & \multicolumn{""" + str(cols) + r"""}{c}{Difference in log-probability (nats)} \\
 \cmidrule(l){2-""" + str(cols + 1) + r"""}

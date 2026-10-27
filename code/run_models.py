@@ -28,6 +28,10 @@ QUEUE = [("vitb32_laion400m", 16), ("rn50_yfcc15m", 10), ("rn50_cc12m", 10),
          ("vitb32_xlmr_laion5b", 16),      # (model, photos per target); the multilingual ViT-B/32 matches its twin
          ("vitl14_openai", 10)]
 BATCH = 64
+# ViT-L/14's text tower needs more memory than an 8 GB machine offers to encode all 1,000 prompts at once, so it
+# encodes them in chunks, which gives the same embeddings up to floating-point rounding. The other models were run
+# with all prompts in one batch, which is kept so that their outputs stay reproducible to the last digit.
+TEXT_CHUNK = {"vitl14_openai": 100}
 RES = os.path.join(ROOT, "results")
 os.makedirs(RES, exist_ok=True)
 FIELDS = ["stim_id", "pred", "target_logp", "target_rank", "true_logp", "d_target_logp", "d_true_logp"]
@@ -59,7 +63,9 @@ def load_model(key):
         model, pre, tok = create_openclip(key)
     model.eval()
     with torch.no_grad():
-        t = model.encode_text(tok([f"a photo of a {n}." for n in IMAGENET_CLASSNAMES]))
+        prompts = [f"a photo of a {n}." for n in IMAGENET_CLASSNAMES]
+        step = TEXT_CHUNK.get(key, len(prompts))
+        t = torch.cat([model.encode_text(tok(prompts[i:i + step])) for i in range(0, len(prompts), step)])
         t = t / t.norm(dim=-1, keepdim=True)
     return model, pre, t, model.logit_scale.exp().item()
 
