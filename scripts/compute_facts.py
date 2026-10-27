@@ -22,15 +22,19 @@ from synthesis import box_adjusted, ff_position_effect, tr_vs_ff_matched, prefix
 
 PAPER = os.path.join(PROJECT, "outputs")
 RES = os.path.join(PROJECT, "results")
-ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitb32_xlmr_laion5b", "rn50_yfcc15m", "rn101_yfcc15m",
-         "rn50_cc12m"]
-READERS = ORDER[:4]
+ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitl14_openai", "vitb32_xlmr_laion5b", "rn50_yfcc15m",
+         "rn101_yfcc15m", "rn50_cc12m"]
+READERS = ORDER[:5]
 LABEL = {
     "vitb32_laion400m": ("ViT-B/32", "LAION-400M", 400), "vitb16_laion400m": ("ViT-B/16", "LAION-400M", 400),
     "rn50_openai": ("RN50", "OpenAI WIT", 400), "vitb32_xlmr_laion5b": ("ViT-B/32", "LAION-5B (multilingual)", 5850),
+    "vitl14_openai": ("ViT-L/14", "OpenAI WIT", 400),
     "rn50_yfcc15m": ("RN50", "YFCC15M", 15), "rn101_yfcc15m": ("RN101", "YFCC15M", 15), "rn50_cc12m": ("RN50", "CC12M", 12),
 }
 PHOTOS = {"vitb32_laion400m": 16, "vitb32_xlmr_laion5b": 16}
+# Parameters of each image encoder in millions, counted from the "visual." entries of the checkpoints.
+IMAGE_PARAMS_M = {"vitb32_laion400m": 87.85, "vitb16_laion400m": 86.19, "rn50_openai": 38.37, "vitl14_openai": 303.97,
+                  "vitb32_xlmr_laion5b": 87.85, "rn50_yfcc15m": 38.37, "rn101_yfcc15m": 56.37, "rn50_cc12m": 38.37}
 for sub in ("data", "tables"):
     os.makedirs(os.path.join(PAPER, sub), exist_ok=True)
 summary = pd.read_csv(os.path.join(RES, "cross_model_summary.csv")).set_index("model")
@@ -61,7 +65,7 @@ for key in ORDER:
     df, clean = load(key)
     df = df.dropna(subset=["d_target_logp"])
     s = summary.loc[key]
-    m = {"arch": LABEL[key][0], "corpus": LABEL[key][1], "pairs_m": LABEL[key][2],
+    m = {"arch": LABEL[key][0], "corpus": LABEL[key][1], "pairs_m": LABEL[key][2], "image_params_m": IMAGE_PARAMS_M[key],
          "photos_per_class": PHOTOS.get(key, 10), "stimuli_analyzed": int(len(df)),
          "stimuli_run": int(len(pd.read_csv(os.path.join(RES, f"{key}_stimuli.csv")))),
          "clean_top1": float((clean.argmax(1) == np.arange(1000)).mean()),
@@ -237,16 +241,16 @@ def nfmt(n):
 rows = []
 for k in ORDER:
     m = facts["models"][k]
-    rows.append(f"{m['arch']} & {m['corpus']} & {format(m['pairs_m'], ',').replace(',', '{,}')} & {m['photos_per_class']} & "
+    rows.append(f"{m['arch']} & {m['corpus']} & {round(m['image_params_m'])} & {format(m['pairs_m'], ',').replace(',', '{,}')} & {m['photos_per_class']} & "
                 f"{nfmt(m['stimuli_analyzed'])} & {100 * m['clean_top1']:.1f} \\\\")
 table_models = r"""\begin{table}[tbp]
 \centering
-\caption{CLIP models evaluated. Pairs are approximate training corpus sizes in millions of image-text pairs, stimuli are the images that entered the analysis, and clean top-1 is zero-shot accuracy on the 1{,}000 source photographs without text. The ViT-B/32 trained on LAION-5B pairs its image encoder with a multilingual text encoder.}
+\caption{CLIP models evaluated. Parameters are those of the image encoder in millions, pairs are approximate training corpus sizes in millions of image-text pairs, stimuli are the images that entered the analysis, and clean top-1 is zero-shot accuracy on the 1{,}000 source photographs without text. The ViT-B/32 trained on LAION-5B pairs its image encoder with a multilingual text encoder.}
 \label{tab:models}
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llrrrr@{}}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llrrrrr@{}}
 \toprule
-Encoder & Training data & Pairs & Photos per & Stimuli & Clean top-1 \\
- & & (M) & target & & (\%) \\
+Encoder & Training data & Parameters & Pairs & Photos per & Stimuli & Clean top-1 \\
+ & & (M) & (M) & target & & (\%) \\
 \midrule
 """ + "\n".join(rows) + r"""
 \bottomrule

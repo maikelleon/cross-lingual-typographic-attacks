@@ -4,15 +4,16 @@ Companion repository for the study *Spelling Over Meaning: Cross-Lingual Typogra
 Contrastive Vision-Language Models* by Maikel Leon (University of Miami).
 
 The study writes words on ImageNet photographs and records how strongly each word pulls the
-zero-shot predictions of seven CLIP models toward the ImageNet class it names. The written words
+zero-shot predictions of eight CLIP models toward the ImageNet class it names. The written words
 are English class names, their translations into Spanish, French, Portuguese, Italian, and
 Catalan, false friends in Spanish and French, pseudowords that keep a graded share of the
 letters of the English name, anagrams, and random consonant strings. Translations carry meaning
 with varying spelling overlap, false friends carry spelling without meaning, and pseudowords carry
 spelling alone, which separates what a model reads from the letters from what it reads from the
-meaning.
+meaning. The models are chosen so that pairs of them differ in training data (three ResNet-50s), in
+the language of their captions (two ViT-B/32s), or in size (OpenAI's ResNet-50 and ViT-L/14).
 
-This repository holds the word lists, the image manifest, the per-stimulus outputs of all seven
+This repository holds the word lists, the image manifest, the per-stimulus outputs of all eight
 models, and the code that builds the stimuli, runs the models, and produces every number, table,
 and figure reported in the manuscript.
 
@@ -24,12 +25,12 @@ code/                      stimulus construction, model runs, and analysis
   build_stimuli.py         builds the pre-review word list and image manifest
   apply_review.py          applies the native-speaker review of the Spanish words
   apply_secondary_check.py applies the check of the other four languages and French false friends
-  run_models.py            runs every stimulus through the seven models (resumable)
+  run_models.py            runs every stimulus through the eight models (resumable)
   analyze.py, synthesis.py regression analyses used in the manuscript
   compare_review.py        compares key estimates before and after the lexical review
 scripts/
   fetch_data.py            downloads and verifies the photographs and NLTK corpora
-  fetch_models.py          downloads and verifies the seven model checkpoints
+  fetch_models.py          downloads and verifies the eight model checkpoints
   verify_sample.py         recomputes a sample of stimuli to check a local setup
   compute_facts.py         computes the reported numbers, the plot data, and the tables of models and words
   robustness.py            runs the robustness checks and writes the table of effects
@@ -122,6 +123,7 @@ compares the predictions and log-probabilities with the shipped result file.
 | `rn101_yfcc15m` | ResNet-101 | YFCC15M | OpenCLIP release v0.2 |
 | `rn50_cc12m` | ResNet-50 | CC12M | OpenCLIP release v0.2 |
 | `vitb32_xlmr_laion5b` | ViT-B/32 | LAION-5B, multilingual captions | LAION on Hugging Face |
+| `vitl14_openai` | ViT-L/14 | OpenAI WIT | OpenAI model server |
 
 Classification is zero-shot over the 1,000 ImageNet classes with the prompt "a photo of a {class}."
 and the class names distributed with OpenCLIP. The multilingual model pairs the ViT-B/32 image

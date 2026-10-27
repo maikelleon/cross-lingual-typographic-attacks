@@ -8,9 +8,11 @@
 4. The pooled full-specification effects without the translations that differ from the English class name only
    in diacritics, and with each translation string counted once per target and photograph.
 5. The translation effect among words with a spelling similarity below 0.4, a direct test of meaning without
-   shared spelling, and the differences in the translation and false-friend effects between the multilingual
-   ViT-B/32 and the ViT-B/32 trained on LAION-400M, estimated jointly on the stimuli both models classified,
-   together with the difference between those two differences and the difference in the low-similarity effect.
+   shared spelling, and two paired comparisons estimated jointly on the stimuli both models classified: the
+   multilingual ViT-B/32 against the ViT-B/32 trained on LAION-400M (caption language), and the ViT-L/14
+   against the RN50, both trained on OpenAI WIT (scale). Each reports the differences in the translation and
+   false-friend effects, the difference between those two differences, and the difference in the
+   low-similarity effect.
 
 Outputs: data/robustness.json and tables/table_effects.tex, which combines the pooled estimates in
 data/facts.json with checks 2 and 3 (run compute_facts.py first). The gradients of check 1 are in a different
@@ -38,7 +40,7 @@ from synthesis import box_adjusted, dice, prefix_ratio, suffix_ratio, text_box  
 
 OUT = os.path.join(PROJECT, "outputs") if os.path.isdir(os.path.join(PROJECT, "outputs")) and \
     not os.path.isdir(os.path.join(PROJECT, "paper")) else os.path.join(PROJECT, "paper")
-READERS = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitb32_xlmr_laion5b"]
+READERS = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitl14_openai", "vitb32_xlmr_laion5b"]
 MULTILINGUAL = "vitb32_xlmr_laion5b"
 LANGS = [("es", "Spanish"), ("fr", "French"), ("pt", "Portuguese"), ("it", "Italian"), ("ca", "Catalan")]
 FORMULA = ("d_target_logp ~ bs(sim_raw, df=4) + bs(jw, df=3) + prefix + suffix + dice + bs(dw, df=3) + box_h"
@@ -93,18 +95,17 @@ def low_similarity(sub, limit=0.4):
     return effect(sub[sub.word_type.isin(["pseudoword", "translation"]) & (sub.sim_raw < limit)], "translation")
 
 
-def twin_difference(sub_english, sub_multilingual, limit=0.4):
-    """Differences between the multilingual ViT-B/32 and the ViT-B/32 trained on LAION-400M, from
-    full-specification models in which every term interacts with the model. Both models classified the same
-    stimuli, so standard errors clustered by target class allow for the pairing. Reports the differences in
-    the translation and false-friend effects, the difference between them (the part of the change specific to
-    translations), and the difference in the translation effect among words below the similarity limit."""
+def pair_difference(sub_first, sub_second, limit=0.4):
+    """Differences between two models (second minus first) from full-specification models in which every term
+    interacts with the model. Both models classified the same stimuli, so standard errors clustered by target
+    class allow for the pairing. Reports the differences in the translation and false-friend effects, the
+    difference between them (the part of the change specific to translations), and the difference in the
+    translation effect among words below the similarity limit."""
     rhs = FORMULA.split("~", 1)[1]
 
-    def fit(english, multilingual):
-        both = pd.concat([english.assign(model="english"), multilingual.assign(model="multilingual")],
-                         ignore_index=True)
-        both["model"] = pd.Categorical(both["model"], ["english", "multilingual"])
+    def fit(first, second):
+        both = pd.concat([first.assign(model="first"), second.assign(model="second")], ignore_index=True)
+        both["model"] = pd.Categorical(both["model"], ["first", "second"])
         types = [t for t in ["pseudoword", "translation", "false_friend"] if t in set(both.word_type)]
         both["word_type"] = pd.Categorical(both["word_type"], types)
         return smf.ols(f"d_target_logp ~ ({rhs}) * C(model)", both).fit(cov_type="cluster",
@@ -121,15 +122,15 @@ def twin_difference(sub_english, sub_multilingual, limit=0.4):
         return {"est": est, "se": se, "ci": [est - 1.96 * se, est + 1.96 * se], "p": float(np.squeeze(t.pvalue)),
                 "n": int(m.nobs)}
 
-    key = "C(word_type)[T.{}]:C(model)[T.multilingual]".format
-    m = fit(sub_english, sub_multilingual)
+    key = "C(word_type)[T.{}]:C(model)[T.second]".format
+    m = fit(sub_first, sub_second)
     out = {"tr": test(m, key("translation")), "ff": test(m, key("false_friend")),
            "tr_minus_ff": test(m, key("translation"), key("false_friend"))}
 
     def low(s):
         return s[s.word_type.isin(["pseudoword", "translation"]) & (s.sim_raw < limit)]
 
-    out["tr_low_similarity"] = test(fit(low(sub_english), low(sub_multilingual)), key("translation"))
+    out["tr_low_similarity"] = test(fit(low(sub_first), low(sub_second)), key("translation"))
     return out
 
 
@@ -174,7 +175,10 @@ def main():
                       "p": float(b[f"{eff}_box_p"])} for eff in ("tr", "ff")}
         res[key] = r
         print(key, "done", flush=True)
-    res["twin_difference"] = twin_difference(subs["vitb32_laion400m"], subs[MULTILINGUAL])
+    # The two controlled comparisons among reading models: caption language (two ViT-B/32 models with the same
+    # architecture and about the same number of training samples) and scale (two models trained on OpenAI WIT).
+    res["twin_difference"] = pair_difference(subs["vitb32_laion400m"], subs[MULTILINGUAL])
+    res["scale_difference"] = pair_difference(subs["rn50_openai"], subs["vitl14_openai"])
     os.makedirs(os.path.join(OUT, "data"), exist_ok=True)
     with open(os.path.join(OUT, "data", "robustness.json"), "w") as fh:
         json.dump(res, fh, indent=1)

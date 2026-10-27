@@ -31,9 +31,9 @@ INK = "#000000"
 C = {"pseudoword": "#2a78d6", "translation": "#eb6834", "false_friend": "#a23b9f", "english": INK}
 MK = {"pseudoword": "o", "translation": "s", "false_friend": "^", "english": "D"}
 NAME = {"pseudoword": "Pseudoword", "translation": "Translation", "false_friend": "False friend"}
-ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitb32_xlmr_laion5b", "rn50_yfcc15m", "rn101_yfcc15m",
-         "rn50_cc12m"]
-READERS = ORDER[:4]
+ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitl14_openai", "vitb32_xlmr_laion5b", "rn50_yfcc15m",
+         "rn101_yfcc15m", "rn50_cc12m"]
+READERS = ORDER[:5]
 LABEL = {k: f"{facts['models'][k]['arch']}, {facts['models'][k]['corpus']}" for k in ORDER}
 WIDTH = 6.0  # inches, the text width of the manuscript
 
@@ -140,8 +140,8 @@ def figure1():
     u1, u2 = m, m + v1 + gap
     u3 = u2 + v2 + gap
     box(u1, y2, v1, h2, "4", "Zero-shot classification")
-    lines(u1 + 0.11, y2 + h2 - 0.34, ["Seven CLIP models; within two", "groups, the image encoder is",
-                                      "shared but training differs", "1,000 ImageNet classes", "Prompt: a photo of a {class}.",
+    lines(u1 + 0.11, y2 + h2 - 0.34, ["Eight CLIP models in three", "controlled comparisons: data,",
+                                      "caption language, and size", "1,000 ImageNet classes", "Prompt: a photo of a {class}.",
                                       f"{facts['stimuli']['run_total']:,} classifications"])
     box(u2, y2, v2, h2, "5", "Outcome")
     lines(u2 + 0.11, y2 + h2 - 0.34, ["Change in log $P$(target)", "relative to a random", "string on the same",
@@ -244,7 +244,8 @@ def figure2(recompute=False):
 # ---------------------------------------------------------------- Figure 3: reading strength
 def figure3():
     d = pd.read_csv(os.path.join(PAPER, "data", "fig3_reading.csv")).set_index("model").loc[ORDER]
-    fig, (a, b) = plt.subplots(1, 2, figsize=(WIDTH, 2.7), gridspec_kw={"width_ratios": [1.05, 1], "wspace": 0.16})
+    fig, (a, b) = plt.subplots(1, 2, figsize=(WIDTH, 0.6 + 0.3 * len(ORDER)),
+                               gridspec_kw={"width_ratios": [1.05, 1], "wspace": 0.16})
     b.patch.set_alpha(0)
     y = np.arange(len(ORDER))[::-1]
     top = 10 * int(np.ceil(100 * d.english_success.max() / 10))       # the axis ends at the decade above the data
@@ -325,7 +326,7 @@ def figure4():
 # ---------------------------------------------------------------- Figure 5: adjusted effects
 def figure5():
     d = pd.read_csv(os.path.join(PAPER, "data", "fig5_effects.csv")).set_index("model").loc[ORDER]
-    fig, ax = plt.subplots(figsize=(WIDTH, 2.95))
+    fig, ax = plt.subplots(figsize=(WIDTH, 0.85 + 0.3 * len(ORDER)))
     y = np.arange(len(ORDER))[::-1].astype(float)
     for col, wt, off in [("tr", "translation", 0.14), ("ff", "false_friend", -0.14)]:
         est, se = d[col].values, d[f"{col}_se"].values
@@ -340,8 +341,9 @@ def figure5():
     ax.set_ylim(-0.6, len(ORDER) - 0.4)
     lo = min((d[c] - 1.96 * d[f"{c}_se"]).min() for c in ("tr", "ff"))
     hi = max((d[c] + 1.96 * d[f"{c}_se"]).max() for c in ("tr", "ff"))
-    ax.set_xlim(np.floor(lo * 10) / 10 - 0.05, np.ceil(hi * 10) / 10 + 0.05)   # just beyond the intervals
-    ax.set_xticks(np.arange(np.floor(lo * 2) / 2, hi + 1e-9, 0.5))
+    right = np.ceil(hi * 10) / 10 + 0.05
+    ax.set_xlim(np.floor(lo * 10) / 10 - 0.05, right)   # just beyond the intervals
+    ax.set_xticks(np.arange(np.floor(lo * 2) / 2, right + 1e-9, 0.5))
     ax.set_xlabel("Difference in log-probability of the target class (nats)")
     ax.legend(loc="lower left", bbox_to_anchor=(0.0, 1.0), ncol=2, handletextpad=0.4, columnspacing=1.8)
     save(fig, "fig5_effects")

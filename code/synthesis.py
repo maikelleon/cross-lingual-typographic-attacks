@@ -13,7 +13,7 @@ from analyze import load
 from common import MODELS, strip_accents
 
 ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "rn50_yfcc15m", "rn101_yfcc15m", "rn50_cc12m",
-         "vitb32_xlmr_laion5b"]
+         "vitb32_xlmr_laion5b", "vitl14_openai"]
 
 
 def prefix_ratio(w, e):
