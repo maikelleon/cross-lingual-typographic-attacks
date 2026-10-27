@@ -1,7 +1,7 @@
-"""Download the seven CLIP checkpoints from their official release locations and verify them.
+"""Download the eight CLIP checkpoints from their official release locations and verify them.
 
-The OpenCLIP checkpoints come from the OpenCLIP release assets, the ResNet-50 released by OpenAI
-from OpenAI's model server, and the multilingual ViT-B/32 (LAION-5B, XLM-RoBERTa text encoder) from
+The OpenCLIP checkpoints come from the OpenCLIP release assets, the ResNet-50 and ViT-L/14 released by
+OpenAI from OpenAI's model server, and the multilingual ViT-B/32 (LAION-5B, XLM-RoBERTa text encoder) from
 LAION's Hugging Face repository, together with the configuration and tokenizer of its text encoder,
 at pinned revisions. Files are saved under weights/ with the names that code/common.py expects and
 are checked against checksums/model_checkpoints.sha256.
@@ -24,6 +24,8 @@ SOURCES = {
     "rn50-quickgelu-cc12m-f000538c.pt": OPENCLIP + "rn50-quickgelu-cc12m-f000538c.pt",
     "openai_rn50/RN50.pt": "https://openaipublic.azureedge.net/clip/models/"
                            "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762/RN50.pt",
+    "openai_vitl14/ViT-L-14.pt": "https://openaipublic.azureedge.net/clip/models/"
+                                 "b8cca3fd41ae0c99ba7e8951adf17d267cdb84cd88be6f7c2e0eca1737a03836/ViT-L-14.pt",
     "xlmr_vitb32_laion5b/open_clip_pytorch_model.bin": XLMR_HUB + "open_clip_pytorch_model.bin",
     "xlm_roberta_base/tokenizer.json": XLMR_HUB + "tokenizer.json",
     "xlm_roberta_base/config.json": "https://huggingface.co/FacebookAI/xlm-roberta-base/resolve/"

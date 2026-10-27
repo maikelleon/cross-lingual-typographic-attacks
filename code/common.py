@@ -27,8 +27,12 @@ MODELS = {
     # encoder, which reads captions in many languages. Its text encoder is built from the xlm-roberta-base
     # configuration and tokenizer kept in weights/xlm_roberta_base, so loading needs no network access.
     "vitb32_xlmr_laion5b": ("xlm-roberta-base-ViT-B-32", "xlmr_vitb32_laion5b/open_clip_pytorch_model.bin", "LAION-5B"),
+    # OpenAI's ViT-L/14 at 224 pixels (TorchScript archive, same corpus as the OpenAI RN50), the encoder
+    # family used in many multimodal language models. Its SHA-256 is also checked before loading.
+    "vitl14_openai": ("ViT-L-14", "openai_vitl14/ViT-L-14.pt", "OpenAI WIT-400M"),
 }
 OPENAI_RN50_SHA256 = "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762"
+OPENAI_VITL14_SHA256 = "b8cca3fd41ae0c99ba7e8951adf17d267cdb84cd88be6f7c2e0eca1737a03836"
 XLMR_DIR = os.path.join(ROOT, "weights", "xlm_roberta_base")   # config.json and tokenizer.json of xlm-roberta-base
 XLMR_SHA256 = "a5412f19cca70db8d434f68361f7254bd322a553455a63dbb709bd6a650cf378"   # open_clip_pytorch_model.bin
 

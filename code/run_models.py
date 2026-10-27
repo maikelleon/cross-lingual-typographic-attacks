@@ -19,12 +19,14 @@ import torch
 import open_clip
 from open_clip.zero_shot_metadata import IMAGENET_CLASSNAMES
 
-from common import MODELS, OPENAI_RN50_SHA256, ROOT, XLMR_SHA256, create_openclip, image_files, load_source, overlay
+from common import (MODELS, OPENAI_RN50_SHA256, OPENAI_VITL14_SHA256, ROOT, XLMR_SHA256, create_openclip,
+                    image_files, load_source, overlay)
 
 torch.set_num_threads(int(os.environ.get("TORCH_THREADS", "2")))   # results do not depend on this
 QUEUE = [("vitb32_laion400m", 16), ("rn50_yfcc15m", 10), ("rn50_cc12m", 10),
          ("vitb16_laion400m", 10), ("rn101_yfcc15m", 10), ("rn50_openai", 10),
-         ("vitb32_xlmr_laion5b", 16)]      # (model, photos per target); the multilingual ViT-B/32 matches its twin
+         ("vitb32_xlmr_laion5b", 16),      # (model, photos per target); the multilingual ViT-B/32 matches its twin
+         ("vitl14_openai", 10)]
 BATCH = 64
 RES = os.path.join(ROOT, "results")
 os.makedirs(RES, exist_ok=True)
@@ -42,10 +44,11 @@ def sha256(path):
 def load_model(key):
     arch, ckpt, _ = MODELS[key]
     path = os.path.join(ROOT, "weights", ckpt)
-    if key == "rn50_openai":
+    openai_digests = {"rn50_openai": OPENAI_RN50_SHA256, "vitl14_openai": OPENAI_VITL14_SHA256}
+    if key in openai_digests:
         # OpenAI checkpoints are TorchScript archives; refuse to load anything but the published file.
         digest = sha256(path)
-        if digest != OPENAI_RN50_SHA256:
+        if digest != openai_digests[key]:
             raise SystemExit(f"[{key}] checksum mismatch ({digest}); not loading")
         model = open_clip.openai.load_openai_model(path, precision="fp32", device="cpu")
         pre = open_clip.image_transform(model.visual.image_size, is_train=False)
