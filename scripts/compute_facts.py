@@ -22,18 +22,19 @@ from synthesis import box_adjusted, ff_position_effect, tr_vs_ff_matched, prefix
 
 PAPER = os.path.join(PROJECT, "outputs")
 RES = os.path.join(PROJECT, "results")
-ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitl14_openai", "vitb32_xlmr_laion5b", "rn50_yfcc15m",
-         "rn101_yfcc15m", "rn50_cc12m"]
-READERS = ORDER[:5]
+ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitb32_openai", "vitl14_openai", "vitb32_xlmr_laion5b",
+         "rn50_yfcc15m", "rn101_yfcc15m", "rn50_cc12m"]
+READERS = ORDER[:6]
 LABEL = {
     "vitb32_laion400m": ("ViT-B/32", "LAION-400M", 400), "vitb16_laion400m": ("ViT-B/16", "LAION-400M", 400),
     "rn50_openai": ("RN50", "OpenAI WIT", 400), "vitb32_xlmr_laion5b": ("ViT-B/32", "LAION-5B (multilingual)", 5850),
-    "vitl14_openai": ("ViT-L/14", "OpenAI WIT", 400),
+    "vitl14_openai": ("ViT-L/14", "OpenAI WIT", 400), "vitb32_openai": ("ViT-B/32", "OpenAI WIT", 400),
     "rn50_yfcc15m": ("RN50", "YFCC15M", 15), "rn101_yfcc15m": ("RN101", "YFCC15M", 15), "rn50_cc12m": ("RN50", "CC12M", 12),
 }
 PHOTOS = {"vitb32_laion400m": 16, "vitb32_xlmr_laion5b": 16}
 # Parameters of each image encoder in millions, counted from the "visual." entries of the checkpoints.
 IMAGE_PARAMS_M = {"vitb32_laion400m": 87.85, "vitb16_laion400m": 86.19, "rn50_openai": 38.37, "vitl14_openai": 303.97,
+                  "vitb32_openai": 87.85,
                   "vitb32_xlmr_laion5b": 87.85, "rn50_yfcc15m": 38.37, "rn101_yfcc15m": 56.37, "rn50_cc12m": 38.37}
 for sub in ("data", "tables"):
     os.makedirs(os.path.join(PAPER, sub), exist_ok=True)

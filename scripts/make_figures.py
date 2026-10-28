@@ -31,9 +31,9 @@ INK = "#000000"
 C = {"pseudoword": "#2a78d6", "translation": "#eb6834", "false_friend": "#a23b9f", "english": INK}
 MK = {"pseudoword": "o", "translation": "s", "false_friend": "^", "english": "D"}
 NAME = {"pseudoword": "Pseudoword", "translation": "Translation", "false_friend": "False friend"}
-ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitl14_openai", "vitb32_xlmr_laion5b", "rn50_yfcc15m",
-         "rn101_yfcc15m", "rn50_cc12m"]
-READERS = ORDER[:5]
+ORDER = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitb32_openai", "vitl14_openai", "vitb32_xlmr_laion5b",
+         "rn50_yfcc15m", "rn101_yfcc15m", "rn50_cc12m"]
+READERS = ORDER[:6]
 LABEL = {k: f"{facts['models'][k]['arch']}, {facts['models'][k]['corpus']}" for k in ORDER}
 WIDTH = 6.0  # inches, the text width of the manuscript
 
@@ -140,7 +140,7 @@ def figure1():
     u1, u2 = m, m + v1 + gap
     u3 = u2 + v2 + gap
     box(u1, y2, v1, h2, "4", "Zero-shot classification")
-    lines(u1 + 0.11, y2 + h2 - 0.34, ["Eight CLIP models in three", "controlled comparisons: data,",
+    lines(u1 + 0.11, y2 + h2 - 0.34, ["Nine CLIP models in three", "controlled comparisons: data,",
                                       "caption language, and size", "1,000 ImageNet classes", "Prompt: a photo of a {class}.",
                                       f"{facts['stimuli']['run_total']:,} classifications"])
     box(u2, y2, v2, h2, "5", "Outcome")
@@ -289,9 +289,11 @@ def figure4():
     bands = ["0.0–0.2", "0.2–0.4", "0.4–0.6", "0.6–0.8", "0.8–1.0"]
     # Each panel has its own y scale, ending at the first multiple of 5 above its largest value, so that no axis
     # runs far beyond the data it shows.
-    # Up to four reading models fill a 2 x 2 grid; five or six fill a 2 x 3 grid, with the legend in a spare cell.
+    # Up to four reading models fill a 2 x 2 grid and five or six a 2 x 3 grid; with five, the spare cell holds the
+    # legend, and otherwise the legend sits above the panels.
     wide = len(READERS) > 4
-    fig, axes = plt.subplots(2, 3 if wide else 2, figsize=(WIDTH, 4.2 if wide else 4.4),
+    spare = wide and len(READERS) < 6           # a free cell holds the legend; otherwise it goes above the panels
+    fig, axes = plt.subplots(2, 3 if wide else 2, figsize=(WIDTH, 4.2 if spare else 4.4),
                              gridspec_kw={"wspace": 0.3 if wide else 0.22, "hspace": 0.5})
     axes = axes.ravel()
     for ax, key, letter in zip(axes, READERS, "abcdef"):
@@ -310,11 +312,11 @@ def figure4():
         ax.set_yticks(range(0, top + 1, 5))
         ax.set_xlim(0, 1)
         panel_label(ax, letter, x=-0.03, y=1.02)
-    fig.subplots_adjust(top=0.93 if wide else 0.88, bottom=0.11)
+    fig.subplots_adjust(top=0.93 if spare else 0.88, bottom=0.11)
     fig.supylabel("Predictions switched to the target class (%)", fontsize=8, x=0.035)
     fig.supxlabel("Spelling similarity to the English class name", fontsize=8, y=0.025)
     h, l = axes[0].get_legend_handles_labels()
-    if wide and len(READERS) < len(axes):
+    if spare:
         for ax in axes[len(READERS):]:
             ax.axis("off")
         axes[len(READERS)].legend(h, l, loc="center", handlelength=2.2, labelspacing=1.0)

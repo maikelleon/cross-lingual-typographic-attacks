@@ -10,8 +10,9 @@ Catalan, false friends in Spanish and French, pseudowords that keep a graded sha
 letters of the English name, anagrams, and random consonant strings. Translations carry meaning
 with varying spelling overlap, false friends carry spelling without meaning, and pseudowords carry
 spelling alone, which separates what a model reads from the letters from what it reads from the
-meaning. The models are chosen so that pairs of them differ in training data (three ResNet-50s), in
-the language of their captions (two ViT-B/32s), or in size (OpenAI's ViT-B/32 and ViT-L/14).
+meaning. The models are chosen so that pairs of them differ in training data (three ResNet-50s, and
+ViT-B/32s trained on OpenAI WIT and on LAION-400M), in the language of their captions (two
+ViT-B/32s), or in size (OpenAI's ViT-B/32 and ViT-L/14).
 
 This repository holds the word lists, the image manifest, the per-stimulus outputs of all nine
 models, and the code that builds the stimuli, runs the models, and produces every number, table,

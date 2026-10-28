@@ -1,4 +1,4 @@
-"""Robustness checks for the main effects in the four reading models.
+"""Robustness checks for the main effects in the reading models.
 
 1. Spelling gradient within translations of each language: slope of the change in the target
    log-probability on spelling similarity (OLS, standard errors clustered by target class).
@@ -8,9 +8,11 @@
 4. The pooled full-specification effects without the translations that differ from the English class name only
    in diacritics, and with each translation string counted once per target and photograph.
 5. The translation effect among words with a spelling similarity below 0.4, a direct test of meaning without
-   shared spelling, and two paired comparisons estimated jointly on the stimuli both models classified: the
-   multilingual ViT-B/32 against the ViT-B/32 trained on LAION-400M (caption language), and the ViT-L/14
-   against the RN50, both trained on OpenAI WIT (scale). Each reports the differences in the translation and
+   shared spelling, and paired comparisons estimated jointly on the stimuli both models classified: the
+   multilingual ViT-B/32 against the ViT-B/32 trained on LAION-400M (caption language), OpenAI's ViT-L/14
+   against its ViT-B/32 (scale), OpenAI's ViT-B/32 against its RN50 (architecture), OpenAI's ViT-B/32 against
+   the ViT-B/32 trained on LAION-400M (corpus), and the ViT-B/16 against the ViT-B/32, both trained on
+   LAION-400M (patch size). Each reports the differences in the translation and
    false-friend effects, the difference between those two differences, and the difference in the
    low-similarity effect.
 
@@ -40,7 +42,7 @@ from synthesis import box_adjusted, dice, prefix_ratio, suffix_ratio, text_box  
 
 OUT = os.path.join(PROJECT, "outputs") if os.path.isdir(os.path.join(PROJECT, "outputs")) and \
     not os.path.isdir(os.path.join(PROJECT, "paper")) else os.path.join(PROJECT, "paper")
-READERS = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitl14_openai", "vitb32_xlmr_laion5b"]
+READERS = ["vitb32_laion400m", "vitb16_laion400m", "rn50_openai", "vitb32_openai", "vitl14_openai", "vitb32_xlmr_laion5b"]
 MULTILINGUAL = "vitb32_xlmr_laion5b"
 LANGS = [("es", "Spanish"), ("fr", "French"), ("pt", "Portuguese"), ("it", "Italian"), ("ca", "Catalan")]
 FORMULA = ("d_target_logp ~ bs(sim_raw, df=4) + bs(jw, df=3) + prefix + suffix + dice + bs(dw, df=3) + box_h"
@@ -175,10 +177,21 @@ def main():
                       "p": float(b[f"{eff}_box_p"])} for eff in ("tr", "ff")}
         res[key] = r
         print(key, "done", flush=True)
-    # The two controlled comparisons among reading models: caption language (two ViT-B/32 models with the same
-    # architecture and about the same number of training samples) and scale (two models trained on OpenAI WIT).
-    res["twin_difference"] = pair_difference(subs["vitb32_laion400m"], subs[MULTILINGUAL])
-    res["scale_difference"] = pair_difference(subs["rn50_openai"], subs["vitl14_openai"])
+    # Paired comparisons among reading models, each on the stimuli both models classified: caption language (two
+    # ViT-B/32 models with the same architecture and about the same number of training samples), scale (OpenAI's
+    # ViT-B/32 and ViT-L/14, which share a corpus, a training recipe, and a family of image encoders), architecture
+    # (OpenAI's RN50 and ViT-B/32), corpus (the ViT-B/32 models trained on LAION-400M and on OpenAI WIT), and patch
+    # size (the ViT-B/32 and ViT-B/16 trained on LAION-400M).
+    def shared(first, second):
+        ids = set(first.stim_id) & set(second.stim_id)
+        return first[first.stim_id.isin(ids)], second[second.stim_id.isin(ids)]
+
+    for name, first, second in [("twin_difference", "vitb32_laion400m", MULTILINGUAL),
+                                ("scale_difference", "vitb32_openai", "vitl14_openai"),
+                                ("architecture_difference", "rn50_openai", "vitb32_openai"),
+                                ("corpus_difference", "vitb32_laion400m", "vitb32_openai"),
+                                ("patch_difference", "vitb32_laion400m", "vitb16_laion400m")]:
+        res[name] = pair_difference(*shared(subs[first], subs[second]))
     os.makedirs(os.path.join(OUT, "data"), exist_ok=True)
     with open(os.path.join(OUT, "data", "robustness.json"), "w") as fh:
         json.dump(res, fh, indent=1)
@@ -242,7 +255,7 @@ def write_table(res):
         assert all(len(v) == 1 for v in counts.values())
         return [num(counts[p].pop()) for p in sorted(counts, reverse=True)]
 
-    words = {3: "three", 4: "four", 5: "five"}
+    words = {3: "three", 4: "four", 5: "five", 6: "six"}
     n_pooled = by_photos(lambda k: pooled[k]["regression_n"])
     n_direct = by_photos(lambda k: pooled[k]["tr_vs_ff"]["n"])
     n_noother = by_photos(lambda k: pooled[k]["ff_noother"]["n"])
@@ -252,31 +265,35 @@ def write_table(res):
               for c in codes]
     half_n = [res[k][kind][h]["n"] for k in READERS for kind in ("tr", "ff") for h in ("half_a", "half_b")]
     cols = len(READERS)
-    # Column groups by training corpus: the English-centered readers first, then the multilingual one.
-    groups = [("English-centered", [k for k in READERS if k != MULTILINGUAL]), ("Multilingual", [MULTILINGUAL])]
-    order = [k for _, keys in groups for k in keys]
-    assert order == READERS
+    # Column groups by training corpus, in the order of Section 2.2; each corpus forms one contiguous block.
+    groups = []
+    for k in READERS:
+        corpus = pooled[k]["corpus"].replace(" (multilingual)", "")
+        if groups and groups[-1][0] == corpus:
+            groups[-1][1].append(k)
+        else:
+            groups.append((corpus, [k]))
+    assert len({c for c, _ in groups}) == len(groups)
     head_groups, rules, start = [], [], 2
     for name, keys in groups:
+        end = start + len(keys) - 1
         head_groups.append(f"\\multicolumn{{{len(keys)}}}{{c}}{{{name}}}")
-        rules.append(f"\\cmidrule({'lr' if start + len(keys) - 1 < cols + 1 else 'l'}){{{start}-{start + len(keys) - 1}}}")
-        start += len(keys)
+        rules.append(f"\\cmidrule({'lr' if end < cols + 1 else 'l'}){{{start}-{end}}}")
+        start = end + 1
     head_arch = " & ".join(pooled[k]["arch"] for k in READERS)
-    head_corpus = " & ".join(pooled[k]["corpus"].replace(" (multilingual)", "") for k in READERS)
+    # Six models with stacked intervals fit the text width only in a smaller type with narrower column gaps.
+    size, gap = ("\\scriptsize", "2pt") if cols >= 6 else ("\\footnotesize", "3pt")
     table = r"""\begin{table}[tbp]
 \centering
-\caption{Effects of meaning on the log-probability of the target class in the """ + words[cols] + r""" reading models, grouped by training corpus as in Section~\ref{sec:models}. Values are differences between word types with 95\% CIs""" + (" (in brackets, under each value)" if stack else "") + r""" from standard errors clustered by target class; an interval that excludes zero corresponds to $P < 0.05$ in a two-sided Wald test. The pooled comparisons with pseudowords use """ + n_pooled[0] + r""" observations for the models evaluated on 16 photographs per target and """ + n_pooled[1] + r""" for those evaluated on 10, with """ + clusters + r""" target classes, the row without other-class words """ + n_noother[0] + " and " + n_noother[1] + r""", the language-specific rows """ + num(min(lang_n)) + " to " + num(max(lang_n)) + r""", the half-sample rows """ + num(min(half_n)) + " to " + num(max(half_n)) + r""", the low-similarity row """ + n_low[0] + " and " + n_low[1] + r""", and the direct comparison """ + n_direct[0] + " and " + n_direct[1] + r""". Specifications follow Section~\ref{sec:analysis}. The row without other-class words repeats the letter-position specification on pseudowords and false friends alone, after removing the false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language, for one random half of the target classes, or for the words whose spelling similarity to the class name is below 0.4.}
+\caption{Effects of meaning on the log-probability of the target class in the """ + words[cols] + r""" reading models, grouped by training corpus as in Section~\ref{sec:models}; the LAION-5B model is the one with multilingual captions and text encoder. Values are differences between word types with 95\% CIs""" + (" (in brackets, under each value)" if stack else "") + r""" from standard errors clustered by target class; an interval that excludes zero corresponds to $P < 0.05$ in a two-sided Wald test. The pooled comparisons with pseudowords use """ + n_pooled[0] + r""" observations for the models evaluated on 16 photographs per target and """ + n_pooled[1] + r""" for those evaluated on 10, with """ + clusters + r""" target classes, the row without other-class words """ + n_noother[0] + " and " + n_noother[1] + r""", the language-specific rows """ + num(min(lang_n)) + " to " + num(max(lang_n)) + r""", the half-sample rows """ + num(min(half_n)) + " to " + num(max(half_n)) + r""", the low-similarity row """ + n_low[0] + " and " + n_low[1] + r""", and the direct comparison """ + n_direct[0] + " and " + n_direct[1] + r""". Specifications follow Section~\ref{sec:analysis}. The row without other-class words repeats the letter-position specification on pseudowords and false friends alone, after removing the false friends that name another ImageNet class, and the rows indented under the full specification re-estimate it for one language, for one random half of the target classes, or for the words whose spelling similarity to the class name is below 0.4.}
 \label{tab:effects}
-\footnotesize
-\setlength{\tabcolsep}{3pt}
-""" + ("\\renewcommand{\\arraystretch}{0.92}\n" if stack else "") + r"""\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l""" + "c" * cols + r"""@{}}
+""" + size + "\n\\setlength{\\tabcolsep}{" + gap + "}\n" + ("\\renewcommand{\\arraystretch}{0.92}\n" if stack else "") + r"""\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l""" + "c" * cols + r"""@{}}
 \toprule
  & \multicolumn{""" + str(cols) + r"""}{c}{Difference in log-probability (nats)} \\
 \cmidrule(l){2-""" + str(cols + 1) + r"""}
  & """ + " & ".join(head_groups) + r""" \\
 """ + "".join(rules) + r"""
-Contrast and & """ + head_arch + r""" \\
-specification & """ + head_corpus + r""" \\
+Contrast and specification & """ + head_arch + r""" \\
 \midrule
 """ + "\n".join(rows) + r"""
 \bottomrule
