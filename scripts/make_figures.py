@@ -85,15 +85,15 @@ def symbol(fig, x, y, wt, size=MS):
                           markeredgewidth=1.0))
 
 
-def save(fig, name):
+def save(fig, name, dpi=400):
     """Save the whole canvas, without cropping, after checking that nothing extends beyond it. No creation date in
-    the PDF, so that a rerun reproduces the file byte for byte; photographs inside a PDF are resampled at 400 dpi."""
+    the PDF, so that a rerun reproduces the file byte for byte; images inside a PDF are resampled at the given dpi."""
     fig.canvas.draw()
     box = fig.get_tightbbox(fig.canvas.get_renderer())
     w, h = fig.get_size_inches()
     margins = {"left": box.x0, "bottom": box.y0, "right": w - box.x1, "top": h - box.y1}
     assert all(v > -0.005 for v in margins.values()), (name, margins)
-    fig.savefig(os.path.join(FIG, f"{name}.pdf"), dpi=400, metadata={"CreationDate": None})
+    fig.savefig(os.path.join(FIG, f"{name}.pdf"), dpi=dpi, metadata={"CreationDate": None})
     fig.savefig(os.path.join(FIG, f"{name}.png"), dpi=400)
     plt.close(fig)
     return margins
@@ -271,7 +271,7 @@ def figure2(recompute=False):
         y_top = H - r * (head + tile + foot + between)
         y_img = y_top - head - tile
         ax = fig.add_axes([x0 / WIDTH, y_img / H, tile / WIDTH, tile / H])
-        ax.imshow(img, extent=(0, 1, 0, 1), aspect="auto")
+        ax.imshow(img, extent=(0, 1, 0, 1), aspect="auto", interpolation="nearest")
         ax.set_axis_off()
         base = y_img + 0.075                 # baseline of the title, just above the tile
         panel_label(fig, x0, base + tile, chr(97 + i))
@@ -281,7 +281,9 @@ def figure2(recompute=False):
         for j, (name, pred) in enumerate([("RN50, OpenAI WIT", reader), ("RN50, YFCC15M", nonreader)]):
             fig.text(x0 / WIDTH, (y_img - 0.16 - j * line) / H, f"{name}: {p3(pred[i][2])}", fontsize=8, color=INK,
                      ha="left", va="baseline")
-    save(fig, "fig2_stimuli")
+    # Each pixel of the 224-pixel stimuli becomes exactly 4 x 4 pixels in the PDF, so the tiles show the images at
+    # the resolution the models received, without smoothing.
+    save(fig, "fig2_stimuli", dpi=4 * IMG_PX / tile)
     return reader, nonreader
 
 
