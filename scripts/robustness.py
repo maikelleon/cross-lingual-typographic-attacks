@@ -14,7 +14,8 @@
    the ViT-B/32 trained on LAION-400M (corpus), and the ViT-B/16 against the ViT-B/32, both trained on
    LAION-400M (patch size). Each reports the differences in the translation and
    false-friend effects, the difference between those two differences, and the difference in the
-   low-similarity effect.
+   low-similarity effect. The gain from scale is also compared directly with the gains from multilingual
+   captions and from a halved patch size.
 
 Outputs: data/robustness.json and tables/table_effects.tex, which combines the pooled estimates in
 data/facts.json with checks 2 and 3 (run compute_facts.py first). The gradients of check 1 are in a different
@@ -34,6 +35,7 @@ sys.path.insert(0, CODE)
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 import statsmodels.formula.api as smf  # noqa: E402
+from scipy import stats  # noqa: E402
 from rapidfuzz.distance import JaroWinkler  # noqa: E402
 
 from analyze import load  # noqa: E402
@@ -97,12 +99,27 @@ def low_similarity(sub, limit=0.4):
     return effect(sub[sub.word_type.isin(["pseudoword", "translation"]) & (sub.sim_raw < limit)], "translation")
 
 
+def influence(m, groups, weights):
+    """A linear contrast of the coefficients of a fitted OLS model and its influence per target class, scaled so
+    that the squared influences sum to the cluster-robust variance that statsmodels reports for the contrast.
+    Influences of models fitted on the same target classes can be combined to compare their contrasts."""
+    names = list(m.params.index)
+    c = np.zeros(len(names))
+    for name, w in weights.items():
+        c[names.index(name)] = w
+    per_row = (m.model.exog @ (m.normalized_cov_params.values @ c)) * m.resid.values
+    g = pd.Series(per_row).groupby(np.asarray(groups)).sum()
+    n, k, clusters = m.nobs, m.model.exog.shape[1], g.size
+    return float(c @ m.params.values), g * np.sqrt(clusters / (clusters - 1) * (n - 1) / (n - k))
+
+
 def pair_difference(sub_first, sub_second, limit=0.4):
     """Differences between two models (second minus first) from full-specification models in which every term
     interacts with the model. Both models classified the same stimuli, so standard errors clustered by target
     class allow for the pairing. Reports the differences in the translation and false-friend effects, the
     difference between them (the part of the change specific to translations), and the difference in the
-    translation effect among words below the similarity limit."""
+    translation effect among words below the similarity limit. Also returns the influence of three of these
+    contrasts per target class, for comparisons between pairs."""
     rhs = FORMULA.split("~", 1)[1]
 
     def fit(first, second):
@@ -110,8 +127,9 @@ def pair_difference(sub_first, sub_second, limit=0.4):
         both["model"] = pd.Categorical(both["model"], ["first", "second"])
         types = [t for t in ["pseudoword", "translation", "false_friend"] if t in set(both.word_type)]
         both["word_type"] = pd.Categorical(both["word_type"], types)
-        return smf.ols(f"d_target_logp ~ ({rhs}) * C(model)", both).fit(cov_type="cluster",
-                                                                       cov_kwds={"groups": both["target_idx"]})
+        m = smf.ols(f"d_target_logp ~ ({rhs}) * C(model)", both).fit(cov_type="cluster",
+                                                                    cov_kwds={"groups": both["target_idx"]})
+        return m, both["target_idx"].values
 
     def test(m, plus, minus=None):
         names = list(m.params.index)
@@ -125,15 +143,32 @@ def pair_difference(sub_first, sub_second, limit=0.4):
                 "n": int(m.nobs)}
 
     key = "C(word_type)[T.{}]:C(model)[T.second]".format
-    m = fit(sub_first, sub_second)
+    m, groups = fit(sub_first, sub_second)
     out = {"tr": test(m, key("translation")), "ff": test(m, key("false_friend")),
            "tr_minus_ff": test(m, key("translation"), key("false_friend"))}
 
     def low(s):
         return s[s.word_type.isin(["pseudoword", "translation"]) & (s.sim_raw < limit)]
 
-    out["tr_low_similarity"] = test(fit(low(sub_first), low(sub_second)), key("translation"))
-    return out
+    m_low, groups_low = fit(low(sub_first), low(sub_second))
+    out["tr_low_similarity"] = test(m_low, key("translation"))
+    infl = {"tr": influence(m, groups, {key("translation"): 1.0}),
+            "tr_minus_ff": influence(m, groups, {key("translation"): 1.0, key("false_friend"): -1.0}),
+            "tr_low_similarity": influence(m_low, groups_low, {key("translation"): 1.0})}
+    for name, (est, g) in infl.items():          # the influences reproduce the reported estimates and errors
+        assert abs(est - out[name]["est"]) < 1e-8 and abs(np.sqrt((g ** 2).sum()) - out[name]["se"]) < 1e-6
+    return out, infl
+
+
+def between(first, second):
+    """Difference between two pair contrasts (first minus second), with a standard error from their influences
+    per target class, which allows for the target classes the two pairs share."""
+    (e1, g1), (e2, g2) = first, second
+    both = pd.concat([g1, g2], axis=1).fillna(0.0)
+    est = e1 - e2
+    se = float(np.sqrt(((both.iloc[:, 0] - both.iloc[:, 1]) ** 2).sum()))
+    p = float(2 * stats.norm.sf(abs(est / se)))
+    return {"est": est, "se": se, "ci": [est - 1.96 * se, est + 1.96 * se], "p": p}
 
 
 def slope(d):
@@ -186,12 +221,21 @@ def main():
         ids = set(first.stim_id) & set(second.stim_id)
         return first[first.stim_id.isin(ids)], second[second.stim_id.isin(ids)]
 
+    infl = {}
     for name, first, second in [("twin_difference", "vitb32_laion400m", MULTILINGUAL),
                                 ("scale_difference", "vitb32_openai", "vitl14_openai"),
                                 ("architecture_difference", "rn50_openai", "vitb32_openai"),
                                 ("corpus_difference", "vitb32_laion400m", "vitb32_openai"),
                                 ("patch_difference", "vitb32_laion400m", "vitb16_laion400m")]:
-        res[name] = pair_difference(*shared(subs[first], subs[second]))
+        res[name], infl[name] = pair_difference(*shared(subs[first], subs[second]))
+    # The gain from scale compared directly with the gain from multilingual captions (in the translation effect and
+    # in its part specific to translations) and with the change from a halved patch size (pooled and among words
+    # below the similarity limit); the pairs share the target classes, which the standard errors allow for.
+    res["pair_comparisons"] = {
+        "scale_vs_twin": {k: between(infl["scale_difference"][k], infl["twin_difference"][k])
+                          for k in ("tr", "tr_minus_ff")},
+        "scale_vs_patch": {k: between(infl["scale_difference"][k], infl["patch_difference"][k])
+                           for k in ("tr", "tr_low_similarity")}}
     os.makedirs(os.path.join(OUT, "data"), exist_ok=True)
     with open(os.path.join(OUT, "data", "robustness.json"), "w") as fh:
         json.dump(res, fh, indent=1)
