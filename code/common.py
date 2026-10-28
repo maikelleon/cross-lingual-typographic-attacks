@@ -30,9 +30,13 @@ MODELS = {
     # OpenAI's ViT-L/14 at 224 pixels (TorchScript archive, same corpus as the OpenAI RN50), the encoder
     # family used in many multimodal language models. Its SHA-256 is also checked before loading.
     "vitl14_openai": ("ViT-L-14", "openai_vitl14/ViT-L-14.pt", "OpenAI WIT-400M"),
+    # OpenAI's ViT-B/32 (TorchScript archive): the same corpus and training recipe as the ViT-L/14 with a smaller
+    # image encoder of the same family, and the same architecture as the two OpenCLIP ViT-B/32 models.
+    "vitb32_openai": ("ViT-B-32", "openai_vitb32/ViT-B-32.pt", "OpenAI WIT-400M"),
 }
 OPENAI_RN50_SHA256 = "afeb0e10f9e5a86da6080e35cf09123aca3b358a0c3e3b6c78a7b63bc04b6762"
 OPENAI_VITL14_SHA256 = "b8cca3fd41ae0c99ba7e8951adf17d267cdb84cd88be6f7c2e0eca1737a03836"
+OPENAI_VITB32_SHA256 = "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af"
 XLMR_DIR = os.path.join(ROOT, "weights", "xlm_roberta_base")   # config.json and tokenizer.json of xlm-roberta-base
 XLMR_SHA256 = "a5412f19cca70db8d434f68361f7254bd322a553455a63dbb709bd6a650cf378"   # open_clip_pytorch_model.bin
 

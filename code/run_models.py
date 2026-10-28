@@ -19,14 +19,14 @@ import torch
 import open_clip
 from open_clip.zero_shot_metadata import IMAGENET_CLASSNAMES
 
-from common import (MODELS, OPENAI_RN50_SHA256, OPENAI_VITL14_SHA256, ROOT, XLMR_SHA256, create_openclip,
-                    image_files, load_source, overlay)
+from common import (MODELS, OPENAI_RN50_SHA256, OPENAI_VITB32_SHA256, OPENAI_VITL14_SHA256, ROOT, XLMR_SHA256,
+                    create_openclip, image_files, load_source, overlay)
 
 torch.set_num_threads(int(os.environ.get("TORCH_THREADS", "2")))   # results do not depend on this
 QUEUE = [("vitb32_laion400m", 16), ("rn50_yfcc15m", 10), ("rn50_cc12m", 10),
          ("vitb16_laion400m", 10), ("rn101_yfcc15m", 10), ("rn50_openai", 10),
          ("vitb32_xlmr_laion5b", 16),      # (model, photos per target); the multilingual ViT-B/32 matches its twin
-         ("vitl14_openai", 10)]
+         ("vitl14_openai", 10), ("vitb32_openai", 10)]
 BATCH = 64
 # ViT-L/14's text tower needs more memory than an 8 GB machine offers to encode all 1,000 prompts at once, so it
 # encodes them in chunks, which gives the same embeddings up to floating-point rounding. The other models were run
@@ -48,7 +48,8 @@ def sha256(path):
 def load_model(key):
     arch, ckpt, _ = MODELS[key]
     path = os.path.join(ROOT, "weights", ckpt)
-    openai_digests = {"rn50_openai": OPENAI_RN50_SHA256, "vitl14_openai": OPENAI_VITL14_SHA256}
+    openai_digests = {"rn50_openai": OPENAI_RN50_SHA256, "vitl14_openai": OPENAI_VITL14_SHA256,
+                      "vitb32_openai": OPENAI_VITB32_SHA256}
     if key in openai_digests:
         # OpenAI checkpoints are TorchScript archives; refuse to load anything but the published file.
         digest = sha256(path)
