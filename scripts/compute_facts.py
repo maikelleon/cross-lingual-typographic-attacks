@@ -258,6 +258,7 @@ table_models = r"""\begin{table}[tbp]
 \centering
 \caption{CLIP models evaluated. Parameters are those of the image encoder in millions, pairs are approximate training corpus sizes in millions of image-text pairs, stimuli are the images that entered the analysis, and clean top-1 is zero-shot accuracy on the 1{,}000 source photographs without text. The ViT-B/32 trained on LAION-5B pairs its image encoder with a multilingual text encoder.}
 \label{tab:models}
+\small
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llrrrrr@{}}
 \toprule
 Encoder & Training data & Parameters & Pairs & Photos per & Stimuli & Clean top-1 \\
@@ -280,6 +281,7 @@ table_stimuli = r"""\begin{table}[tbp]
 \centering
 \caption{Written words per word type and language after lexical review. Similarity is the mean normalized Levenshtein similarity to the English class name.}
 \label{tab:stimuli}
+\small
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llrr@{}}
 \toprule
 Word type & Language & Words & Mean similarity \\
